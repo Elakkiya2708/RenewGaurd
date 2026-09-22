@@ -241,3 +241,21 @@ textarea:focus {
         align-items: flex-start;
     }
 }
+.details-box {
+    background: #111827;
+    border: 1px solid #263244;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.details-box p {
+    color: #cbd5e1;
+    margin: 15px 0;
+}
+
+.details-box strong {
+    color: #ffffff;
+    display: inline-block;
+    min-width: 140px;
+}
