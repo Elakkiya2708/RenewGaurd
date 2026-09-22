@@ -49,20 +49,40 @@ function displayRenewals(data) {
     table.innerHTML = data.map(item => `
         <tr>
             <td>${item.name}</td>
+
             <td>${item.category}</td>
+
             <td>${item.organization || "-"}</td>
+
             <td>${item.expiry_date}</td>
+
             <td class="${item.priority.toLowerCase()}">
                 ${item.priority}
             </td>
+
             <td>
                 <span class="badge ${getStatusClass(item.status)}">
                     ${item.status}
                 </span>
             </td>
+
             <td>
-                <button class="action-btn">
+                <button
+                    class="action-btn"
+                    onclick="viewRenewal(${item.id})">
                     View
+                </button>
+
+                <button
+                    class="action-btn"
+                    onclick="editRenewal(${item.id})">
+                    Edit
+                </button>
+
+                <button
+                    class="action-btn"
+                    onclick="deleteRenewal(${item.id})">
+                    Delete
                 </button>
             </td>
         </tr>
@@ -73,17 +93,22 @@ function getStatusClass(status) {
     if (status === "Renewed") return "renewed";
     if (status === "Expired") return "expired";
     if (status === "In Progress") return "progress";
+
     return "pending";
 }
 
 function filterRenewals() {
+
     const search = document
         .getElementById("searchInput")
         .value
         .toLowerCase();
 
-    const category = document.getElementById("categoryFilter").value;
-    const status = document.getElementById("statusFilter").value;
+    const category =
+        document.getElementById("categoryFilter").value;
+
+    const status =
+        document.getElementById("statusFilter").value;
 
     const filtered = renewals.filter(item =>
         item.name.toLowerCase().includes(search) &&
@@ -92,6 +117,52 @@ function filterRenewals() {
     );
 
     displayRenewals(filtered);
+}
+
+function viewRenewal(id) {
+    window.location.href =
+        `renewal-details.html?id=${id}`;
+}
+
+function editRenewal(id) {
+    window.location.href =
+        `edit-renewal.html?id=${id}`;
+}
+
+async function deleteRenewal(id) {
+
+    const confirmDelete =
+        confirm("Are you sure you want to delete this renewal?");
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/renewals/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message);
+            return;
+        }
+
+        alert("Renewal deleted successfully");
+
+        loadRenewals();
+
+    } catch (error) {
+
+        alert("Unable to connect to server");
+
+    }
 }
 
 document
@@ -106,9 +177,13 @@ document
     .getElementById("statusFilter")
     .addEventListener("change", filterRenewals);
 
-document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.clear();
-    window.location.href = "login.html";
-});
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", () => {
+
+        localStorage.clear();
+
+        window.location.href = "login.html";
+    });
 
 loadRenewals();
