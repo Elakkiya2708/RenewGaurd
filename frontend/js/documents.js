@@ -52,7 +52,6 @@ async function loadRenewals() {
 
 // Show Success Notification
 function showSuccessNotification() {
-
     successNotification.style.display = "flex";
 
     setTimeout(() => {
