@@ -5,33 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Documents - RenewGuard</title>
-    <link rel="stylesheet" href="css/documents.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/documents.css">
 </head>
 
 <body>
 
+    <div class="documents-page">
 
+        <div class="document-header">
+            <div class="brand">RenewGuard</div>
 
-    <main class="main-content">
+            <h1>Document Management</h1>
 
-        <div class="top-bar">
-            <div>
-                <h1>Documents</h1>
-                <p>Upload and manage renewal documents</p>
-            </div>
+            <p>
+                Upload and manage documents related to your renewals
+            </p>
         </div>
 
 
-        <div class="document-card">
+        <div class="upload-card">
+
+            <div class="upload-icon">
+                📄
+            </div>
 
             <h2>Upload Document</h2>
 
-            <p class="subtitle">
-                Attach a document to a renewal record
+            <p class="card-description">
+                Attach important documents to your renewal record
             </p>
+
 
             <div class="form-group">
 
@@ -39,7 +43,7 @@
 
                 <select id="renewalSelect">
                     <option value="">
-                        Select Renewal
+                        Select a renewal
                     </option>
                 </select>
 
@@ -50,16 +54,28 @@
 
                 <label>Select Document</label>
 
-                <input
-                    type="file"
-                    id="fileInput"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                >
+                <div class="file-box">
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    >
+
+                    <span id="fileName">
+                        Choose a file
+                    </span>
+
+                </div>
+
+                <small>
+                    PDF, DOC, DOCX, JPG or PNG • Maximum 10 MB
+                </small>
 
             </div>
 
 
-            <button id="uploadBtn" class="upload-btn">
+            <button id="uploadBtn">
                 Upload Document
             </button>
 
@@ -67,10 +83,33 @@
 
         </div>
 
-    </main>
+
+        <button class="back-btn"
+            onclick="window.location.href='dashboard.html'">
+            ← Back to Dashboard
+        </button>
+
+    </div>
 
 
     <script src="js/documents.js"></script>
+
+    <script>
+        document.getElementById("fileInput")
+            .addEventListener("change", function () {
+
+                const fileName =
+                    document.getElementById("fileName");
+
+                if (this.files.length > 0) {
+                    fileName.textContent =
+                        this.files[0].name;
+                } else {
+                    fileName.textContent =
+                        "Choose a file";
+                }
+            });
+    </script>
 
 </body>
 </html>
