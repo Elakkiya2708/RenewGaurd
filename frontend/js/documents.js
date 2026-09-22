@@ -14,7 +14,9 @@ const successNotification = document.getElementById("successNotification");
 
 // Load Renewals
 async function loadRenewals() {
+
     try {
+
         const response = await fetch(
             "http://localhost:5000/api/renewals"
         );
@@ -29,6 +31,7 @@ async function loadRenewals() {
             '<option value="">Select a renewal</option>';
 
         data.forEach(item => {
+
             const option = document.createElement("option");
 
             option.value = item.id;
@@ -38,7 +41,8 @@ async function loadRenewals() {
         });
 
     } catch (error) {
-        console.error("Renewal Error:", error);
+
+        console.error(error);
 
         message.style.color = "#ef4444";
         message.textContent = "Failed to load renewals";
@@ -49,24 +53,24 @@ async function loadRenewals() {
 // Show Success Notification
 function showSuccessNotification() {
 
-    successNotification.classList.add("show");
+    successNotification.style.display = "flex";
 
     setTimeout(() => {
-        successNotification.classList.remove("show");
+
+        successNotification.style.display = "none";
+
     }, 4000);
 }
 
 
 // Upload Document
-uploadBtn.addEventListener("click", async () => {
+uploadBtn.addEventListener("click", async function () {
 
     const renewalId = renewalSelect.value;
     const file = fileInput.files[0];
 
-    // Clear old message
-    message.textContent = "";
 
-    // Validate renewal
+    // Validate Renewal
     if (!renewalId) {
 
         message.style.color = "#ef4444";
@@ -75,7 +79,8 @@ uploadBtn.addEventListener("click", async () => {
         return;
     }
 
-    // Validate file
+
+    // Validate File
     if (!file) {
 
         message.style.color = "#ef4444";
@@ -84,7 +89,8 @@ uploadBtn.addEventListener("click", async () => {
         return;
     }
 
-    // Validate file size
+
+    // Validate Size
     if (file.size > 10 * 1024 * 1024) {
 
         message.style.color = "#ef4444";
@@ -94,7 +100,7 @@ uploadBtn.addEventListener("click", async () => {
     }
 
 
-    // Uploading state
+    // Uploading
     uploadBtn.disabled = true;
     uploadBtn.textContent = "Uploading...";
 
@@ -102,7 +108,6 @@ uploadBtn.addEventListener("click", async () => {
     message.textContent = "Uploading document...";
 
 
-    // Form data
     const formData = new FormData();
 
     formData.append("renewal_id", renewalId);
@@ -123,7 +128,7 @@ uploadBtn.addEventListener("click", async () => {
         const data = await response.json();
 
 
-        // Error response
+        // Upload failed
         if (!response.ok) {
 
             throw new Error(
@@ -132,13 +137,13 @@ uploadBtn.addEventListener("click", async () => {
         }
 
 
-        // SUCCESS
+        // Upload successful
         message.textContent = "";
 
         showSuccessNotification();
 
 
-        // Reset form
+        // Clear form
         fileInput.value = "";
         renewalSelect.value = "";
         fileName.textContent = "Choose a file";
@@ -153,13 +158,15 @@ uploadBtn.addEventListener("click", async () => {
         message.textContent =
             "✕ " + error.message;
 
+
     } finally {
 
         uploadBtn.disabled = false;
         uploadBtn.textContent = "Upload Document";
     }
+
 });
 
 
-// Load renewals when page opens
+// Load renewals
 loadRenewals();
