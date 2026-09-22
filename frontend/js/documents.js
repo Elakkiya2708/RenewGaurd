@@ -14,6 +14,7 @@ const successNotification = document.getElementById("successNotification");
 
 // Load Renewals
 async function loadRenewals() {
+
     try {
 
         const response = await fetch(
@@ -23,7 +24,9 @@ async function loadRenewals() {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || "Failed to load renewals");
+            throw new Error(
+                data.message || "Failed to load renewals"
+            );
         }
 
         renewalSelect.innerHTML =
@@ -49,29 +52,14 @@ async function loadRenewals() {
 }
 
 
-// Show Success Notification
+// Success Notification
 function showSuccessNotification() {
 
-    // Force notification to stay visible
-    successNotification.style.setProperty(
-        "display",
-        "flex",
-        "important"
-    );
+    successNotification.style.display = "flex";
 
-    // Remove old timer if any
-    if (window.notificationTimer) {
-        clearTimeout(window.notificationTimer);
-    }
+    setTimeout(() => {
 
-    // Hide only after 15 seconds
-    window.notificationTimer = setTimeout(() => {
-
-        successNotification.style.setProperty(
-            "display",
-            "none",
-            "important"
-        );
+        successNotification.style.display = "none";
 
     }, 15000);
 }
@@ -84,7 +72,7 @@ uploadBtn.addEventListener("click", async function () {
     const file = fileInput.files[0];
 
 
-    // Validate Renewal
+    // Check Renewal
     if (!renewalId) {
 
         message.style.color = "#ef4444";
@@ -94,7 +82,7 @@ uploadBtn.addEventListener("click", async function () {
     }
 
 
-    // Validate File
+    // Check File
     if (!file) {
 
         message.style.color = "#ef4444";
@@ -104,11 +92,12 @@ uploadBtn.addEventListener("click", async function () {
     }
 
 
-    // Validate Size
+    // Check File Size
     if (file.size > 10 * 1024 * 1024) {
 
         message.style.color = "#ef4444";
-        message.textContent = "File size must be less than 10 MB";
+        message.textContent =
+            "File size must be less than 10 MB";
 
         return;
     }
@@ -142,7 +131,7 @@ uploadBtn.addEventListener("click", async function () {
         const data = await response.json();
 
 
-        // Upload failed
+        // Error
         if (!response.ok) {
 
             throw new Error(
@@ -151,13 +140,13 @@ uploadBtn.addEventListener("click", async function () {
         }
 
 
-        // Upload successful
+        // Success
         message.textContent = "";
 
         showSuccessNotification();
 
 
-        // Clear form
+        // Clear Form
         fileInput.value = "";
         renewalSelect.value = "";
         fileName.textContent = "Choose a file";
@@ -182,5 +171,5 @@ uploadBtn.addEventListener("click", async function () {
 });
 
 
-// Load renewals
+// Load Renewals
 loadRenewals();
