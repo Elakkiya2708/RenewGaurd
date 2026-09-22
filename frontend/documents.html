@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +9,28 @@
 
     <link rel="stylesheet" href="css/documents.css">
 </head>
-<div id="successNotification" class="notification">
-    <span>✓</span>
-    <span>Document uploaded successfully!</span>
-</div>
+
 <body>
 
     <div class="documents-page">
 
+        <!-- Header -->
         <div class="document-header">
-            <div class="brand">RenewGuard</div>
+
+            <div class="brand">
+                RenewGuard
+            </div>
 
             <h1>Document Management</h1>
 
             <p>
                 Upload and manage documents related to your renewals
             </p>
+
         </div>
 
 
+        <!-- Upload Card -->
         <div class="upload-card">
 
             <div class="upload-icon">
@@ -40,19 +44,23 @@
             </p>
 
 
+            <!-- Renewal -->
             <div class="form-group">
 
                 <label>Select Renewal</label>
 
                 <select id="renewalSelect">
+
                     <option value="">
                         Select a renewal
                     </option>
+
                 </select>
 
             </div>
 
 
+            <!-- File -->
             <div class="form-group">
 
                 <label>Select Document</label>
@@ -78,41 +86,71 @@
             </div>
 
 
+            <!-- Upload Button -->
             <button id="uploadBtn">
                 Upload Document
             </button>
 
+
+            <!-- Error / Status Message -->
             <p id="message"></p>
 
         </div>
 
 
-        <button class="back-btn"
-            onclick="window.location.href='dashboard.html'">
+        <!-- Back Button -->
+        <button
+            class="back-btn"
+            onclick="window.location.href='dashboard.html'"
+        >
             ← Back to Dashboard
         </button>
 
     </div>
 
 
+    <!-- Success Notification -->
+    <div id="successNotification" class="notification">
+
+        <span class="notification-icon">
+            ✓
+        </span>
+
+        <span>
+            Document uploaded successfully!
+        </span>
+
+    </div>
+
+
     <script src="js/documents.js"></script>
 
+
+    <!-- File Name Display -->
     <script>
-        document.getElementById("fileInput")
+
+        document
+            .getElementById("fileInput")
             .addEventListener("change", function () {
 
                 const fileName =
                     document.getElementById("fileName");
 
                 if (this.files.length > 0) {
+
                     fileName.textContent =
                         this.files[0].name;
+
                 } else {
+
                     fileName.textContent =
                         "Choose a file";
                 }
+
             });
+
     </script>
 
 </body>
+
 </html>
