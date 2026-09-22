@@ -56,15 +56,10 @@ async function loadRenewals() {
 let notificationTimer;
 
 function showSuccessNotification() {
-
-    clearTimeout(notificationTimer);
-
     successNotification.style.display = "flex";
 
-    notificationTimer = setTimeout(() => {
-
+    setTimeout(() => {
         successNotification.style.display = "none";
-
     }, 15000);
 }
 
