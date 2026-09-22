@@ -9,16 +9,14 @@ const reminderList = document.getElementById("reminderList");
 async function loadReminders() {
     try {
         const response = await fetch("http://localhost:5000/api/reminders");
-        const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.message || "Failed to load reminders");
-        }
+        console.log("STATUS:", response.status);
 
-        if (data.length === 0) {
-            reminderList.innerHTML = "<p>No reminders found.</p>";
-            return;
-        }
+        const text = await response.text();
+
+        console.log("API RESPONSE:", text);
+
+        const data = JSON.parse(text);
 
         reminderList.innerHTML = data.map(item => `
             <div class="reminder-card">
@@ -33,7 +31,7 @@ async function loadReminders() {
         `).join("");
 
     } catch (error) {
-        console.error("Reminder Error:", error);
+        console.error("REMINDER ERROR:", error);
         reminderList.innerHTML = "<p>Failed to load reminders.</p>";
     }
 }
