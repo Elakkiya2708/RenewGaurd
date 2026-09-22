@@ -142,7 +142,7 @@ uploadBtn.addEventListener("click", async function () {
         // SUCCESS
         message.textContent = "";
 
-        showSuccessNotification();
+       successNotification.style.display = "flex";
 
 
         // Clear form
