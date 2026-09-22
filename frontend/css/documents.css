@@ -272,3 +272,30 @@ body {
     border-radius: 50%;
     font-size: 14px;
 }
+.success-notification {
+    display: none;
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 99999;
+    background: #16a34a;
+    color: white;
+    padding: 16px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    align-items: center;
+    gap: 10px;
+}
+
+.success-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: #16a34a;
+    border-radius: 50%;
+}
