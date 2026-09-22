@@ -137,10 +137,6 @@ uploadBtn.addEventListener("click", async function () {
         // SUCCESS
         message.style.color = "#4ade80";
 message.textContent = "Document uploaded successfully!";
-
-       successNotification.style.display = "flex";
-
-
         // Clear form
         fileInput.value = "";
         renewalSelect.value = "";
