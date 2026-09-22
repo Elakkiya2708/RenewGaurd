@@ -1,5 +1,5 @@
 const token = localStorage.getItem("token");
-const response = await fetch("http://localhost:5000/api/reminders");
+
 if (!token) {
     window.location.href = "login.html";
 }
@@ -12,7 +12,7 @@ async function loadReminders() {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message);
+            throw new Error(data.message || "Failed to load reminders");
         }
 
         if (data.length === 0) {
@@ -26,16 +26,15 @@ async function loadReminders() {
                     <h3>${item.renewals?.name || "Renewal"}</h3>
                     <p>Reminder Date: ${item.reminder_date}</p>
                     <p>${item.reminder_days} days before expiry</p>
+                    <p>Expiry Date: ${item.renewals?.expiry_date || "-"}</p>
                 </div>
-
                 <span class="badge">${item.status}</span>
             </div>
         `).join("");
 
     } catch (error) {
-        console.error(error);
-        reminderList.innerHTML =
-            "<p>Failed to load reminders.</p>";
+        console.error("Reminder Error:", error);
+        reminderList.innerHTML = "<p>Failed to load reminders.</p>";
     }
 }
 
