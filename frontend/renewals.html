@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenewGuard - Renewals</title>
+    <link rel="stylesheet" href="css/renewals.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">R</div>
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="renewals.html" class="active">Renewals</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="history.html">History</a>
+            <a href="documents.html">Documents</a>
+            <a href="reports.html">Reports</a>
+        </nav>
+
+        <button class="logout" id="logoutBtn">Logout</button>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1>Renewals</h1>
+                <p>Manage all your renewal records</p>
+            </div>
+
+            <button class="add-btn" onclick="location.href='add-renewal.html'">
+                + Add Renewal
+            </button>
+        </header>
+
+        <section class="toolbar">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search renewals..."
+            >
+
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="Contract">Contract</option>
+                <option value="License">License</option>
+                <option value="Certification">Certification</option>
+                <option value="Warranty">Warranty</option>
+                <option value="Insurance">Insurance</option>
+                <option value="Subscription">Subscription</option>
+                <option value="Regulatory Permit">Regulatory Permit</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <select id="statusFilter">
+                <option value="">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Renewed">Renewed</option>
+                <option value="Expired">Expired</option>
+            </select>
+
+        </section>
+
+        <section class="table-container">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Organization</th>
+                        <th>Expiry Date</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="renewalTable">
+                    <tr>
+                        <td colspan="7" class="loading">
+                            Loading renewals...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/renewals.js"></script>
+
+</body>
+</html>r
