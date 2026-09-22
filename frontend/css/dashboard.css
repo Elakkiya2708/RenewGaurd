@@ -262,3 +262,35 @@ nav a.active {
         grid-template-columns: 1fr;
     }
 }
+.document-card {
+    max-width: 600px;
+    margin-top: 30px;
+    padding: 25px;
+    background: #111827;
+    border: 1px solid #263244;
+    border-radius: 12px;
+}
+
+.document-card label {
+    display: block;
+    margin: 15px 0 8px;
+    color: #cbd5e1;
+}
+
+.document-card select,
+.document-card input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    background: #1f2937;
+    color: white;
+}
+
+.document-card button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
