@@ -82,6 +82,4 @@ document.getElementById("uploadBtn")
         }
     });
 
-
-
 loadRenewals();
