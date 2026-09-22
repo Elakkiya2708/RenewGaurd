@@ -8,7 +8,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-
+app.use("/api/documents", documentRoutes);
 const renewalRoutes = require("./routes/renewalRoutes");
 app.use("/api/renewals", renewalRoutes);
 // Routes
