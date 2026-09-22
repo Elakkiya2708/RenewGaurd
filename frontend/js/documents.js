@@ -24,7 +24,6 @@ async function loadRenewals() {
 
         data.forEach(item => {
             const option = document.createElement("option");
-
             option.value = item.id;
             option.textContent = item.name;
 
@@ -32,8 +31,6 @@ async function loadRenewals() {
         });
 
     } catch (error) {
-        console.error("Renewal Error:", error);
-
         message.style.color = "#ef4444";
         message.textContent = "Failed to load renewals";
     }
@@ -60,9 +57,11 @@ uploadBtn.addEventListener("click", async () => {
         return;
     }
 
-    // Show uploading message
+    // Uploading
+    uploadBtn.disabled = true;
+    uploadBtn.textContent = "Uploading...";
     message.style.color = "#f59e0b";
-    message.textContent = "Uploading...";
+    message.textContent = "Uploading document...";
 
     const formData = new FormData();
 
@@ -79,32 +78,13 @@ uploadBtn.addEventListener("click", async () => {
             }
         );
 
-        const text = await response.text();
+        const data = await response.json();
 
-        // Show exact backend response
-        message.style.color =
-            response.ok ? "#22c55e" : "#ef4444";
-
-        message.textContent =
-            "STATUS: " + response.status +
-            " | " + text;
-
-        let data;
-
-        try {
-            data = JSON.parse(text);
-        } catch {
-            data = {
-                message: text
-            };
-        }
-
-        // Upload failed
         if (!response.ok) {
-            return;
+            throw new Error(data.message || "Upload failed");
         }
 
-        // Upload successful
+        // SUCCESS
         message.style.color = "#22c55e";
         message.textContent =
             "✓ Document uploaded successfully!";
@@ -117,12 +97,15 @@ uploadBtn.addEventListener("click", async () => {
         console.error("Upload Error:", error);
 
         message.style.color = "#ef4444";
-
         message.textContent =
-            "Unable to connect to server";
+            "✕ " + error.message;
+
+    } finally {
+
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = "Upload Document";
     }
 });
 
 
-// Load renewals when page opens
 loadRenewals();
