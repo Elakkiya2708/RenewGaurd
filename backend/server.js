@@ -1,18 +1,27 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Routes
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
 
+// Test route
 app.get("/", (req, res) => {
-    res.send("RenewGuard API is running");
+    res.json({
+        message: "RenewGuard API is running"
+    });
 });
 
-app.listen(5000, () => {
-    console.log("Server running on http://localhost:5000");
+// Server
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
