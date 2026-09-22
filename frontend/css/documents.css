@@ -1,0 +1,55 @@
+.document-card {
+    max-width: 650px;
+    margin-top: 30px;
+    padding: 30px;
+    background: #111827;
+    border: 1px solid #263244;
+    border-radius: 14px;
+}
+
+.document-card h2 {
+    margin-bottom: 8px;
+    color: white;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: #1f2937;
+    color: white;
+    border: 1px solid #374151;
+    border-radius: 8px;
+}
+
+.upload-btn {
+    padding: 12px 22px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background: #1d4ed8;
+}
+
+#message {
+    margin-top: 15px;
+}documents
