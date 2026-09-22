@@ -9,7 +9,9 @@ const app = express();
 
 // Middleware
 app.use("/api/reminders", reminderRoutes);
-app.use(cors());
+app.use(cors({
+    origin: true
+}));
 app.use(express.json());
 app.use("/api/documents", documentRoutes);
 const renewalRoutes = require("./routes/renewalRoutes");
