@@ -1,5 +1,5 @@
 const supabase = require("../config/database");
-
+const { createDefaultReminders } = require("../services/reminderService");
 exports.getRenewals = async (req, res) => {
     try {
         const { data, error } = await supabase
