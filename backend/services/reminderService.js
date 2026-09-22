@@ -2,7 +2,6 @@ const supabase = require("../config/database");
 
 async function createDefaultReminders(renewalId, expiryDate) {
     const expiry = new Date(expiryDate);
-
     const days = [30, 15, 7];
 
     const reminders = days.map(day => {
