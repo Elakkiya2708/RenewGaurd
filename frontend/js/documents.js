@@ -65,16 +65,16 @@ document.getElementById("uploadBtn")
             const data = await response.json();
 
             if (!response.ok) {
-                message.textContent = data.message;
-                return;
-            }
+    message.style.color = "#ef4444";
+    message.textContent = data.message;
+    return;
+}
 
-            message.textContent =
-                "Document uploaded successfully!";
+message.style.color = "#22c55e";
+message.textContent = "✓ Document uploaded successfully!";
 
-            fileInput.value = "";
-            renewalSelect.value = "";
-
+fileInput.value = "";
+renewalSelect.value = "";
         } catch (error) {
 
             message.textContent =
