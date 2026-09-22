@@ -7,7 +7,10 @@ if (!token) {
 const renewalSelect = document.getElementById("renewalSelect");
 const fileInput = document.getElementById("fileInput");
 const message = document.getElementById("message");
+const uploadBtn = document.getElementById("uploadBtn");
 
+
+// Load Renewals
 async function loadRenewals() {
     try {
         const response = await fetch(
@@ -29,12 +32,16 @@ async function loadRenewals() {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("Renewal Error:", error);
+
+        message.style.color = "#ef4444";
         message.textContent = "Failed to load renewals";
     }
 }
 
-document.getElementById("uploadBtn").addEventListener("click", async () => {
+
+// Upload Document
+uploadBtn.addEventListener("click", async () => {
 
     const renewalId = renewalSelect.value;
     const file = fileInput.files[0];
@@ -53,15 +60,16 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
         return;
     }
 
+    // Show uploading message
+    message.style.color = "#f59e0b";
+    message.textContent = "Uploading...";
+
     const formData = new FormData();
 
     formData.append("renewal_id", renewalId);
     formData.append("file", file);
 
     try {
-
-        message.style.color = "#f59e0b";
-        message.textContent = "Uploading...";
 
         const response = await fetch(
             "http://localhost:5000/api/documents",
@@ -73,25 +81,30 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
 
         const text = await response.text();
 
-        console.log("STATUS:", response.status);
-        console.log("RESPONSE:", text);
+        // Show exact backend response
+        message.style.color =
+            response.ok ? "#22c55e" : "#ef4444";
+
+        message.textContent =
+            "STATUS: " + response.status +
+            " | " + text;
 
         let data;
 
         try {
             data = JSON.parse(text);
         } catch {
-            data = { message: text };
+            data = {
+                message: text
+            };
         }
 
+        // Upload failed
         if (!response.ok) {
-            message.style.color = "#ef4444";
-            message.textContent =
-                data.message || "Upload failed";
-
             return;
         }
 
+        // Upload successful
         message.style.color = "#22c55e";
         message.textContent =
             "✓ Document uploaded successfully!";
@@ -101,12 +114,15 @@ document.getElementById("uploadBtn").addEventListener("click", async () => {
 
     } catch (error) {
 
-        console.error("FETCH ERROR:", error);
+        console.error("Upload Error:", error);
 
         message.style.color = "#ef4444";
+
         message.textContent =
             "Unable to connect to server";
     }
 });
 
+
+// Load renewals when page opens
 loadRenewals();
