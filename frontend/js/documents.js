@@ -82,11 +82,6 @@ document.getElementById("uploadBtn")
         }
     });
 
-document.getElementById("logoutBtn")
-    .addEventListener("click", () => {
 
-        localStorage.clear();
-        window.location.href = "login.html";
-    });
 
 loadRenewals();
