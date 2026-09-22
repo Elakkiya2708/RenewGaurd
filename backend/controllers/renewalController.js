@@ -65,6 +65,7 @@ exports.addRenewal = async (req, res) => {
                 message: error.message
             });
         }
+        await createDefaultReminders(data.id, data.expiry_date);
 
         res.status(201).json({
             message: "Renewal added successfully",
