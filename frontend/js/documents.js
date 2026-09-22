@@ -14,7 +14,6 @@ const successNotification = document.getElementById("successNotification");
 
 // Load Renewals
 async function loadRenewals() {
-
     try {
 
         const response = await fetch(
@@ -52,10 +51,28 @@ async function loadRenewals() {
 
 // Show Success Notification
 function showSuccessNotification() {
-    successNotification.style.display = "flex";
 
-    setTimeout(() => {
-        successNotification.style.display = "none";
+    // Force notification to stay visible
+    successNotification.style.setProperty(
+        "display",
+        "flex",
+        "important"
+    );
+
+    // Remove old timer if any
+    if (window.notificationTimer) {
+        clearTimeout(window.notificationTimer);
+    }
+
+    // Hide only after 15 seconds
+    window.notificationTimer = setTimeout(() => {
+
+        successNotification.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
+
     }, 15000);
 }
 
