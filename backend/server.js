@@ -7,6 +7,7 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
+app.use("/api/reminders", reminderRoutes);
 app.use(cors());
 app.use(express.json());
 app.use("/api/documents", documentRoutes);
