@@ -203,6 +203,44 @@ body {
     color: white;
 }
 
+/* Success Notification */
+
+.success-notification {
+    display: none;
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 99999;
+
+    background: #16a34a;
+    color: white;
+
+    padding: 16px 22px;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+
+    align-items: center;
+    gap: 10px;
+}
+
+.success-icon {
+    width: 24px;
+    height: 24px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    color: #16a34a;
+
+    border-radius: 50%;
+}
+
 /* Mobile */
 
 @media (max-width: 600px) {
@@ -219,83 +257,4 @@ body {
         max-width: 100%;
         padding: 20px;
     }
-}
-/* Success Notification */
-
-.notification {
-    position: fixed;
-    top: 25px;
-    right: 25px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 14px 20px;
-
-    background: #16a34a;
-    color: white;
-
-    border-radius: 10px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-
-    opacity: 0;
-    transform: translateY(-20px);
-
-    pointer-events: none;
-
-    transition: all 0.3s ease;
-
-    z-index: 9999;
-}
-
-.notification.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.notification span:first-child {
-    width: 22px;
-    height: 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: white;
-    color: #16a34a;
-
-    border-radius: 50%;
-    font-size: 14px;
-}
-.success-notification {
-    display: none;
-    position: fixed;
-    top: 25px;
-    right: 25px;
-    z-index: 99999;
-    background: #16a34a;
-    color: white;
-    padding: 16px 22px;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-    align-items: center;
-    gap: 10px;
-}
-
-.success-icon {
-    width: 24px;
-    height: 24px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    color: #16a34a;
-    border-radius: 50%;
 }
