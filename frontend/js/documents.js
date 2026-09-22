@@ -9,17 +9,17 @@ const fileInput = document.getElementById("fileInput");
 const message = document.getElementById("message");
 
 async function loadRenewals() {
-
     try {
-
         const response = await fetch(
             "http://localhost:5000/api/renewals"
         );
 
         const data = await response.json();
 
-        data.forEach(item => {
+        renewalSelect.innerHTML =
+            '<option value="">Select a renewal</option>';
 
+        data.forEach(item => {
             const option = document.createElement("option");
 
             option.value = item.id;
@@ -29,57 +29,84 @@ async function loadRenewals() {
         });
 
     } catch (error) {
-
-        message.textContent =
-            "Failed to load renewals";
+        console.error(error);
+        message.textContent = "Failed to load renewals";
     }
 }
 
-document.getElementById("uploadBtn")
-    .addEventListener("click", async () => {
+document.getElementById("uploadBtn").addEventListener("click", async () => {
 
-        const renewalId = renewalSelect.value;
-        const file = fileInput.files[0];
+    const renewalId = renewalSelect.value;
+    const file = fileInput.files[0];
 
-        if (!renewalId || !file) {
+    message.textContent = "";
+
+    if (!renewalId) {
+        message.style.color = "#ef4444";
+        message.textContent = "Please select a renewal";
+        return;
+    }
+
+    if (!file) {
+        message.style.color = "#ef4444";
+        message.textContent = "Please select a file";
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("renewal_id", renewalId);
+    formData.append("file", file);
+
+    try {
+
+        message.style.color = "#f59e0b";
+        message.textContent = "Uploading...";
+
+        const response = await fetch(
+            "http://localhost:5000/api/documents",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const text = await response.text();
+
+        console.log("STATUS:", response.status);
+        console.log("RESPONSE:", text);
+
+        let data;
+
+        try {
+            data = JSON.parse(text);
+        } catch {
+            data = { message: text };
+        }
+
+        if (!response.ok) {
+            message.style.color = "#ef4444";
             message.textContent =
-                "Select renewal and file";
+                data.message || "Upload failed";
+
             return;
         }
 
-        const formData = new FormData();
+        message.style.color = "#22c55e";
+        message.textContent =
+            "✓ Document uploaded successfully!";
 
-        formData.append("renewal_id", renewalId);
-        formData.append("file", file);
+        fileInput.value = "";
+        renewalSelect.value = "";
 
-        try {
+    } catch (error) {
 
-            const response = await fetch(
-                "http://localhost:5000/api/documents",
-                {
-                    method: "POST",
-                    body: formData
-                }
-            );
+        console.error("FETCH ERROR:", error);
 
-            const data = await response.json();
-
-            if (!response.ok) {
-    message.style.color = "#ef4444";
-    message.textContent = data.message;
-    return;
-}
-
-message.style.color = "#22c55e";
-message.textContent = "✓ Document uploaded successfully!";
-
-fileInput.value = "";
-renewalSelect.value = "";
-        } catch (error) {
-
-            message.textContent =
-                "Unable to connect to server";
-        }
-    });
+        message.style.color = "#ef4444";
+        message.textContent =
+            "Unable to connect to server";
+    }
+});
 
 loadRenewals();
