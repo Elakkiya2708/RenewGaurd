@@ -53,29 +53,18 @@ async function loadRenewals() {
 
 
 // Success Notification
+let notificationTimer;
+
 function showSuccessNotification() {
 
-    successNotification.removeAttribute("style");
+    clearTimeout(notificationTimer);
 
-    successNotification.style.cssText = `
-        display: flex !important;
-        position: fixed;
-        top: 25px;
-        right: 25px;
-        z-index: 99999;
-        background: #16a34a;
-        color: white;
-        padding: 16px 22px;
-        border-radius: 10px;
-        font-size: 15px;
-        font-weight: 600;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-        align-items: center;
-        gap: 10px;
-    `;
+    successNotification.style.display = "flex";
 
-    setTimeout(() => {
+    notificationTimer = setTimeout(() => {
+
         successNotification.style.display = "none";
+
     }, 15000);
 }
 
@@ -87,7 +76,6 @@ uploadBtn.addEventListener("click", async function () {
     const file = fileInput.files[0];
 
 
-    // Check Renewal
     if (!renewalId) {
 
         message.style.color = "#ef4444";
@@ -97,7 +85,6 @@ uploadBtn.addEventListener("click", async function () {
     }
 
 
-    // Check File
     if (!file) {
 
         message.style.color = "#ef4444";
@@ -107,7 +94,6 @@ uploadBtn.addEventListener("click", async function () {
     }
 
 
-    // Check File Size
     if (file.size > 10 * 1024 * 1024) {
 
         message.style.color = "#ef4444";
@@ -118,7 +104,6 @@ uploadBtn.addEventListener("click", async function () {
     }
 
 
-    // Uploading
     uploadBtn.disabled = true;
     uploadBtn.textContent = "Uploading...";
 
@@ -146,7 +131,6 @@ uploadBtn.addEventListener("click", async function () {
         const data = await response.json();
 
 
-        // Error
         if (!response.ok) {
 
             throw new Error(
@@ -155,13 +139,13 @@ uploadBtn.addEventListener("click", async function () {
         }
 
 
-        // Success
+        // SUCCESS
         message.textContent = "";
 
         showSuccessNotification();
 
 
-        // Clear Form
+        // Clear form
         fileInput.value = "";
         renewalSelect.value = "";
         fileName.textContent = "Choose a file";
