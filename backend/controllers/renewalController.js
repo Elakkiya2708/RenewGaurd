@@ -79,3 +79,50 @@ exports.addRenewal = async (req, res) => {
         });
     }
 };
+
+exports.updateRenewal = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const { data, error } = await supabase
+            .from("renewals")
+            .update(req.body)
+            .eq("id", id)
+            .select()
+            .single();
+
+        if (error) {
+            return res.status(400).json({ message: error.message });
+        }
+
+        res.json({
+            message: "Renewal updated successfully",
+            renewal: data
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+exports.deleteRenewal = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const { error } = await supabase
+            .from("renewals")
+            .delete()
+            .eq("id", id);
+
+        if (error) {
+            return res.status(400).json({ message: error.message });
+        }
+
+        res.json({
+            message: "Renewal deleted successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+};
