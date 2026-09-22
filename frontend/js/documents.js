@@ -55,14 +55,27 @@ async function loadRenewals() {
 // Success Notification
 function showSuccessNotification() {
 
-    successNotification.style.display = "flex";
-    successNotification.style.visibility = "visible";
-    successNotification.style.opacity = "1";
+    successNotification.removeAttribute("style");
+
+    successNotification.style.cssText = `
+        display: flex !important;
+        position: fixed;
+        top: 25px;
+        right: 25px;
+        z-index: 99999;
+        background: #16a34a;
+        color: white;
+        padding: 16px 22px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+        align-items: center;
+        gap: 10px;
+    `;
 
     setTimeout(() => {
-
         successNotification.style.display = "none";
-
     }, 15000);
 }
 
