@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const documentRoutes = require("./routes/documentRoutes");
 const reminderRoutes = require("./routes/reminderRoutes");
+
 require("dotenv").config();
 
 const app = express();
