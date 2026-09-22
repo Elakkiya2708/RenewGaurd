@@ -56,10 +56,8 @@ function showSuccessNotification() {
     successNotification.style.display = "flex";
 
     setTimeout(() => {
-
         successNotification.style.display = "none";
-
-    }, 4000);
+    }, 15000);
 }
 
 
