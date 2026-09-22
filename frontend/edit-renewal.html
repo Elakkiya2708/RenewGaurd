@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Renewal - RenewGuard</title>
+    <link rel="stylesheet" href="css/add-renewal.css">
+</head>
+
+<body>
+
+<div class="form-container">
+
+    <div class="form-header">
+        <h1>Edit Renewal</h1>
+        <p>Update renewal information</p>
+    </div>
+
+    <form id="editForm">
+
+        <div class="form-group">
+            <label>Renewal Name</label>
+            <input type="text" id="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <select id="category" required>
+                <option value="Contract">Contract</option>
+                <option value="License">License</option>
+                <option value="Certification">Certification</option>
+                <option value="Warranty">Warranty</option>
+                <option value="Insurance">Insurance</option>
+                <option value="Subscription">Subscription</option>
+                <option value="Regulatory Permit">Regulatory Permit</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Organization / Vendor</label>
+            <input type="text" id="organization">
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" id="start_date">
+            </div>
+
+            <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="date" id="expiry_date" required>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Cost</label>
+            <input type="number" id="cost" min="0">
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label>Priority</label>
+                <select id="priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <select id="status">
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Renewed">Renewed</option>
+                    <option value="Expired">Expired</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea id="notes" rows="4"></textarea>
+        </div>
+
+        <p id="message"></p>
+
+        <div class="form-actions">
+            <button type="submit" class="save-btn">
+                Update Renewal
+            </button>
+
+            <button type="button" class="cancel-btn"
+                onclick="window.location.href='renewals.html'">
+                Cancel
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+<script src="js/edit-renewal.js"></script>
+
+</body>
+</html>
