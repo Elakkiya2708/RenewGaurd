@@ -66,4 +66,4 @@ document.getElementById("nextMonth").onclick = () => {
     renderCalendar();
 };
 
-loadRenewals();calendar
+loadRenewals();
