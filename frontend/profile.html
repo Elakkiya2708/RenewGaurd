@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - RenewGuard</title>
+
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+
+<div class="profile-page">
+
+    <div class="profile-header">
+        <div>
+            <h1>My Profile</h1>
+            <p>Manage your RenewGuard account details</p>
+        </div>
+
+        <button onclick="window.location.href='dashboard.html'">
+            ← Dashboard
+        </button>
+    </div>
+
+    <div class="profile-card">
+
+        <div class="profile-title">
+            <h2>Personal Information</h2>
+            <span id="roleBadge">Loading...</span>
+        </div>
+
+        <form id="profileForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="full_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input type="text" id="mobile">
+                </div>
+
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input type="text" id="organization">
+                </div>
+
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="department">
+                </div>
+
+                <div class="form-group">
+                    <label>Employee ID</label>
+                    <input type="text" id="employee_id">
+                </div>
+
+            </div>
+
+            <button type="submit" class="save-btn">
+                Save Changes
+            </button>
+
+        </form>
+
+        <p id="message"></p>
+
+    </div>
+
+</div>
+
+<script src="js/profile.js"></script>
+
+</body>
+
+</html>
