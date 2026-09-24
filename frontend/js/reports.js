@@ -1,290 +1,954 @@
 const token = localStorage.getItem("token");
 
+
+// ===============================
+// LOGIN CHECK
+// ===============================
+
 if (!token) {
     window.location.href = "login.html";
 }
+
+
+// ===============================
+// HEADERS
+// ===============================
 
 const headers = {
     "Authorization": `Bearer ${token}`
 };
 
+
+// ===============================
+// VARIABLES
+// ===============================
+
 let renewals = [];
 
-const reportTable = document.getElementById("reportTable");
-const statusFilter = document.getElementById("statusFilter");
-const categoryFilter = document.getElementById("categoryFilter");
-const priorityFilter = document.getElementById("priorityFilter");
-const searchInput = document.getElementById("searchInput");
 
-const totalCount = document.getElementById("totalCount");
-const upcomingCount = document.getElementById("upcomingCount");
-const expiredCount = document.getElementById("expiredCount");
-const totalCost = document.getElementById("totalCost");
-const resultText = document.getElementById("resultText");
+// ===============================
+// ELEMENTS
+// ===============================
+
+const reportTable =
+    document.getElementById("reportTable");
+
+const statusFilter =
+    document.getElementById("statusFilter");
+
+const categoryFilter =
+    document.getElementById("categoryFilter");
+
+const priorityFilter =
+    document.getElementById("priorityFilter");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+
+const totalCount =
+    document.getElementById("totalCount");
+
+const upcomingCount =
+    document.getElementById("upcomingCount");
+
+const expiredCount =
+    document.getElementById("expiredCount");
+
+const totalCost =
+    document.getElementById("totalCost");
+
+const resultText =
+    document.getElementById("resultText");
+
+
+// ===============================
+// LOAD REPORTS
+// ===============================
 
 async function loadReports() {
+
     try {
+
         const response = await fetch(
             "http://localhost:5000/api/renewals",
-            { headers }
+            {
+                headers
+            }
         );
+
 
         const data = await response.json();
 
+
         if (!response.ok) {
-            throw new Error(data.message || "Failed to load reports");
+
+            throw new Error(
+                data.message ||
+                "Failed to load reports"
+            );
+
         }
 
-        renewals = Array.isArray(data) ? data : [];
+
+        renewals =
+            Array.isArray(data)
+                ? data
+                : [];
+
 
         updateSummary();
+
         applyFilters();
 
+
     } catch (error) {
-        console.error("REPORT ERROR:", error);
+
+        console.error(
+            "REPORT ERROR:",
+            error
+        );
+
 
         reportTable.innerHTML = `
             <tr>
-                <td colspan="6" class="empty">
+                <td
+                    colspan="6"
+                    class="empty">
+
                     Unable to load reports
+
                 </td>
             </tr>
         `;
 
-        resultText.textContent = "Error loading reports";
+
+        resultText.textContent =
+            "Error loading reports";
+
     }
+
 }
+
+
+// ===============================
+// UPDATE SUMMARY
+// ===============================
 
 function updateSummary() {
 
-    totalCount.textContent = renewals.length;
+    totalCount.textContent =
+        renewals.length;
+
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    const upcoming = renewals.filter(item => {
-        if (!item.expiry_date) return false;
-
-        const expiry = new Date(item.expiry_date);
-        const diff = Math.ceil(
-            (expiry - today) / (1000 * 60 * 60 * 24)
-        );
-
-        return diff >= 0 && diff <= 30;
-    });
-
-    const expired = renewals.filter(item => {
-        if (!item.expiry_date) return false;
-
-        return new Date(item.expiry_date) < today;
-    });
-
-    const cost = renewals.reduce(
-        (sum, item) => sum + Number(item.cost || 0),
+    today.setHours(
+        0,
+        0,
+        0,
         0
     );
 
-    upcomingCount.textContent = upcoming.length;
-    expiredCount.textContent = expired.length;
+
+    // UPCOMING
+
+    const upcoming =
+        renewals.filter(item => {
+
+            if (!item.expiry_date) {
+                return false;
+            }
+
+
+            const expiry =
+                new Date(item.expiry_date);
+
+
+            const diff =
+                Math.ceil(
+                    (
+                        expiry - today
+                    ) /
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    )
+                );
+
+
+            return (
+                diff >= 0 &&
+                diff <= 30
+            );
+
+        });
+
+
+    // EXPIRED
+
+    const expired =
+        renewals.filter(item => {
+
+            if (!item.expiry_date) {
+                return false;
+            }
+
+
+            return (
+                new Date(item.expiry_date)
+                < today
+            );
+
+        });
+
+
+    // TOTAL COST
+
+    const cost =
+        renewals.reduce(
+            (sum, item) => {
+
+                return (
+                    sum +
+                    Number(
+                        item.cost || 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    upcomingCount.textContent =
+        upcoming.length;
+
+
+    expiredCount.textContent =
+        expired.length;
+
 
     totalCost.textContent =
-        "₹" + cost.toLocaleString("en-IN");
+        "₹" +
+        cost.toLocaleString(
+            "en-IN"
+        );
+
 }
+
+
+// ===============================
+// APPLY FILTERS
+// ===============================
 
 function applyFilters() {
 
-    const status = statusFilter.value;
-    const category = categoryFilter.value;
-    const priority = priorityFilter.value;
-    const search = searchInput.value.trim().toLowerCase();
+    const status =
+        statusFilter.value;
 
-    const filtered = renewals.filter(item => {
 
-        const matchesStatus =
-            !status || item.status === status;
+    const category =
+        categoryFilter.value;
 
-        const matchesCategory =
-            !category || item.category === category;
 
-        const matchesPriority =
-            !priority || item.priority === priority;
+    const priority =
+        priorityFilter.value;
 
-        const matchesSearch =
-            !search ||
-            String(item.name || "")
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    const filtered =
+        renewals.filter(item => {
+
+
+            const matchesStatus =
+                !status ||
+                item.status === status;
+
+
+            const matchesCategory =
+                !category ||
+                item.category === category;
+
+
+            const matchesPriority =
+                !priority ||
+                item.priority === priority;
+
+
+            const matchesSearch =
+                !search ||
+                String(
+                    item.name || ""
+                )
                 .toLowerCase()
                 .includes(search);
 
-        return (
-            matchesStatus &&
-            matchesCategory &&
-            matchesPriority &&
-            matchesSearch
-        );
-    });
+
+            return (
+                matchesStatus &&
+                matchesCategory &&
+                matchesPriority &&
+                matchesSearch
+            );
+
+        });
+
 
     renderTable(filtered);
+
 }
+
+
+// ===============================
+// RENDER TABLE
+// ===============================
 
 function renderTable(data) {
 
     reportTable.innerHTML = "";
 
+
     resultText.textContent =
-        `${data.length} renewal${data.length !== 1 ? "s" : ""} found`;
+        `${data.length} renewal${
+            data.length !== 1
+                ? "s"
+                : ""
+        } found`;
+
 
     if (data.length === 0) {
 
         reportTable.innerHTML = `
             <tr>
-                <td colspan="6" class="empty">
+                <td
+                    colspan="6"
+                    class="empty">
+
                     No renewal records found
+
                 </td>
             </tr>
         `;
 
         return;
+
     }
+
 
     data.forEach(item => {
 
-        const row = document.createElement("tr");
+        const row =
+            document.createElement("tr");
+
 
         row.innerHTML = `
-            <td>${escapeHTML(item.name)}</td>
 
             <td>
+                ${escapeHTML(
+                    item.name
+                )}
+            </td>
+
+            <td>
+
                 <span class="category-badge">
-                    ${escapeHTML(item.category || "-")}
+
+                    ${escapeHTML(
+                        item.category || "-"
+                    )}
+
                 </span>
-            </td>
 
-            <td>${formatDate(item.expiry_date)}</td>
-
-            <td>₹${Number(item.cost || 0).toLocaleString("en-IN")}</td>
-
-            <td>
-                <span class="priority ${String(item.priority || "").toLowerCase()}">
-                    ${escapeHTML(item.priority || "-")}
-                </span>
             </td>
 
             <td>
-                <span class="status ${getStatusClass(item.status)}">
-                    ${escapeHTML(item.status || "-")}
-                </span>
+                ${formatDate(
+                    item.expiry_date
+                )}
             </td>
+
+            <td>
+                ₹${Number(
+                    item.cost || 0
+                ).toLocaleString(
+                    "en-IN"
+                )}
+            </td>
+
+            <td>
+
+                <span
+                    class="priority ${
+                        String(
+                            item.priority || ""
+                        ).toLowerCase()
+                    }">
+
+                    ${escapeHTML(
+                        item.priority || "-"
+                    )}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <span
+                    class="status ${
+                        getStatusClass(
+                            item.status
+                        )
+                    }">
+
+                    ${escapeHTML(
+                        item.status || "-"
+                    )}
+
+                </span>
+
+            </td>
+
         `;
 
+
         reportTable.appendChild(row);
+
     });
+
 }
+
+
+// ===============================
+// STATUS CLASS
+// ===============================
 
 function getStatusClass(status) {
 
-    if (!status) return "";
+    if (!status) {
+        return "";
+    }
+
 
     return status
         .toLowerCase()
-        .replace(/\s+/g, "-");
+        .replace(
+            /\s+/g,
+            "-"
+        );
+
 }
+
+
+// ===============================
+// FORMAT DATE
+// ===============================
 
 function formatDate(date) {
 
-    if (!date) return "-";
+    if (!date) {
+        return "-";
+    }
 
-    return new Date(date).toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
+
+    return new Date(date)
+        .toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
 }
+
+
+// ===============================
+// ESCAPE HTML
+// ===============================
 
 function escapeHTML(value) {
 
     return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
-/* Filters */
 
-statusFilter.addEventListener("change", applyFilters);
-categoryFilter.addEventListener("change", applyFilters);
-priorityFilter.addEventListener("change", applyFilters);
-searchInput.addEventListener("input", applyFilters);
+// ===============================
+// FILTER EVENTS
+// ===============================
 
-/* Logout */
-
-document.getElementById("logoutBtn").addEventListener(
-    "click",
-    () => {
-        localStorage.clear();
-        window.location.href = "login.html";
-    }
+statusFilter.addEventListener(
+    "change",
+    applyFilters
 );
 
-/* User */
 
-const user = JSON.parse(
-    localStorage.getItem("user")
+categoryFilter.addEventListener(
+    "change",
+    applyFilters
 );
+
+
+priorityFilter.addEventListener(
+    "change",
+    applyFilters
+);
+
+
+searchInput.addEventListener(
+    "input",
+    applyFilters
+);
+
+
+// ===============================
+// LOGOUT
+// ===============================
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            localStorage.clear();
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
+
+// ===============================
+// USER INFO
+// ===============================
+
+const user =
+    JSON.parse(
+        localStorage.getItem(
+            "user"
+        )
+    );
+
 
 if (user) {
 
-    document.getElementById("userName").textContent =
-        user.name || "User";
+    document.getElementById(
+        "userName"
+    ).textContent =
+        user.name ||
+        user.full_name ||
+        "User";
 
-    document.getElementById("userRole").textContent =
-        user.role || "Employee";
 
-    document.getElementById("userAvatar").textContent =
-        (user.name || "U")
-            .charAt(0)
-            .toUpperCase();
+    document.getElementById(
+        "userRole"
+    ).textContent =
+        user.role ||
+        "Employee";
+
+
+    document.getElementById(
+        "userAvatar"
+    ).textContent =
+        (
+            user.name ||
+            user.full_name ||
+            "U"
+        )
+        .charAt(0)
+        .toUpperCase();
+
+
+    // ADMIN ONLY LINKS
 
     if (user.role !== "Admin") {
-        document.getElementById("usersLink").style.display = "none";
-        document.getElementById("auditLink").style.display = "none";
+
+        document.getElementById(
+            "usersLink"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "auditLink"
+        ).style.display =
+            "none";
+
     }
+
 }
 
-/* Theme */
+
+// ===============================
+// THEME TOGGLE
+// ===============================
 
 const themeToggle =
-    document.getElementById("themeToggle");
+    document.getElementById(
+        "themeToggle"
+    );
+
 
 const savedTheme =
-    localStorage.getItem("theme");
+    localStorage.getItem(
+        "theme"
+    );
+
 
 if (savedTheme === "light") {
 
-    document.body.classList.add("light-theme");
-    themeToggle.textContent = "🌙";
-}
-
-themeToggle.addEventListener("click", () => {
-
-    document.body.classList.toggle("light-theme");
-
-    const isLight =
-        document.body.classList.contains("light-theme");
-
-    localStorage.setItem(
-        "theme",
-        isLight ? "light" : "dark"
+    document.body.classList.add(
+        "light-theme"
     );
 
-    themeToggle.textContent =
-        isLight ? "🌙" : "☀️";
-});
 
-/* Start */
+    themeToggle.textContent =
+        "🌙";
+
+}
+
+
+themeToggle.addEventListener(
+    "click",
+    () => {
+
+        document.body.classList.toggle(
+            "light-theme"
+        );
+
+
+        const isLight =
+            document.body.classList.contains(
+                "light-theme"
+            );
+
+
+        localStorage.setItem(
+            "theme",
+            isLight
+                ? "light"
+                : "dark"
+        );
+
+
+        themeToggle.textContent =
+            isLight
+                ? "🌙"
+                : "☀️";
+
+    }
+);
+
+
+// ===============================
+// DOWNLOAD PDF
+// ===============================
+
+document
+    .getElementById("downloadPDF")
+    .addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                const button =
+                    document.getElementById(
+                        "downloadPDF"
+                    );
+
+
+                button.disabled =
+                    true;
+
+                button.textContent =
+                    "Generating PDF...";
+
+
+                const response =
+                    await fetch(
+                        "http://localhost:5000/api/reports/pdf",
+                        {
+                            method: "GET",
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    let message =
+                        "PDF download failed";
+
+                    try {
+
+                        const data =
+                            await response.json();
+
+                        message =
+                            data.message ||
+                            message;
+
+                    } catch (e) {}
+
+                    throw new Error(
+                        message
+                    );
+
+                }
+
+
+                const blob =
+                    await response.blob();
+
+
+                const url =
+                    window.URL.createObjectURL(
+                        blob
+                    );
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                link.href = url;
+
+                link.download =
+                    "RenewGuard_Report.pdf";
+
+
+                document.body.appendChild(
+                    link
+                );
+
+
+                link.click();
+
+
+                link.remove();
+
+
+                window.URL.revokeObjectURL(
+                    url
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "PDF DOWNLOAD ERROR:",
+                    error
+                );
+
+
+                alert(
+                    error.message ||
+                    "PDF download failed"
+                );
+
+
+            } finally {
+
+                const button =
+                    document.getElementById(
+                        "downloadPDF"
+                    );
+
+
+                button.disabled =
+                    false;
+
+
+                button.textContent =
+                    "📄 Download PDF";
+
+            }
+
+        }
+    );
+
+
+// ===============================
+// DOWNLOAD EXCEL
+// ===============================
+
+document
+    .getElementById("downloadExcel")
+    .addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                const button =
+                    document.getElementById(
+                        "downloadExcel"
+                    );
+
+
+                button.disabled =
+                    true;
+
+
+                button.textContent =
+                    "Generating Excel...";
+
+
+                const response =
+                    await fetch(
+                        "http://localhost:5000/api/reports/excel",
+                        {
+                            method: "GET",
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    let message =
+                        "Excel download failed";
+
+                    try {
+
+                        const data =
+                            await response.json();
+
+                        message =
+                            data.message ||
+                            message;
+
+                    } catch (e) {}
+
+                    throw new Error(
+                        message
+                    );
+
+                }
+
+
+                const blob =
+                    await response.blob();
+
+
+                const url =
+                    window.URL.createObjectURL(
+                        blob
+                    );
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                link.href = url;
+
+
+                link.download =
+                    "RenewGuard_Report.xlsx";
+
+
+                document.body.appendChild(
+                    link
+                );
+
+
+                link.click();
+
+
+                link.remove();
+
+
+                window.URL.revokeObjectURL(
+                    url
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "EXCEL DOWNLOAD ERROR:",
+                    error
+                );
+
+
+                alert(
+                    error.message ||
+                    "Excel download failed"
+                );
+
+
+            } finally {
+
+                const button =
+                    document.getElementById(
+                        "downloadExcel"
+                    );
+
+
+                button.disabled =
+                    false;
+
+
+                button.textContent =
+                    "📊 Download Excel";
+
+            }
+
+        }
+    );
+
+
+// ===============================
+// LOAD
+// ===============================
 
 loadReports();
