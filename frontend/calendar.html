@@ -11,34 +11,196 @@
 
 <body>
 
-<div class="calendar-page">
+<div class="layout">
 
-    <h1>📅 Renewal Calendar</h1>
-    <p>View your renewal dates</p>
+    <!-- Sidebar -->
+    <aside class="sidebar">
 
-    <div class="calendar-header">
-        <button id="prevMonth">←</button>
-        <h2 id="monthYear"></h2>
-        <button id="nextMonth">→</button>
-    </div>
+        <div class="brand">
+            <div class="brand-icon">R</div>
 
-    <div class="weekdays">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-    </div>
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
+        </div>
 
-    <div id="calendar" class="calendar"></div>
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="renewals.html">Renewals</a>
+            <a href="calendar.html" class="active">Calendar</a>
+            <a href="history.html">History</a>
+            <a href="documents.html">Documents</a>
+            <a href="reports.html">Reports</a>
+            <a href="reminders.html">Reminders</a>
 
-    <button onclick="window.location.href='dashboard.html'">
-        ← Back to Dashboard
-    </button>
+            <!-- Admin Only -->
+            <a href="audit-logs.html" id="auditLink">Audit Logs</a>
+
+            <a href="profile.html">My Profile</a>
+
+            <!-- Admin Only -->
+            <a href="users.html" id="usersLink">User Management</a>
+        </nav>
+
+        <button class="logout" id="logoutBtn">
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div>
+                <h1>Renewal Calendar</h1>
+                <p>View and track your renewal dates</p>
+            </div>
+
+            <div class="topbar-actions">
+
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    title="Toggle Theme">
+                    ☀️
+                </button>
+
+                <div class="user-info">
+
+                    <div class="avatar" id="userAvatar">
+                        U
+                    </div>
+
+                    <div>
+                        <strong id="userName">User</strong>
+                        <small id="userRole">Employee</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Calendar -->
+        <section class="calendar-container">
+
+            <div class="calendar-header">
+
+                <button id="prevMonth">
+                    ←
+                </button>
+
+                <h2 id="monthYear"></h2>
+
+                <button id="nextMonth">
+                    →
+                </button>
+
+            </div>
+
+
+            <div class="weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+
+            <div id="calendar" class="calendar"></div>
+
+        </section>
+
+    </main>
 
 </div>
+
+
+<!-- Role Control -->
+<script>
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const auditLink = document.getElementById("auditLink");
+    const usersLink = document.getElementById("usersLink");
+
+    if (!user || user.role !== "Admin") {
+
+        if (auditLink) {
+            auditLink.style.display = "none";
+        }
+
+        if (usersLink) {
+            usersLink.style.display = "none";
+        }
+    }
+
+
+    /* User Details */
+
+    if (user) {
+
+        document.getElementById("userName").textContent =
+            user.name || user.full_name || "User";
+
+        document.getElementById("userRole").textContent =
+            user.role || "Employee";
+
+        const name =
+            user.name || user.full_name || "User";
+
+        document.getElementById("userAvatar").textContent =
+            name.charAt(0).toUpperCase();
+    }
+
+
+    /* Theme */
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    const savedTheme =
+        localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add("light-theme");
+        themeToggle.textContent = "🌙";
+
+    } else {
+
+        themeToggle.textContent = "☀️";
+    }
+
+
+    themeToggle.addEventListener("click", () => {
+
+        document.body.classList.toggle("light-theme");
+
+        const isLight =
+            document.body.classList.contains("light-theme");
+
+        localStorage.setItem(
+            "theme",
+            isLight ? "light" : "dark"
+        );
+
+        themeToggle.textContent =
+            isLight ? "🌙" : "☀️";
+    });
+
+</script>
+
 
 <script src="js/calendar.js"></script>
 
