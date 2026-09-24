@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Management - RenewGuard</title>
+
+    <link rel="stylesheet" href="css/users.css">
+</head>
+
+<body>
+
+<div class="users-page">
+
+    <div class="users-header">
+
+        <div>
+            <h1>User Management</h1>
+            <p>Manage RenewGuard users and roles</p>
+        </div>
+
+        <button onclick="window.location.href='dashboard.html'">
+            ← Dashboard
+        </button>
+
+    </div>
+
+
+    <div class="users-card">
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Organization</th>
+                        <th>Department</th>
+                        <th>Employee ID</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="usersTable">
+
+                    <tr>
+                        <td colspan="8">
+                            Loading users...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/users.js"></script>
+
+</body>
+
+</html>
