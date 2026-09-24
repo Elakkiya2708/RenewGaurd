@@ -115,7 +115,7 @@ body {
 nav {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
     flex: 1;
 }
 
@@ -125,9 +125,7 @@ nav a {
     text-decoration: none;
     color: var(--muted);
     font-size: 14px;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-    flex-shrink: 0;
+    transition: 0.2s;
 }
 
 nav a:hover {
@@ -135,10 +133,11 @@ nav a:hover {
     color: var(--gold-hover);
 }
 
+/* History page-la irukura adhe exact active style & border indicator */
 nav a.active {
     background: rgba(212, 175, 55, 0.12);
     color: var(--gold);
-    border-color: rgba(212, 175, 55, 0.25);
+    border-left: 3px solid var(--gold);
 }
 
 /* =========================
