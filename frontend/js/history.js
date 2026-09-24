@@ -7,11 +7,14 @@ if (!token) {
 const historyTable = document.getElementById("historyTable");
 
 async function loadHistory() {
-
     try {
-
         const response = await fetch(
-            "http://localhost:5000/api/history"
+            "http://localhost:5000/api/history",
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
         );
 
         const data = await response.json();
@@ -20,65 +23,35 @@ async function loadHistory() {
             throw new Error(data.message || "Failed to load history");
         }
 
-        if (data.length === 0) {
-
+        if (!Array.isArray(data) || data.length === 0) {
             historyTable.innerHTML = `
                 <tr>
-                    <td colspan="6">
-                        No renewal history found.
-                    </td>
+                    <td colspan="6">No history found.</td>
                 </tr>
             `;
-
             return;
         }
 
-        historyTable.innerHTML = data.map(item => {
-
-            const statusClass =
-                (item.new_status || "")
-                .toLowerCase()
-                .replace(" ", "-");
-
-            return `
-                <tr>
-
-                    <td>#${item.renewal_id}</td>
-
-                    <td>${item.action || "-"}</td>
-
-                    <td>
-                        ${item.old_status || "-"}
-                    </td>
-
-                    <td>
-                        <span class="status ${statusClass}">
-                            ${item.new_status || "-"}
-                        </span>
-                    </td>
-
-                    <td>${item.remarks || "-"}</td>
-
-                    <td>
-                        ${item.created_at
-                            ? new Date(item.created_at).toLocaleDateString()
-                            : "-"}
-                    </td>
-
-                </tr>
-            `;
-
-        }).join("");
+        historyTable.innerHTML = data.map(item => `
+            <tr>
+                <td>${item.renewal_id || "-"}</td>
+                <td>${item.action || "-"}</td>
+                <td>${item.old_status || "-"}</td>
+                <td>${item.new_status || "-"}</td>
+                <td>${item.remarks || "-"}</td>
+                <td>${item.created_at
+                    ? new Date(item.created_at).toLocaleDateString()
+                    : "-"
+                }</td>
+            </tr>
+        `).join("");
 
     } catch (error) {
-
-        console.error("History Error:", error);
+        console.error("HISTORY ERROR:", error);
 
         historyTable.innerHTML = `
             <tr>
-                <td colspan="6">
-                    Failed to load history.
-                </td>
+                <td colspan="6">Failed to load history.</td>
             </tr>
         `;
     }
