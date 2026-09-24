@@ -166,3 +166,45 @@ tr:hover td {
         font-size: 23px;
     }
 }
+
+.category-card {
+    margin-bottom: 20px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.category-item {
+    padding: 12px;
+    background: #f8fafc;
+    border: 1px solid #e5eaf1;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-item strong {
+    display: block;
+    font-size: 12px;
+}
+
+.category-item span {
+    display: block;
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 10px;
+}
+
+.category-item b {
+    font-size: 12px;
+}
+
+@media (max-width: 800px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
