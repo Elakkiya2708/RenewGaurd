@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+.users-page {
+    width: 92%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.users-header h1 {
+    margin: 0;
+    font-size: 27px;
+}
+
+.users-header p {
+    margin: 5px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.users-header button {
+    border: none;
+    background: #172033;
+    color: white;
+    padding: 9px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.users-header button:hover {
+    background: #0f172a;
+}
+
+.users-card {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.07);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: left;
+    padding: 11px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+td {
+    padding: 11px;
+    font-size: 12px;
+    border-bottom: 1px solid #eef2f7;
+}
+
+tr:hover td {
+    background: #f8fafc;
+}
+
+.role {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.role-admin {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.role-employee {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.action-btn {
+    border: none;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-size: 10px;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.role-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.role-btn:hover {
+    background: #1d4ed8;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.delete-btn:hover {
+    background: #fecaca;
+}
+
+@media (max-width: 700px) {
+
+    .users-page {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    .users-header {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .users-header h1 {
+        font-size: 22px;
+    }
+
+    .users-card {
+        padding: 10px;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        font-size: 10px;
+    }
+
+}
