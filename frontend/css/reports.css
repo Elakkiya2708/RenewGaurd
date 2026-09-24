@@ -617,3 +617,57 @@ body.light-theme nav a.active {
         font-size: 13px;
     }
 }
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.report-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.download-btn {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.download-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-1px);
+}
+
+.pdf-btn:hover {
+    border-color: var(--danger);
+}
+
+.excel-btn:hover {
+    border-color: var(--success);
+}
+
+@media (max-width: 700px) {
+
+    .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .report-actions {
+        width: 100%;
+    }
+
+    .download-btn {
+        flex: 1;
+    }
+}
