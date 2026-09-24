@@ -1,6 +1,6 @@
 const supabase = require("../config/database");
 const { createAuditLog } = require("../services/auditService");
-
+const bcrypt = require("bcryptjs");
 
 // GET ALL USERS
 exports.getUsers = async (req, res) => {
