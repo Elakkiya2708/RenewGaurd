@@ -27,6 +27,12 @@ async function loadReminders() {
                     <p>Expiry Date: ${item.renewals?.expiry_date || "-"}</p>
                 </div>
                 <span class="badge">${item.status}</span>
+
+${item.status === "Pending" ? `
+    <button onclick="completeReminder(${item.id})">
+        Complete
+    </button>
+` : ""}
             </div>
         `).join("");
 
