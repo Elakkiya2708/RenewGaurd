@@ -1,4 +1,6 @@
 const supabase = require("../config/database");
+const { createAuditLog } = require("../services/auditService");
+
 
 // GET ALL USERS
 exports.getUsers = async (req, res) => {
@@ -38,6 +40,18 @@ exports.updateUserRole = async (req, res) => {
             });
         }
 
+        const { data: oldUser, error: oldError } = await supabase
+            .from("users")
+            .select("id, full_name, email, role")
+            .eq("id", id)
+            .single();
+
+        if (oldError) {
+            return res.status(400).json({
+                message: oldError.message
+            });
+        }
+
         const { data, error } = await supabase
             .from("users")
             .update({ role })
@@ -50,6 +64,12 @@ exports.updateUserRole = async (req, res) => {
                 message: error.message
             });
         }
+
+        await createAuditLog(
+            req.user.id,
+            "User Role Updated",
+            `Changed ${oldUser.email} role from ${oldUser.role} to ${role}`
+        );
 
         res.json({
             message: "User role updated successfully",
@@ -71,6 +91,18 @@ exports.deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
 
+        const { data: user, error: findError } = await supabase
+            .from("users")
+            .select("email, full_name")
+            .eq("id", id)
+            .single();
+
+        if (findError) {
+            return res.status(400).json({
+                message: findError.message
+            });
+        }
+
         const { error } = await supabase
             .from("users")
             .delete()
@@ -81,6 +113,12 @@ exports.deleteUser = async (req, res) => {
                 message: error.message
             });
         }
+
+        await createAuditLog(
+            req.user.id,
+            "User Deleted",
+            `Deleted user: ${user.email}`
+        );
 
         res.json({
             message: "User deleted successfully"
@@ -94,6 +132,7 @@ exports.deleteUser = async (req, res) => {
         });
     }
 };
+
 
 // GET MY PROFILE
 exports.getProfile = async (req, res) => {
