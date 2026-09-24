@@ -6,11 +6,20 @@ if (!token) {
 
 const usersTable = document.getElementById("usersTable");
 
+const headers = {
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+};
+
+
 async function loadUsers() {
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/users"
+            "http://localhost:5000/api/users",
+            {
+                headers: headers
+            }
         );
 
         const users = await response.json();
@@ -24,9 +33,7 @@ async function loadUsers() {
         if (users.length === 0) {
             usersTable.innerHTML = `
                 <tr>
-                    <td colspan="8">
-                        No users found.
-                    </td>
+                    <td colspan="8">No users found.</td>
                 </tr>
             `;
             return;
@@ -34,22 +41,15 @@ async function loadUsers() {
 
         usersTable.innerHTML = users.map(user => {
 
-            const roleClass =
-                user.role.toLowerCase();
+            const roleClass = user.role.toLowerCase();
 
             return `
                 <tr>
-
                     <td>${user.id}</td>
-
                     <td>${user.full_name || "-"}</td>
-
                     <td>${user.email || "-"}</td>
-
                     <td>${user.organization || "-"}</td>
-
                     <td>${user.department || "-"}</td>
-
                     <td>${user.employee_id || "-"}</td>
 
                     <td>
@@ -59,7 +59,6 @@ async function loadUsers() {
                     </td>
 
                     <td>
-
                         <button
                             class="action-btn role-btn"
                             onclick="changeRole(${user.id}, '${user.role}')">
@@ -71,9 +70,7 @@ async function loadUsers() {
                             onclick="deleteUser(${user.id}, '${user.full_name}')">
                             Delete
                         </button>
-
                     </td>
-
                 </tr>
             `;
 
@@ -86,7 +83,7 @@ async function loadUsers() {
         usersTable.innerHTML = `
             <tr>
                 <td colspan="8">
-                    Failed to load users.
+                    ${error.message}
                 </td>
             </tr>
         `;
@@ -101,11 +98,9 @@ async function changeRole(id, currentRole) {
             ? "Employee"
             : "Admin";
 
-    const confirmChange = confirm(
+    if (!confirm(
         `Change role from ${currentRole} to ${newRole}?`
-    );
-
-    if (!confirmChange) {
+    )) {
         return;
     }
 
@@ -115,9 +110,7 @@ async function changeRole(id, currentRole) {
             `http://localhost:5000/api/users/${id}/role`,
             {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: headers,
                 body: JSON.stringify({
                     role: newRole
                 })
@@ -139,7 +132,6 @@ async function changeRole(id, currentRole) {
     } catch (error) {
 
         console.error(error);
-
         alert(error.message);
     }
 }
@@ -147,11 +139,7 @@ async function changeRole(id, currentRole) {
 
 async function deleteUser(id, name) {
 
-    const confirmDelete = confirm(
-        `Delete user "${name}"?`
-    );
-
-    if (!confirmDelete) {
+    if (!confirm(`Delete user "${name}"?`)) {
         return;
     }
 
@@ -160,7 +148,8 @@ async function deleteUser(id, name) {
         const response = await fetch(
             `http://localhost:5000/api/users/${id}`,
             {
-                method: "DELETE"
+                method: "DELETE",
+                headers: headers
             }
         );
 
@@ -179,7 +168,6 @@ async function deleteUser(id, name) {
     } catch (error) {
 
         console.error(error);
-
         alert(error.message);
     }
 }
