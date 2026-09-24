@@ -4,146 +4,319 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg: #0A0A0A;
+    --card: #181818;
+    --input: #101010;
+    --border: #2A2A2A;
+
+    --gold: #D4AF37;
+    --gold-hover: #F1C75B;
+
+    --text: #F5F5F5;
+    --muted: #A3A3A3;
+
+    --success: #22C55E;
+    --danger: #EF4444;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
 body {
     font-family: "Segoe UI", Arial, sans-serif;
-    background: #0b1120;
-    color: #fff;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
 }
 
-.login-container {
+
+/* =========================
+   LOGIN PAGE
+========================= */
+
+.login-page {
     min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     padding: 20px;
 
     background:
-        radial-gradient(circle at 20% 20%, #172554 0, transparent 35%),
-        radial-gradient(circle at 80% 80%, #0f766e 0, transparent 30%),
-        #0b1120;
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(212, 175, 55, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(212, 175, 55, 0.05),
+            transparent 30%
+        ),
+        var(--bg);
 }
 
-.login-box {
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card {
     width: 430px;
-    padding: 42px;
-    background: rgba(15, 23, 42, 0.92);
-    border: 1px solid #334155;
-    border-radius: 18px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(12px);
+
+    padding: 40px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.45);
 }
+
+
+/* =========================
+   LOGO
+========================= */
 
 .logo {
-    text-align: center;
-    margin-bottom: 28px;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-bottom: 32px;
 }
 
 .logo-icon {
-    width: 58px;
-    height: 58px;
-    margin: 0 auto 15px;
+    width: 48px;
+    height: 48px;
+
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: #2563eb;
-    border-radius: 14px;
-    font-size: 27px;
-    font-weight: bold;
+    justify-content: center;
+
+    background: var(--gold);
+
+    color: #111;
+
+    border-radius: 10px;
+
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .logo h1 {
-    font-size: 30px;
-    letter-spacing: -0.5px;
+    font-size: 24px;
+
+    margin-bottom: 3px;
 }
 
-.logo p {
-    margin-top: 7px;
-    color: #94a3b8;
-    font-size: 14px;
+.logo span {
+    color: var(--muted);
+
+    font-size: 11px;
 }
+
+
+/* =========================
+   LOGIN HEADING
+========================= */
+
+.login-heading {
+    margin-bottom: 25px;
+}
+
+.login-heading h2 {
+    font-size: 22px;
+
+    margin-bottom: 6px;
+}
+
+.login-heading p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   FORM
+========================= */
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
-label {
+.form-group label {
     display: block;
-    margin-bottom: 8px;
-    color: #cbd5e1;
-    font-size: 14px;
+
+    margin-bottom: 7px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
     font-weight: 500;
 }
 
-input {
+.form-group input {
     width: 100%;
-    padding: 13px 15px;
-    background: #0f172a;
-    color: #fff;
-    border: 1px solid #334155;
-    border-radius: 9px;
+
+    padding: 12px 13px;
+
+    background: var(--input);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
     outline: none;
+
+    font-family: inherit;
+
     font-size: 14px;
+
     transition: 0.2s;
 }
 
-input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+.form-group input::placeholder {
+    color: #666;
 }
 
-input::placeholder {
-    color: #64748b;
+.form-group input:focus {
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 2px rgba(212, 175, 55, 0.08);
 }
 
-button {
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-btn {
     width: 100%;
-    padding: 14px;
-    margin-top: 8px;
+
+    padding: 12px;
+
+    margin-top: 5px;
+
     border: none;
-    border-radius: 9px;
-    background: #2563eb;
-    color: white;
-    font-size: 15px;
+
+    border-radius: 8px;
+
+    background: var(--gold);
+
+    color: #111;
+
+    font-size: 14px;
+
     font-weight: 600;
+
     cursor: pointer;
+
     transition: 0.2s;
 }
 
-button:hover {
-    background: #1d4ed8;
+.login-btn:hover {
+    background: var(--gold-hover);
+
     transform: translateY(-1px);
 }
 
-#message {
-    min-height: 20px;
-    margin-top: 15px;
-    text-align: center;
-    font-size: 14px;
+.login-btn:active {
+    transform: translateY(0);
 }
 
-.register-link {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #334155;
+
+/* =========================
+   MESSAGE
+========================= */
+
+#message {
+    min-height: 20px;
+
+    margin-top: 14px;
+
     text-align: center;
-    color: #94a3b8;
-    font-size: 14px;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   REGISTER
+========================= */
+
+.register-link {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 13px;
 }
 
 .register-link a {
-    color: #60a5fa;
+    color: var(--gold);
+
     text-decoration: none;
+
     font-weight: 600;
 }
 
 .register-link a:hover {
+    color: var(--gold-hover);
+
     text-decoration: underline;
 }
 
+
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media (max-width: 500px) {
-    .login-box {
+
+    .login-page {
+        padding: 15px;
+    }
+
+    .login-card {
         width: 100%;
+
         padding: 30px 22px;
     }
+
+    .logo h1 {
+        font-size: 22px;
+    }
+
+    .login-heading h2 {
+        font-size: 20px;
+    }
+
 }
