@@ -416,9 +416,12 @@ body.light-theme {
     --bg: #F7F7F5;
     --sidebar: #FFFFFF;
     --card: #FFFFFF;
+    --input: #FAFAFA;
     --border: #E5E5E5;
+
     --gold: #B8860B;
     --gold-hover: #D4A017;
+
     --text: #171717;
     --muted: #666666;
 }
@@ -426,7 +429,7 @@ body.light-theme {
 body.light-theme nav a.active {
     background: rgba(184, 134, 11, 0.10);
     color: var(--gold);
-    border-left: 4px solid var(--gold);
+    border-left: 3px solid var(--gold);
 }
 
 body.light-theme .day {
@@ -438,6 +441,7 @@ body.light-theme .renewal {
     color: #8A6508;
     border-left-color: var(--gold);
 }
+
 /* =========================
    RESPONSIVE
 ========================= */
