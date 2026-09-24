@@ -137,8 +137,8 @@ nav a.active {
     background: rgba(212, 175, 55, 0.12);
     color: var(--gold);
     border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.12);
 }
-
 /* =========================
    LOGOUT
 ========================= */
