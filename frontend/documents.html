@@ -11,148 +11,434 @@
 </head>
 
 <body>
-<div id="successNotification" class="success-notification">
-    Document uploaded successfully!
-</div>
-    <div class="documents-page">
 
-        <!-- Header -->
-        <div class="document-header">
+<div class="layout">
 
-            <div class="brand">
-                RenewGuard
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                R
             </div>
 
-            <h1>Document Management</h1>
-
-            <p>
-                Upload and manage documents related to your renewals
-            </p>
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
 
         </div>
 
 
-        <!-- Upload Card -->
-        <div class="upload-card">
+        <nav>
 
-            <div class="upload-icon">
-                📄
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="renewals.html">
+                Renewals
+            </a>
+
+            <a href="reminders.html">
+                Reminders
+            </a>
+
+            <a href="calendar.html">
+                Calendar
+            </a>
+
+            <a href="history.html">
+                History
+            </a>
+
+            <a href="documents.html" class="active">
+                Documents
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <a href="users.html" id="usersLink">
+                User Management
+            </a>
+
+            <a href="audit-logs.html" id="auditLink">
+                Audit Logs
+            </a>
+
+        </nav>
+
+
+        <button
+            class="logout"
+            id="logoutBtn">
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    Document Management
+                </h1>
+
+                <p>
+                    Upload and manage documents related to your renewals
+                </p>
+
             </div>
 
-            <h2>Upload Document</h2>
 
-            <p class="card-description">
-                Attach important documents to your renewal record
-            </p>
+            <div class="topbar-actions">
 
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    title="Toggle Theme">
 
-            <!-- Renewal Selection -->
-            <div class="form-group">
+                    ☀️
 
-                <label for="renewalSelect">
-                    Select Renewal
-                </label>
-
-                <select id="renewalSelect">
-
-                    <option value="">
-                        Select a renewal
-                    </option>
-
-                </select>
-
-            </div>
+                </button>
 
 
-            <!-- File Selection -->
-            <div class="form-group">
+                <div class="user-info">
 
-                <label for="fileInput">
-                    Select Document
-                </label>
+                    <div
+                        class="avatar"
+                        id="userAvatar">
 
-                <div class="file-box">
+                        U
 
-                    <input
-                        type="file"
-                        id="fileInput"
-                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                    >
+                    </div>
 
-                    <span id="fileName">
-                        Choose a file
-                    </span>
+                    <div>
+
+                        <strong id="userName">
+                            User
+                        </strong>
+
+                        <small id="userRole">
+                            Employee
+                        </small>
+
+                    </div>
 
                 </div>
 
-                <small>
-                    PDF, DOC, DOCX, JPG or PNG • Maximum 10 MB
-                </small>
+            </div>
+
+        </div>
+
+
+
+        <!-- SUMMARY -->
+
+        <div class="summary-row">
+
+            <div class="summary-card">
+
+                <span>
+                    Total Documents
+                </span>
+
+                <strong id="documentCount">
+                    0
+                </strong>
 
             </div>
 
 
+            <div class="summary-card">
+
+                <span>
+                    PDF Documents
+                </span>
+
+                <strong id="pdfCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>
+                    Image Documents
+                </span>
+
+                <strong id="imageCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>
+                    Storage Used
+                </span>
+
+                <strong id="storageUsed">
+                    0 MB
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- UPLOAD CARD -->
+
+        <div class="upload-card">
+
+
+            <div class="section-title">
+
+                <div class="upload-icon">
+                    📄
+                </div>
+
+                <div>
+
+                    <h2>
+                        Upload Document
+                    </h2>
+
+                    <p>
+                        Attach important documents to a renewal record
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="form-grid">
+
+
+                <!-- Renewal -->
+
+                <div class="form-group">
+
+                    <label for="renewalSelect">
+                        Select Renewal
+                    </label>
+
+                    <select id="renewalSelect">
+
+                        <option value="">
+                            Select a renewal
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- File -->
+
+                <div class="form-group">
+
+                    <label for="fileInput">
+                        Select Document
+                    </label>
+
+                    <div class="file-box">
+
+                        <input
+                            type="file"
+                            id="fileInput"
+                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                        >
+
+                        <span id="fileName">
+                            Choose a file
+                        </span>
+
+                    </div>
+
+                    <small>
+                        PDF, DOC, DOCX, JPG or PNG • Maximum 10 MB
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
             <!-- Upload Button -->
-            <button id="uploadBtn" type="button">
+
+            <button
+                id="uploadBtn"
+                type="button"
+                class="upload-btn">
+
                 Upload Document
+
             </button>
-            <div id="successNotification" class="success-notification">
-    Document uploaded successfully!
-</div>
 
 
             <!-- Message -->
+
             <p id="message"></p>
 
         </div>
 
 
-        <!-- Back Button -->
-        <button
-            class="back-btn"
-            type="button"
-            onclick="window.location.href='dashboard.html'"
-        >
-            ← Back to Dashboard
-        </button>
 
-    </div>
+        <!-- DOCUMENT LIST -->
+
+        <div class="documents-card">
 
 
-    <!-- SUCCESS NOTIFICATION -->
-<div id="successNotification" class="success-notification">
-    <span class="success-icon">✓</span>
-    <span>Document uploaded successfully!</span>
+            <div class="documents-header">
+
+                <div>
+
+                    <h2>
+                        Uploaded Documents
+                    </h2>
+
+                    <p id="resultText">
+                        Loading documents...
+                    </p>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search documents..."
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Document
+                            </th>
+
+                            <th>
+                                Renewal
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Size
+                            </th>
+
+                            <th>
+                                Uploaded
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="documentsTable">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="loading">
+
+                                Loading documents...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
 </div>
 
-    <!-- JavaScript -->
-    <script src="js/documents.js"></script>
 
 
-    <!-- File Name -->
-    <script>
+<!-- SUCCESS NOTIFICATION -->
 
-        document
-            .getElementById("fileInput")
-            .addEventListener("change", function () {
+<div
+    id="successNotification"
+    class="success-notification">
 
-                const fileName =
-                    document.getElementById("fileName");
+    <span class="success-icon">
+        ✓
+    </span>
 
-                if (this.files.length > 0) {
+    <span>
+        Document uploaded successfully!
+    </span>
 
-                    fileName.textContent =
-                        this.files[0].name;
+</div>
 
-                } else {
 
-                    fileName.textContent =
-                        "Choose a file";
-                }
 
-            });
-
-    </script>
+<script src="js/documents.js"></script>
 
 </body>
 
