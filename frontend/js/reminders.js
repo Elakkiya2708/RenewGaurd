@@ -1,151 +1,754 @@
-const token = localStorage.getItem("token");
-
-if (!token) {
-    window.location.href = "login.html";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-const reminderList =
-    document.getElementById("reminderList");
+/* =========================
+   THEME VARIABLES
+========================= */
 
-const headers = {
-    "Authorization": `Bearer ${token}`,
-    "Content-Type": "application/json"
-};
+:root {
+    --bg: #0A0A0A;
+    --sidebar: #111111;
+    --card: #181818;
+    --input: #101010;
+    --border: #2A2A2A;
 
+    --gold: #D4AF37;
+    --gold-hover: #F1C75B;
 
-// Load Reminders
-async function loadReminders() {
+    --text: #F5F5F5;
+    --muted: #A3A3A3;
 
-    try {
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --blue: #60A5FA;
+}
 
-        const response = await fetch(
-            "http://localhost:5000/api/reminders",
-            {
-                headers: headers
-            }
-        );
+/* =========================
+   BODY
+========================= */
 
-        console.log("STATUS:", response.status);
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
 
-        const data = await response.json();
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
 
-        console.log("API RESPONSE:", data);
+/* =========================
+   SIDEBAR
+========================= */
 
-        if (!response.ok) {
-            throw new Error(
-                data.message || "Failed to load reminders"
-            );
-        }
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    padding: 25px 16px;
 
-        if (!Array.isArray(data) || data.length === 0) {
+    display: flex;
+    flex-direction: column;
 
-            reminderList.innerHTML =
-                "<p>No reminders found.</p>";
+    overflow-y: auto;
+    flex-shrink: 0;
+}
 
-            return;
-        }
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
 
-        reminderList.innerHTML = data.map(item => `
+.sidebar::-webkit-scrollbar-track {
+    background: var(--sidebar);
+}
 
-            <div class="reminder-card">
+.sidebar::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+}
 
-                <div>
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
 
-                    <h3>
-                        ${item.renewals?.name || "Renewal"}
-                    </h3>
+/* =========================
+   BRAND
+========================= */
 
-                    <p>
-                        Reminder Date:
-                        ${item.reminder_date}
-                    </p>
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-                    <p>
-                        ${item.reminder_days || "-"}
-                        days before expiry
-                    </p>
+    padding: 5px 10px 30px;
 
-                    <p>
-                        Expiry Date:
-                        ${item.renewals?.expiry_date || "-"}
-                    </p>
+    flex-shrink: 0;
+}
 
-                </div>
+.brand-icon {
+    width: 42px;
+    height: 42px;
 
-                <span class="badge">
-                    ${item.status}
-                </span>
+    background: var(--gold);
+    color: #111;
 
-                ${
-                    item.status === "Pending"
-                    ? `
-                        <button
-                            onclick="completeReminder(${item.id})">
-                            Complete
-                        </button>
-                    `
-                    : ""
-                }
+    border-radius: 10px;
 
-            </div>
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        `).join("");
+    font-weight: 800;
+    font-size: 20px;
 
-    } catch (error) {
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.18);
+}
 
-        console.error(
-            "REMINDER ERROR:",
-            error
-        );
+.brand h2 {
+    font-size: 18px;
+    color: var(--text);
+}
 
-        reminderList.innerHTML =
-            `<p>${error.message || "Failed to load reminders."}</p>`;
+.brand span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    flex: 1;
+}
+
+nav a {
+    padding: 12px 14px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    border: 1px solid transparent;
+
+    transition: all 0.2s ease;
+}
+
+nav a:hover {
+    background: rgba(212, 175, 55, 0.08);
+    color: var(--gold-hover);
+}
+
+nav a.active {
+    background: rgba(212, 175, 55, 0.12);
+
+    color: var(--gold);
+
+    border-color: rgba(212, 175, 55, 0.25);
+
+    box-shadow:
+        0 0 12px rgba(212, 175, 55, 0.12);
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.logout {
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+.logout:hover {
+    background: rgba(239, 68, 68, 0.12);
+
+    border-color: var(--danger);
+
+    color: white;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 30px;
+
+    overflow-x: hidden;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.topbar h1 {
+    font-size: 28px;
+
+    color: var(--text);
+}
+
+.topbar p {
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+/* =========================
+   TOPBAR ACTIONS
+========================= */
+
+.topbar-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+}
+
+/* =========================
+   THEME TOGGLE
+========================= */
+
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+
+    color: var(--gold);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.theme-toggle:hover {
+    border-color: var(--gold);
+
+    background: rgba(212, 175, 55, 0.1);
+}
+
+/* =========================
+   USER
+========================= */
+
+.user-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.user-info strong {
+    color: var(--text);
+
+    font-size: 14px;
+}
+
+.user-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: var(--gold);
+
+    color: #111;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: 800;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary-row {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 22px;
+}
+
+.summary-card span {
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+.summary-card strong {
+    display: block;
+
+    color: var(--gold);
+
+    font-size: 28px;
+
+    margin-top: 10px;
+}
+
+/* =========================
+   REMINDER SECTION
+========================= */
+
+.reminder-section {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header {
+    margin-bottom: 22px;
+}
+
+.section-header h2 {
+    font-size: 20px;
+
+    color: var(--text);
+
+    font-weight: 600;
+
+    margin-bottom: 5px;
+}
+
+.section-header p {
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+/* =========================
+   REMINDER CARD
+========================= */
+
+.reminder-card {
+    background: #121212;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 18px 20px;
+
+    margin-bottom: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    transition: all 0.2s ease;
+}
+
+.reminder-card:hover {
+    border-color: rgba(212, 175, 55, 0.45);
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.25);
+
+    transform: translateY(-1px);
+}
+
+/* =========================
+   REMINDER INFO
+========================= */
+
+.reminder-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.reminder-info h3 {
+    font-size: 16px;
+
+    color: var(--text);
+
+    margin-bottom: 8px;
+}
+
+.reminder-info p {
+    margin: 4px 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+/* =========================
+   REMINDER ACTIONS
+========================= */
+
+.reminder-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.badge {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.badge.pending {
+    background: #3A2D0A;
+
+    color: var(--warning);
+}
+
+.badge.completed {
+    background: #12351F;
+
+    color: var(--success);
+}
+
+/* =========================
+   COMPLETE BUTTON
+========================= */
+
+.complete-btn {
+    padding: 9px 14px;
+
+    border: 1px solid rgba(212, 175, 55, 0.35);
+
+    border-radius: 7px;
+
+    background: rgba(212, 175, 55, 0.10);
+
+    color: var(--gold);
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.complete-btn:hover {
+    background: var(--gold);
+
+    color: #111;
+
+    border-color: var(--gold);
+}
+
+/* =========================
+   LOADING / EMPTY
+========================= */
+
+.loading,
+.empty {
+    text-align: center;
+
+    padding: 35px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+/* =========================
+   LIGHT THEME
+========================= */
+
+body.light-theme {
+    --bg: #F7F7F5;
+    --sidebar: #FFFFFF;
+    --card: #FFFFFF;
+    --input: #FFFFFF;
+    --border: #E5E5E5;
+
+    --gold: #B8860B;
+    --gold-hover: #D4A017;
+
+    --text: #171717;
+    --muted: #666666;
+}
+
+.light-theme nav a {
+    color: #666;
+}
+
+.light-theme nav a:hover,
+.light-theme nav a.active {
+    background: #FFF8E1;
+
+    color: #B8860B;
+}
+
+.light-theme .summary-card strong {
+    color: #B8860B;
+}
+
+.light-theme .theme-toggle {
+    background: #FFFFFF;
+
+    border-color: #E5E5E5;
+}
+
+.light-theme .reminder-section {
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.04);
+}
+
+.light-theme .reminder-card {
+    background: #FAFAFA;
+
+    border-color: #E5E5E5;
+}
+
+.light-theme .reminder-card:hover {
+    background: #FFFFFF;
+}
+
+.light-theme .reminder-info h3 {
+    color: #171717;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .main {
+        padding: 22px;
     }
 }
 
+@media (max-width: 750px) {
 
-// Complete Reminder
-async function completeReminder(id) {
+    .sidebar {
+        width: 210px;
+    }
 
-    try {
+    .main {
+        padding: 25px 18px;
+    }
 
-        const response = await fetch(
-            `http://localhost:5000/api/reminders/${id}`,
-            {
-                method: "PUT",
-                headers: headers,
-                body: JSON.stringify({
-                    status: "Completed"
-                })
-            }
-        );
+    .topbar {
+        align-items: flex-start;
 
-        const data = await response.json();
+        gap: 15px;
+    }
 
-        if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                "Failed to update reminder"
-            );
-        }
-
-        loadReminders();
-
-    } catch (error) {
-
-        console.error(
-            "Update Error:",
-            error
-        );
-
-        alert(
-            error.message ||
-            "Failed to update reminder"
-        );
+    .summary-row {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
+@media (max-width: 600px) {
 
-// Start
-loadReminders();
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+
+        height: auto;
+
+        padding: 15px;
+    }
+
+    .brand {
+        padding-bottom: 15px;
+    }
+
+    nav {
+        flex-direction: row;
+
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        font-size: 12px;
+
+        padding: 9px 10px;
+    }
+
+    .logout {
+        margin-top: 15px;
+    }
+
+    .main {
+        padding: 20px 12px;
+    }
+
+    .topbar {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .topbar-actions {
+        width: 100%;
+
+        justify-content: flex-end;
+    }
+
+    .summary-row {
+        grid-template-columns: 1fr;
+    }
+
+    .reminder-section {
+        padding: 18px;
+    }
+
+    .reminder-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 16px;
+    }
+
+    .reminder-actions {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .topbar h1 {
+        font-size: 24px;
+    }
+
+    .topbar p {
+        font-size: 13px;
+    }
+
+    .reminder-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .complete-btn {
+        width: 100%;
+    }
+
+    .badge {
+        text-align: center;
+    }
+}
