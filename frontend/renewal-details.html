@@ -3,35 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Renewal Details - RenewGuard</title>
-    <link rel="stylesheet" href="css/add-renewal.css">
+
+    <link rel="stylesheet" href="css/renewal-details.css">
 </head>
 
 <body>
 
-<div class="form-container">
+<div class="layout">
 
-    <div class="form-header">
-        <h1>Renewal Details</h1>
-        <p>View complete renewal information</p>
-    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-    <div id="details">
-        <p>Loading...</p>
-    </div>
+        <div class="brand">
+            <div class="brand-icon">R</div>
 
-    <div class="form-actions">
-        <button class="save-btn" onclick="editRenewal()">
-            Edit Renewal
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="renewals.html" class="active">
+                Renewals
+            </a>
+
+            <a href="reminders.html">
+                Reminders
+            </a>
+
+            <a href="calendar.html">
+                Calendar
+            </a>
+
+            <a href="history.html">
+                History
+            </a>
+
+            <a href="documents.html">
+                Documents
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <!-- ADMIN ONLY -->
+            <a href="users.html" id="usersLink">
+                User Management
+            </a>
+
+            <a href="audit-logs.html" id="auditLink">
+                Audit Logs
+            </a>
+
+        </nav>
+
+        <button class="logout" id="logoutBtn">
+            Logout
         </button>
 
-        <button class="cancel-btn"
-            onclick="window.location.href='renewals.html'">
-            Back
-        </button>
-    </div>
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <div class="page-header">
+
+            <div>
+                <h1>Renewal Details</h1>
+                <p>View complete renewal information</p>
+            </div>
+
+            <a href="renewals.html" class="back-top">
+                ← Back to Renewals
+            </a>
+
+        </div>
+
+
+        <!-- DETAILS CARD -->
+        <div class="details-wrapper">
+
+            <div id="details">
+
+                <div class="loading">
+                    Loading renewal details...
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="actions">
+
+                <button
+                    class="edit-btn"
+                    onclick="editRenewal()"
+                >
+                    Edit Renewal
+                </button>
+
+                <button
+                    class="back-btn"
+                    onclick="window.location.href='renewals.html'"
+                >
+                    Back
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
+
+
+<!-- ROLE CONTROL -->
+<script>
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
+if (user && user.role !== "Admin") {
+
+    const usersLink = document.getElementById("usersLink");
+    const auditLink = document.getElementById("auditLink");
+
+    if (usersLink) {
+        usersLink.style.display = "none";
+    }
+
+    if (auditLink) {
+        auditLink.style.display = "none";
+    }
+}
+
+
+/* Logout */
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+
+    localStorage.clear();
+
+    window.location.href = "login.html";
+
+});
+
+
+/* Theme */
+
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+    document.body.classList.add("light-theme");
+}
+
+</script>
+
 
 <script src="js/renewal-details.js"></script>
 
