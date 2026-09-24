@@ -1,142 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Reports - RenewGuard</title>
-
     <link rel="stylesheet" href="css/reports.css">
 </head>
 
 <body>
 
-<div class="reports-page">
+<div class="layout">
 
-    <!-- Header -->
-    <div class="reports-header">
-
-        <div>
-            <h1>Renewal Reports</h1>
-            <p>Overview of your renewal records and costs</p>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">R</div>
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
         </div>
 
-        <div class="report-actions">
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="renewals.html">Renewals</a>
+            <a href="reminders.html">Reminders</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="history.html">History</a>
+            <a href="documents.html">Documents</a>
+            <a href="reports.html" class="active">Reports</a>
+            <a href="profile.html">Profile</a>
+            <a href="users.html" id="usersLink">User Management</a>
+            <a href="audit-logs.html" id="auditLink">Audit Logs</a>
+        </nav>
 
-            <button
-                onclick="downloadPDF()"
-                class="pdf-btn">
-                📄 Download PDF
-            </button>
+        <button class="logout" id="logoutBtn">Logout</button>
+    </aside>
 
-            <button
-                onclick="downloadExcel()"
-                class="excel-btn">
-                📊 Download Excel
-            </button>
+    <main class="main">
 
-            <button
-                onclick="window.location.href='dashboard.html'">
-                ← Dashboard
-            </button>
+        <div class="topbar">
+            <div>
+                <h1>Reports</h1>
+                <p>Analyze renewal and compliance information</p>
+            </div>
 
+            <div class="topbar-actions">
+                <button id="themeToggle" class="theme-toggle">☀️</button>
+
+                <div class="user-info">
+                    <div class="avatar" id="userAvatar">U</div>
+                    <div>
+                        <strong id="userName">User</strong>
+                        <small id="userRole">Employee</small>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </div>
+        <!-- Summary -->
+        <div class="summary-row">
 
+            <div class="summary-card">
+                <span>Total Renewals</span>
+                <strong id="totalCount">0</strong>
+            </div>
 
-    <!-- Summary Cards -->
-    <div class="summary-grid">
+            <div class="summary-card">
+                <span>Upcoming</span>
+                <strong id="upcomingCount">0</strong>
+            </div>
 
-        <div class="summary-card">
-            <span>Total Renewals</span>
-            <strong id="totalCount">0</strong>
-        </div>
+            <div class="summary-card">
+                <span>Expired</span>
+                <strong id="expiredCount">0</strong>
+            </div>
 
-        <div class="summary-card">
-            <span>Upcoming</span>
-            <strong id="upcomingCount">0</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Expired</span>
-            <strong id="expiredCount">0</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Renewed</span>
-            <strong id="renewedCount">0</strong>
-        </div>
-
-        <div class="summary-card cost-card">
-            <span>Total Cost</span>
-            <strong id="totalCost">₹0</strong>
-        </div>
-
-    </div>
-
-
-    <!-- Category Summary -->
-    <div class="report-card category-card">
-
-        <h2>Category-wise Summary</h2>
-
-        <div
-            id="categorySummary"
-            class="category-grid">
-
-            <p>Loading categories...</p>
+            <div class="summary-card">
+                <span>Total Cost</span>
+                <strong id="totalCost">₹0</strong>
+            </div>
 
         </div>
 
-    </div>
+        <!-- Filters -->
+        <div class="report-card">
 
+            <div class="section-header">
+                <div>
+                    <h2>Renewal Report</h2>
+                    <p>Filter renewal records</p>
+                </div>
+            </div>
 
-    <!-- Renewal Records -->
-    <div class="report-card">
+            <div class="filter-grid">
 
-        <h2>Renewal Records</h2>
+                <div>
+                    <label>Status</label>
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Renewed">Renewed</option>
+                        <option value="Expired">Expired</option>
+                    </select>
+                </div>
 
-        <div class="table-wrapper">
+                <div>
+                    <label>Category</label>
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="Contract">Contract</option>
+                        <option value="License">License</option>
+                        <option value="Certification">Certification</option>
+                        <option value="Warranty">Warranty</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Subscription">Subscription</option>
+                        <option value="Regulatory Permit">Regulatory Permit</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
 
-            <table>
+                <div>
+                    <label>Priority</label>
+                    <select id="priorityFilter">
+                        <option value="">All Priorities</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
 
-                <thead>
+                <div>
+                    <label>Search</label>
+                    <input type="text" id="searchInput" placeholder="Search renewal...">
+                </div>
 
-                    <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Organization</th>
-                        <th>Expiry Date</th>
-                        <th>Cost</th>
-                        <th>Priority</th>
-                        <th>Status</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="reportTable">
-
-                    <tr>
-                        <td colspan="7">
-                            Loading...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
 
-    </div>
+        <!-- Table -->
+        <div class="report-card">
 
+            <div class="table-header">
+                <div>
+                    <h2>Renewal Details</h2>
+                    <p id="resultText">Loading...</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Expiry Date</th>
+                            <th>Cost</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="reportTable">
+                        <tr>
+                            <td colspan="6" class="loading">
+                                Loading reports...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
 </div>
-
 
 <script src="js/reports.js"></script>
 
 </body>
-
 </html>
