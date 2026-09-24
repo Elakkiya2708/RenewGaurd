@@ -12,130 +12,235 @@
 
 <body>
 
-<div class="profile-page">
+<div class="layout">
 
-    <div class="profile-header">
-        <div>
-            <h1>My Profile</h1>
-            <p>Manage your RenewGuard account details</p>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">R</div>
+
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
         </div>
 
-        <button onclick="window.location.href='dashboard.html'">
-            ← Dashboard
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="renewals.html">Renewals</a>
+            <a href="reminders.html">Reminders</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="history.html">History</a>
+            <a href="documents.html">Documents</a>
+            <a href="reports.html">Reports</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="users.html" id="usersLink">User Management</a>
+            <a href="audit-logs.html" id="auditLink">Audit Logs</a>
+        </nav>
+
+        <button class="logout" id="logoutBtn">
+            Logout
         </button>
-    </div>
+
+    </aside>
 
 
-    <!-- Personal Information -->
+    <!-- MAIN -->
+    <main class="main">
 
-    <div class="profile-card">
+        <!-- TOPBAR -->
+        <div class="topbar">
 
-        <div class="profile-title">
-            <h2>Personal Information</h2>
-            <span id="roleBadge">Loading...</span>
-        </div>
+            <div>
+                <h1>My Profile</h1>
+                <p>Manage your RenewGuard account details</p>
+            </div>
 
-        <form id="profileForm">
+            <div class="topbar-actions">
 
-            <div class="form-grid">
+                <button id="themeToggle" class="theme-toggle">
+                    ☀️
+                </button>
 
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="full_name" required>
-                </div>
+                <div class="user-info">
 
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="email" readonly>
-                </div>
+                    <div class="avatar" id="userAvatar">
+                        U
+                    </div>
 
-                <div class="form-group">
-                    <label>Mobile</label>
-                    <input type="text" id="mobile">
-                </div>
+                    <div>
+                        <strong id="userName">User</strong>
+                        <small id="userRole">Employee</small>
+                    </div>
 
-                <div class="form-group">
-                    <label>Organization</label>
-                    <input type="text" id="organization">
-                </div>
-
-                <div class="form-group">
-                    <label>Department</label>
-                    <input type="text" id="department">
-                </div>
-
-                <div class="form-group">
-                    <label>Employee ID</label>
-                    <input type="text" id="employee_id">
                 </div>
 
             </div>
 
-            <button type="submit" class="save-btn">
-                Save Changes
-            </button>
-
-        </form>
-
-        <p id="message"></p>
-
-    </div>
-
-
-    <!-- Change Password -->
-
-    <div class="profile-card">
-
-        <div class="profile-title">
-            <h2>Change Password</h2>
         </div>
 
-        <form id="passwordForm">
 
-            <div class="form-grid">
+        <!-- PERSONAL INFORMATION -->
+        <div class="profile-card">
 
-                <div class="form-group">
-                    <label>Current Password</label>
-                    <input
-                        type="password"
-                        id="currentPassword"
-                        required
-                    >
+            <div class="profile-title">
+
+                <div>
+                    <h2>Personal Information</h2>
+                    <p>Update your account information</p>
                 </div>
 
-                <div class="form-group">
-                    <label>New Password</label>
-                    <input
-                        type="password"
-                        id="newPassword"
-                        minlength="6"
-                        required
-                    >
+                <span id="roleBadge">
+                    Loading...
+                </span>
+
+            </div>
+
+
+            <form id="profileForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input
+                            type="text"
+                            id="full_name"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            readonly
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        <input
+                            type="text"
+                            id="mobile"
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Organization</label>
+                        <input
+                            type="text"
+                            id="organization"
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input
+                            type="text"
+                            id="department"
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Employee ID</label>
+                        <input
+                            type="text"
+                            id="employee_id"
+                        >
+                    </div>
+
                 </div>
 
-                <div class="form-group">
-                    <label>Confirm New Password</label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        minlength="6"
-                        required
-                    >
+
+                <button type="submit" class="save-btn">
+                    Save Changes
+                </button>
+
+            </form>
+
+
+            <p id="message"></p>
+
+        </div>
+
+
+        <!-- CHANGE PASSWORD -->
+        <div class="profile-card">
+
+            <div class="profile-title">
+
+                <div>
+                    <h2>Change Password</h2>
+                    <p>Update your account password securely</p>
                 </div>
 
             </div>
 
-            <button type="submit" class="save-btn">
-                Change Password
-            </button>
 
-        </form>
+            <form id="passwordForm">
 
-        <p id="passwordMessage"></p>
+                <div class="form-grid">
 
-    </div>
+                    <div class="form-group">
+                        <label>Current Password</label>
+
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>New Password</label>
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="save-btn">
+                    Change Password
+                </button>
+
+            </form>
+
+
+            <p id="passwordMessage"></p>
+
+        </div>
+
+    </main>
 
 </div>
+
 
 <script src="js/profile.js"></script>
 
