@@ -1,5 +1,7 @@
 const supabase = require("../config/database");
-const { createDefaultReminders } = require("../services/reminderService");
+
+
+// GET ALL REMINDERS
 exports.getReminders = async (req, res) => {
     try {
         const { data, error } = await supabase
@@ -14,17 +16,24 @@ exports.getReminders = async (req, res) => {
             .order("reminder_date", { ascending: true });
 
         if (error) {
-            return res.status(400).json({ message: error.message });
+            console.error("GET REMINDER ERROR:", error);
+            return res.status(400).json({
+                message: error.message
+            });
         }
 
         res.json(data);
 
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        console.error("SERVER ERROR:", error);
+        res.status(500).json({
+            message: "Server error"
+        });
     }
 };
 
 
+// ADD REMINDER
 exports.addReminder = async (req, res) => {
     try {
         const {
@@ -51,7 +60,10 @@ exports.addReminder = async (req, res) => {
             .single();
 
         if (error) {
-            return res.status(400).json({ message: error.message });
+            console.error("ADD REMINDER ERROR:", error);
+            return res.status(400).json({
+                message: error.message
+            });
         }
 
         res.status(201).json({
@@ -60,32 +72,44 @@ exports.addReminder = async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        console.error("SERVER ERROR:", error);
+        res.status(500).json({
+            message: "Server error"
+        });
     }
 };
 
+
+// UPDATE REMINDER STATUS
 exports.updateReminder = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status } = req.body;
 
         const { data, error } = await supabase
             .from("reminders")
-            .update({ status })
+            .update({
+                status: "Completed"
+            })
             .eq("id", id)
             .select()
             .single();
 
         if (error) {
-            return res.status(400).json({ message: error.message });
+            console.error("UPDATE REMINDER ERROR:", error);
+            return res.status(400).json({
+                message: error.message
+            });
         }
 
         res.json({
-            message: "Reminder updated successfully",
+            message: "Reminder completed successfully",
             reminder: data
         });
 
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        console.error("SERVER ERROR:", error);
+        res.status(500).json({
+            message: "Server error"
+        });
     }
 };
