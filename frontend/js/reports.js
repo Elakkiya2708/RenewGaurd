@@ -4,6 +4,10 @@ if (!token) {
     window.location.href = "login.html";
 }
 
+const headers = {
+    "Authorization": `Bearer ${token}`
+};
+
 const totalCount = document.getElementById("totalCount");
 const upcomingCount = document.getElementById("upcomingCount");
 const expiredCount = document.getElementById("expiredCount");
@@ -15,11 +19,13 @@ const reportTable = document.getElementById("reportTable");
 
 
 async function loadReports() {
-
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/reports"
+            "http://localhost:5000/api/reports",
+            {
+                headers: headers
+            }
         );
 
         const result = await response.json();
@@ -30,17 +36,11 @@ async function loadReports() {
             );
         }
 
-
-        /* =========================
-           SUMMARY
-        ========================= */
+        /* SUMMARY */
 
         totalCount.textContent = result.total;
-
         upcomingCount.textContent = result.upcoming;
-
         expiredCount.textContent = result.expired;
-
         renewedCount.textContent = result.renewed;
 
         totalCost.textContent =
@@ -48,9 +48,7 @@ async function loadReports() {
             Number(result.totalCost).toLocaleString("en-IN");
 
 
-        /* =========================
-           CATEGORY SUMMARY
-        ========================= */
+        /* CATEGORY SUMMARY */
 
         const categories = result.categories || {};
 
@@ -90,9 +88,7 @@ async function loadReports() {
         }
 
 
-        /* =========================
-           RENEWAL TABLE
-        ========================= */
+        /* RENEWAL TABLE */
 
         if (!result.data || result.data.length === 0) {
 
@@ -107,7 +103,6 @@ async function loadReports() {
             return;
         }
 
-
         reportTable.innerHTML = result.data
             .map(item => {
 
@@ -119,30 +114,20 @@ async function loadReports() {
                 return `
                     <tr>
 
-                        <td>
-                            ${item.name || "-"}
-                        </td>
+                        <td>${item.name || "-"}</td>
 
-                        <td>
-                            ${item.category || "-"}
-                        </td>
+                        <td>${item.category || "-"}</td>
 
-                        <td>
-                            ${item.organization || "-"}
-                        </td>
+                        <td>${item.organization || "-"}</td>
 
-                        <td>
-                            ${item.expiry_date || "-"}
-                        </td>
+                        <td>${item.expiry_date || "-"}</td>
 
                         <td>
                             ₹${Number(item.cost || 0)
                                 .toLocaleString("en-IN")}
                         </td>
 
-                        <td>
-                            ${item.priority || "-"}
-                        </td>
+                        <td>${item.priority || "-"}</td>
 
                         <td>
                             <span class="status ${statusClass}">
@@ -155,7 +140,6 @@ async function loadReports() {
 
             })
             .join("");
-
 
     } catch (error) {
 
@@ -178,16 +162,92 @@ async function loadReports() {
 
 loadReports();
 
-function downloadPDF() {
-    window.open(
-        "http://localhost:5000/api/reports/pdf",
-        "_blank"
-    );
+
+/* =========================
+   PDF DOWNLOAD
+========================= */
+
+async function downloadPDF() {
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/reports/pdf",
+            {
+                headers: headers
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("PDF download failed");
+        }
+
+        const blob = await response.blob();
+
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+
+        a.href = url;
+        a.download = "RenewGuard_Report.pdf";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        a.remove();
+
+        window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+    }
 }
 
-function downloadExcel() {
-    window.open(
-        "http://localhost:5000/api/reports/excel",
-        "_blank"
-    );
+
+/* =========================
+   EXCEL DOWNLOAD
+========================= */
+
+async function downloadExcel() {
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/reports/excel",
+            {
+                headers: headers
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Excel download failed");
+        }
+
+        const blob = await response.blob();
+
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+
+        a.href = url;
+        a.download = "RenewGuard_Report.xlsx";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        a.remove();
+
+        window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+    }
 }
