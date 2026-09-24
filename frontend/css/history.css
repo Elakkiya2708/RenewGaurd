@@ -143,10 +143,12 @@ nav a.active {
 
 .main {
     flex: 1;
+    min-width: 0;
+
     padding: 30px;
+
     overflow-x: hidden;
 }
-
 /* ================= HEADER ================= */
 
 .page-header {
