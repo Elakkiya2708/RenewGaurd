@@ -208,3 +208,42 @@ tr:hover td {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+.report-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.pdf-btn {
+    background: #2563eb !important;
+    color: white;
+}
+
+.pdf-btn:hover {
+    background: #1d4ed8 !important;
+}
+
+.excel-btn {
+    background: #16a34a !important;
+    color: white;
+}
+
+.excel-btn:hover {
+    background: #15803d !important;
+}
+
+@media (max-width: 800px) {
+
+    .reports-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .report-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+}
