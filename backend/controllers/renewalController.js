@@ -1,5 +1,8 @@
 const supabase = require("../config/database");
 const { createDefaultReminders } = require("../services/reminderService");
+const { createAuditLog } = require("../services/auditService");
+
+
 exports.getRenewals = async (req, res) => {
     try {
         const { data, error } = await supabase
@@ -65,7 +68,18 @@ exports.addRenewal = async (req, res) => {
                 message: error.message
             });
         }
-        await createDefaultReminders(data.id, data.expiry_date);
+
+        await createDefaultReminders(
+            data.id,
+            data.expiry_date
+        );
+
+        // Audit log
+        await createAuditLog(
+            req.user.id,
+            "Renewal Added",
+            `Added renewal: ${data.name}`
+        );
 
         res.status(201).json({
             message: "Renewal added successfully",
@@ -81,8 +95,10 @@ exports.addRenewal = async (req, res) => {
     }
 };
 
+
 exports.updateRenewal = async (req, res) => {
     try {
+
         const { id } = req.params;
 
         // Get old renewal data
@@ -117,6 +133,7 @@ exports.updateRenewal = async (req, res) => {
             req.body.status &&
             req.body.status !== oldData.status
         ) {
+
             const { error: historyError } = await supabase
                 .from("renewal_history")
                 .insert([{
@@ -132,6 +149,13 @@ exports.updateRenewal = async (req, res) => {
             }
         }
 
+        // Audit log
+        await createAuditLog(
+            req.user.id,
+            "Renewal Updated",
+            `Updated renewal: ${data.name}`
+        );
+
         res.json({
             message: "Renewal updated successfully",
             renewal: data
@@ -146,9 +170,24 @@ exports.updateRenewal = async (req, res) => {
     }
 };
 
+
 exports.deleteRenewal = async (req, res) => {
     try {
+
         const { id } = req.params;
+
+        // Get renewal before deleting
+        const { data: renewal, error: findError } = await supabase
+            .from("renewals")
+            .select("name")
+            .eq("id", id)
+            .single();
+
+        if (findError) {
+            return res.status(400).json({
+                message: findError.message
+            });
+        }
 
         const { error } = await supabase
             .from("renewals")
@@ -156,14 +195,27 @@ exports.deleteRenewal = async (req, res) => {
             .eq("id", id);
 
         if (error) {
-            return res.status(400).json({ message: error.message });
+            return res.status(400).json({
+                message: error.message
+            });
         }
+
+        // Audit log
+        await createAuditLog(
+            req.user.id,
+            "Renewal Deleted",
+            `Deleted renewal: ${renewal.name}`
+        );
 
         res.json({
             message: "Renewal deleted successfully"
         });
 
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        console.error(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
     }
 };
