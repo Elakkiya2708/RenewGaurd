@@ -50,6 +50,6 @@ router.put(
     authMiddleware,
     updateProfile
 );
-
+router.put("/password", authMiddleware, changePassword);
 
 module.exports = router;
