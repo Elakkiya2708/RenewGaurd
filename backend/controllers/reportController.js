@@ -73,3 +73,32 @@ exports.getReport = async (req, res) => {
         });
     }
 };
+
+exports.downloadPDF = async (req, res) => {
+
+    try {
+
+        const { data, error } = await supabase
+            .from("renewals")
+            .select("*")
+            .order("expiry_date", {
+                ascending: true
+            });
+
+        if (error) {
+            return res.status(400).json({
+                message: error.message
+            });
+        }
+
+        createPDF(res, data);
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            message: "PDF generation failed"
+        });
+    }
+};
