@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.calendar-page {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+h1 {
+    margin-bottom: 5px;
+}
+
+p {
+    color: #6b7280;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 0 15px;
+}
+
+.calendar-header button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.calendar-header h2 {
+    margin: 0;
+}
+
+.weekdays,
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.weekdays div {
+    text-align: center;
+    font-weight: bold;
+    padding: 12px;
+}
+
+.day {
+    min-height: 100px;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+}
+
+.day-number {
+    font-weight: bold;
+}
+
+.renewal {
+    margin-top: 8px;
+    padding: 5px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.empty {
+    background: transparent;
+    box-shadow: none;
+}
+
+.calendar-page > button {
+    margin-top: 25px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
