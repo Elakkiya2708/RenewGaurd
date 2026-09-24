@@ -11,9 +11,7 @@ const {
 
 const router = express.Router();
 
-router.get("/test", (req, res) => {
-    res.json({ message: "Document route working" });
-});
+
 
 router.post("/", authMiddleware, upload.single("file"), uploadDocument);
 
