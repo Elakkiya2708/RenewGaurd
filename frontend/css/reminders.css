@@ -128,25 +128,17 @@ body {
 nav {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-
+    gap: 5px;
     flex: 1;
 }
 
 nav a {
     padding: 12px 14px;
-
     border-radius: 8px;
-
     text-decoration: none;
-
     color: var(--muted);
-
     font-size: 14px;
-
-    border: 1px solid transparent;
-
-    transition: all 0.2s ease;
+    transition: 0.2s;
 }
 
 nav a:hover {
@@ -154,15 +146,11 @@ nav a:hover {
     color: var(--gold-hover);
 }
 
+/* History page-la irukura adhe exact active style & border indicator */
 nav a.active {
     background: rgba(212, 175, 55, 0.12);
-
     color: var(--gold);
-
-    border-color: rgba(212, 175, 55, 0.25);
-
-    box-shadow:
-        0 0 12px rgba(212, 175, 55, 0.12);
+    border-left: 3px solid var(--gold);
 }
 
 /* =========================
