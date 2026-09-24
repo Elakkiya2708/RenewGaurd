@@ -58,48 +58,70 @@ exports.uploadDocument = async (req, res) => {
 // ===============================
 
 exports.getDocuments = async (req, res) => {
-
     try {
 
-        const { data, error } = await supabase
+        const { data: documents, error } = await supabase
             .from("documents")
-            .select(`
-                id,
-                renewal_id,
-                file_name,
-                file_path,
-                file_type,
-                file_size,
-                uploaded_at,
-                renewals (
-                    name
-                )
-            `)
+            .select("*")
             .order("uploaded_at", {
                 ascending: false
             });
 
         if (error) {
-
-            console.error(error);
+            console.error("GET DOCUMENTS ERROR:", error);
 
             return res.status(400).json({
                 message: error.message
             });
         }
 
-        res.json(data || []);
+        const { data: renewals, error: renewalError } =
+            await supabase
+                .from("renewals")
+                .select("id, name");
+
+        if (renewalError) {
+            console.error(
+                "GET RENEWALS ERROR:",
+                renewalError
+            );
+
+            return res.status(400).json({
+                message: renewalError.message
+            });
+        }
+
+        const result = documents.map(document => {
+
+            const renewal = renewals.find(
+                item => item.id == document.renewal_id
+            );
+
+            return {
+                ...document,
+                renewals: {
+                    name: renewal
+                        ? renewal.name
+                        : "Unknown Renewal"
+                }
+            };
+
+        });
+
+        res.json(result);
 
     } catch (error) {
 
-        console.error("GET DOCUMENTS ERROR:", error);
+        console.error(
+            "GET DOCUMENTS ERROR:",
+            error
+        );
 
         res.status(500).json({
             message: "Server error"
         });
     }
 };
-
 
 // ===============================
 // DOWNLOAD DOCUMENT
