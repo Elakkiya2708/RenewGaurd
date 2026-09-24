@@ -43,3 +43,29 @@ ${item.status === "Pending" ? `
 }
 
 loadReminders();
+
+async function completeReminder(id) {
+    try {
+        const response = await fetch(`http://localhost:5000/api/reminders/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                status: "Completed"
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
+
+        loadReminders();
+
+    } catch (error) {
+        console.error("Update Error:", error);
+        alert("Failed to update reminder");
+    }
+}
