@@ -6,36 +6,57 @@ if (!token) {
 
 let renewals = [];
 
+const headers = {
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+};
+
+
+// Load Renewals
 async function loadRenewals() {
+
     try {
+
         const response = await fetch(
-            "http://localhost:5000/api/renewals"
+            "http://localhost:5000/api/renewals",
+            {
+                headers: headers
+            }
         );
 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message);
+            throw new Error(data.message || "Failed to load renewals");
         }
 
         renewals = data;
+
         displayRenewals(renewals);
 
     } catch (error) {
+
+        console.error(error);
+
         document.getElementById("renewalTable").innerHTML = `
             <tr>
                 <td colspan="7" class="loading">
-                    Failed to load renewals
+                    ${error.message}
                 </td>
             </tr>
         `;
     }
 }
 
+
+// Display Renewals
 function displayRenewals(data) {
-    const table = document.getElementById("renewalTable");
+
+    const table =
+        document.getElementById("renewalTable");
 
     if (data.length === 0) {
+
         table.innerHTML = `
             <tr>
                 <td colspan="7" class="loading">
@@ -43,11 +64,13 @@ function displayRenewals(data) {
                 </td>
             </tr>
         `;
+
         return;
     }
 
     table.innerHTML = data.map(item => `
         <tr>
+
             <td>${item.name}</td>
 
             <td>${item.category}</td>
@@ -67,6 +90,7 @@ function displayRenewals(data) {
             </td>
 
             <td>
+
                 <button
                     class="action-btn"
                     onclick="viewRenewal(${item.id})">
@@ -84,19 +108,31 @@ function displayRenewals(data) {
                     onclick="deleteRenewal(${item.id})">
                     Delete
                 </button>
+
             </td>
+
         </tr>
     `).join("");
 }
 
+
+// Status Class
 function getStatusClass(status) {
-    if (status === "Renewed") return "renewed";
-    if (status === "Expired") return "expired";
-    if (status === "In Progress") return "progress";
+
+    if (status === "Renewed")
+        return "renewed";
+
+    if (status === "Expired")
+        return "expired";
+
+    if (status === "In Progress")
+        return "progress";
 
     return "pending";
 }
 
+
+// Filter
 function filterRenewals() {
 
     const search = document
@@ -119,20 +155,30 @@ function filterRenewals() {
     displayRenewals(filtered);
 }
 
+
+// View
 function viewRenewal(id) {
+
     window.location.href =
         `renewal-details.html?id=${id}`;
 }
 
+
+// Edit
 function editRenewal(id) {
+
     window.location.href =
         `edit-renewal.html?id=${id}`;
 }
 
+
+// Delete
 async function deleteRenewal(id) {
 
     const confirmDelete =
-        confirm("Are you sure you want to delete this renewal?");
+        confirm(
+            "Are you sure you want to delete this renewal?"
+        );
 
     if (!confirmDelete) {
         return;
@@ -143,7 +189,8 @@ async function deleteRenewal(id) {
         const response = await fetch(
             `http://localhost:5000/api/renewals/${id}`,
             {
-                method: "DELETE"
+                method: "DELETE",
+                headers: headers
             }
         );
 
@@ -160,30 +207,55 @@ async function deleteRenewal(id) {
 
     } catch (error) {
 
-        alert("Unable to connect to server");
+        console.error(error);
 
+        alert("Unable to connect to server");
     }
 }
 
+
+// Search
 document
     .getElementById("searchInput")
-    .addEventListener("input", filterRenewals);
+    .addEventListener(
+        "input",
+        filterRenewals
+    );
 
+
+// Category Filter
 document
     .getElementById("categoryFilter")
-    .addEventListener("change", filterRenewals);
+    .addEventListener(
+        "change",
+        filterRenewals
+    );
 
+
+// Status Filter
 document
     .getElementById("statusFilter")
-    .addEventListener("change", filterRenewals);
+    .addEventListener(
+        "change",
+        filterRenewals
+    );
 
+
+// Logout
 document
     .getElementById("logoutBtn")
-    .addEventListener("click", () => {
+    .addEventListener(
+        "click",
+        () => {
 
-        localStorage.clear();
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
 
-        window.location.href = "login.html";
-    });
+            window.location.href =
+                "login.html";
+        }
+    );
 
+
+// Start
 loadRenewals();
