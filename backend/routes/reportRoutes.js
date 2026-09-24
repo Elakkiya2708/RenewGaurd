@@ -6,10 +6,14 @@ const {
     downloadExcel
 } = require("../controllers/reportController");
 
+const authMiddleware = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-router.get("/", getReport);
-router.get("/excel", downloadExcel);
-router.get("/pdf", downloadPDF);
+router.get("/", authMiddleware, getReport);
+
+router.get("/excel", authMiddleware, downloadExcel);
+
+router.get("/pdf", authMiddleware, downloadPDF);
 
 module.exports = router;
