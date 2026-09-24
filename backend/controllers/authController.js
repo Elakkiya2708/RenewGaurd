@@ -1,6 +1,8 @@
 const supabase = require("../config/database");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { createAuditLog } = require("../services/auditService");
+
 
 exports.register = async (req, res) => {
     try {
@@ -67,6 +69,7 @@ exports.register = async (req, res) => {
 
     } catch (error) {
         console.error(error);
+
         res.status(500).json({
             message: "Server error"
         });
@@ -119,6 +122,13 @@ exports.login = async (req, res) => {
             }
         );
 
+        // Audit log
+        await createAuditLog(
+            user.id,
+            "User Login",
+            `User logged in: ${user.email}`
+        );
+
         res.json({
             message: "Login successful",
             token,
@@ -132,6 +142,7 @@ exports.login = async (req, res) => {
 
     } catch (error) {
         console.error(error);
+
         res.status(500).json({
             message: "Server error"
         });
