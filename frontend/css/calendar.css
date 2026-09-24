@@ -419,6 +419,10 @@ nav a.active {
    LIGHT THEME
 ========================= */
 
+/* =========================
+   LIGHT THEME
+========================= */
+
 body.light-theme {
     --bg: #F7F7F5;
     --sidebar: #FFFFFF;
@@ -430,6 +434,12 @@ body.light-theme {
     --muted: #666666;
 }
 
+body.light-theme nav a.active {
+    background: rgba(184, 134, 11, 0.10);
+    color: var(--gold);
+    border-left: 4px solid var(--gold);
+}
+
 body.light-theme .day {
     background: #FAFAFA;
 }
@@ -439,7 +449,6 @@ body.light-theme .renewal {
     color: #8A6508;
     border-left-color: var(--gold);
 }
-
 /* =========================
    RESPONSIVE
 ========================= */
