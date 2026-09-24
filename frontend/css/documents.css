@@ -850,10 +850,6 @@ tbody tr:hover {
 }
 
 
-/* =========================
-   LIGHT THEME
-========================= */
-
 body.light-theme {
     --bg: #F7F7F5;
     --sidebar: #FFFFFF;
@@ -872,15 +868,16 @@ body.light-theme thead {
     background: #F5F5F5;
 }
 
-body.light-theme .brand-icon,
-body.light-theme .avatar {
+body.light-theme .brand-icon {
     color: white;
 }
 
-body.light-theme .success-notification {
-    background: #FFFFFF;
+/* Light Theme Active Navigation Bar */
+body.light-theme nav a.active {
+    background: rgba(184, 134, 11, 0.10);
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
 }
-
 
 /* =========================
    RESPONSIVE
