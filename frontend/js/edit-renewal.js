@@ -17,7 +17,10 @@ if (!id) {
 }
 
 
-// Load Renewal
+/* =========================
+   LOAD RENEWAL
+========================= */
+
 async function loadRenewal() {
 
     try {
@@ -37,57 +40,86 @@ async function loadRenewal() {
             );
         }
 
-        const renewal =
-            data.find(item => item.id == id);
+        const renewal = data.find(
+            item => item.id == id
+        );
 
         if (!renewal) {
+
             alert("Renewal not found");
-            window.location.href = "renewals.html";
+
+            window.location.href =
+                "renewals.html";
+
             return;
         }
+
 
         document.getElementById("name").value =
             renewal.name || "";
 
+
         document.getElementById("category").value =
             renewal.category || "Other";
+
 
         document.getElementById("organization").value =
             renewal.organization || "";
 
+
         document.getElementById("start_date").value =
             renewal.start_date || "";
+
 
         document.getElementById("expiry_date").value =
             renewal.expiry_date || "";
 
+
         document.getElementById("cost").value =
             renewal.cost || 0;
+
 
         document.getElementById("priority").value =
             renewal.priority || "Medium";
 
+
         document.getElementById("status").value =
             renewal.status || "Pending";
+
 
         document.getElementById("notes").value =
             renewal.notes || "";
 
-    } catch (error) {
+    }
 
-        console.error(error);
+    catch (error) {
 
-        alert(error.message || "Unable to load renewal");
+        console.error(
+            "Load Renewal Error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to load renewal"
+        );
     }
 }
 
 
-// Update Renewal
+/* =========================
+   UPDATE RENEWAL
+========================= */
+
 document
     .getElementById("editForm")
     .addEventListener("submit", async (e) => {
 
         e.preventDefault();
+
+        const message =
+            document.getElementById("message");
+
 
         const renewal = {
 
@@ -120,6 +152,15 @@ document
         };
 
 
+        /* Show updating message */
+
+        message.textContent =
+            "Updating renewal...";
+
+        message.className =
+            "message";
+
+
         try {
 
             const response = await fetch(
@@ -131,34 +172,61 @@ document
                 }
             );
 
-            const data = await response.json();
+
+            const data =
+                await response.json();
+
 
             if (!response.ok) {
 
-                document.getElementById("message").textContent =
-                    data.message || "Update failed";
+                message.textContent =
+                    data.message ||
+                    "Update failed";
+
+                message.className =
+                    "message error";
 
                 return;
             }
 
-            document.getElementById("message").textContent =
+
+            /* Success */
+
+            message.textContent =
                 "Renewal updated successfully!";
+
+            message.className =
+                "message success";
+
 
             setTimeout(() => {
 
                 window.location.href =
                     "renewals.html";
 
-            }, 800);
+            }, 1000);
 
-        } catch (error) {
-
-            console.error(error);
-
-            document.getElementById("message").textContent =
-                "Unable to connect to server";
         }
+
+        catch (error) {
+
+            console.error(
+                "Update Renewal Error:",
+                error
+            );
+
+            message.textContent =
+                "Unable to connect to server";
+
+            message.className =
+                "message error";
+        }
+
     });
 
+
+/* =========================
+   LOAD PAGE
+========================= */
 
 loadRenewal();
