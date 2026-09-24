@@ -154,3 +154,40 @@ tr:hover td {
     }
 
 }
+
+.user-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.user-filters input,
+.user-filters select {
+    padding: 9px 11px;
+    border: 1px solid #dbe2ea;
+    border-radius: 7px;
+    background: white;
+    font-size: 12px;
+    outline: none;
+}
+
+.user-filters input {
+    width: 280px;
+}
+
+.user-filters input:focus,
+.user-filters select:focus {
+    border-color: #2563eb;
+}
+
+@media (max-width: 700px) {
+
+    .user-filters {
+        flex-direction: column;
+    }
+
+    .user-filters input {
+        width: 100%;
+    }
+
+}
