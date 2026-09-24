@@ -12,79 +12,182 @@
 
 <body>
 
-<div class="users-page">
+<div class="layout">
 
-    <div class="users-header">
+    <!-- Sidebar -->
+    <aside class="sidebar">
 
-        <div>
-            <h1>User Management</h1>
-            <p>Manage RenewGuard users and roles</p>
+        <div class="brand">
+            <div class="brand-icon">R</div>
+
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
         </div>
 
-        <button onclick="window.location.href='dashboard.html'">
-            ← Dashboard
+        <nav>
+
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="renewals.html">Renewals</a>
+
+            <a href="reminders.html">Reminders</a>
+
+            <a href="calendar.html">Calendar</a>
+
+            <a href="history.html">History</a>
+
+            <a href="documents.html">Documents</a>
+
+            <a href="reports.html">Reports</a>
+
+            <a href="profile.html">Profile</a>
+
+            <a href="users.html" class="active" id="usersLink">
+                User Management
+            </a>
+
+            <a href="audit-logs.html" id="auditLink">
+                Audit Logs
+            </a>
+
+        </nav>
+
+        <button class="logout" id="logoutBtn">
+            Logout
         </button>
 
-    </div>
+    </aside>
 
 
-    <!-- Search and Filter -->
-    <div class="user-filters">
+    <!-- Main -->
+    <main class="main">
 
-        <input
-            type="text"
-            id="searchUser"
-            placeholder="Search by name or email..."
-        >
+        <!-- Topbar -->
+        <div class="topbar">
 
-        <select id="roleFilter">
-            <option value="All">All Roles</option>
-            <option value="Admin">Admin</option>
-            <option value="Employee">Employee</option>
-        </select>
+            <div>
+                <h1>User Management</h1>
+                <p>Manage RenewGuard users and roles</p>
+            </div>
 
-    </div>
+            <div class="topbar-actions">
 
+                <button id="themeToggle" class="theme-toggle">
+                    ☀️
+                </button>
 
-    <!-- Users Table -->
-    <div class="users-card">
+                <div class="user-info">
 
-        <div class="table-wrapper">
+                    <div class="avatar" id="userAvatar">
+                        A
+                    </div>
 
-            <table>
+                    <div>
+                        <strong id="userName">Admin</strong>
+                        <small id="userRole">Admin</small>
+                    </div>
 
-                <thead>
+                </div>
 
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Organization</th>
-                        <th>Department</th>
-                        <th>Employee ID</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="usersTable">
-
-                    <tr>
-                        <td colspan="8">
-                            Loading users...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
 
-    </div>
+
+        <!-- User Management Card -->
+        <div class="users-card">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>System Users</h2>
+                    <p>View and manage registered users</p>
+                </div>
+
+            </div>
+
+
+            <!-- Search and Filter -->
+            <div class="user-filters">
+
+                <input
+                    type="text"
+                    id="searchUser"
+                    placeholder="Search by name or email..."
+                >
+
+                <select id="roleFilter">
+
+                    <option value="All">
+                        All Roles
+                    </option>
+
+                    <option value="Admin">
+                        Admin
+                    </option>
+
+                    <option value="Employee">
+                        Employee
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Users Table -->
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Name</th>
+
+                            <th>Email</th>
+
+                            <th>Organization</th>
+
+                            <th>Department</th>
+
+                            <th>Employee ID</th>
+
+                            <th>Role</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="usersTable">
+
+                        <tr>
+
+                            <td colspan="8" class="loading">
+                                Loading users...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
+
 
 <script src="js/users.js"></script>
 
