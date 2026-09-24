@@ -1,754 +1,354 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+const token = localStorage.getItem("token");
+
+if (!token) {
+    window.location.href = "login.html";
 }
+
+const headers = {
+    "Authorization": `Bearer ${token}`,
+    "Content-Type": "application/json"
+};
+
+const reminderList = document.getElementById("reminderList");
+
+const totalReminders = document.getElementById("totalReminders");
+const pendingReminders = document.getElementById("pendingReminders");
+const completedReminders = document.getElementById("completedReminders");
+
+const resultText = document.getElementById("resultText");
+
+let reminders = [];
+
 
 /* =========================
-   THEME VARIABLES
+   LOAD REMINDERS
 ========================= */
 
-:root {
-    --bg: #0A0A0A;
-    --sidebar: #111111;
-    --card: #181818;
-    --input: #101010;
-    --border: #2A2A2A;
+async function loadReminders() {
 
-    --gold: #D4AF37;
-    --gold-hover: #F1C75B;
+    try {
 
-    --text: #F5F5F5;
-    --muted: #A3A3A3;
+        const response = await fetch(
+            "http://localhost:5000/api/reminders",
+            {
+                headers
+            }
+        );
 
-    --success: #22C55E;
-    --warning: #F59E0B;
-    --danger: #EF4444;
-    --blue: #60A5FA;
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Failed to load reminders"
+            );
+        }
+
+        reminders = Array.isArray(data) ? data : [];
+
+        updateSummary();
+
+        renderReminders();
+
+    } catch (error) {
+
+        console.error("REMINDER ERROR:", error);
+
+        reminderList.innerHTML = `
+            <div class="empty">
+                ${escapeHTML(
+                    error.message || "Failed to load reminders."
+                )}
+            </div>
+        `;
+
+        resultText.textContent = "Error loading reminders";
+    }
 }
 
-/* =========================
-   BODY
-========================= */
-
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-.layout {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background: var(--sidebar);
-    border-right: 1px solid var(--border);
-    padding: 25px 16px;
-
-    display: flex;
-    flex-direction: column;
-
-    overflow-y: auto;
-    flex-shrink: 0;
-}
-
-.sidebar::-webkit-scrollbar {
-    width: 5px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: var(--sidebar);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 10px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: var(--gold);
-}
-
-/* =========================
-   BRAND
-========================= */
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 5px 10px 30px;
-
-    flex-shrink: 0;
-}
-
-.brand-icon {
-    width: 42px;
-    height: 42px;
-
-    background: var(--gold);
-    color: #111;
-
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: 800;
-    font-size: 20px;
-
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.18);
-}
-
-.brand h2 {
-    font-size: 18px;
-    color: var(--text);
-}
-
-.brand span {
-    color: var(--muted);
-    font-size: 10px;
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-
-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-
-    flex: 1;
-}
-
-nav a {
-    padding: 12px 14px;
-
-    border-radius: 8px;
-
-    text-decoration: none;
-
-    color: var(--muted);
-
-    font-size: 14px;
-
-    border: 1px solid transparent;
-
-    transition: all 0.2s ease;
-}
-
-nav a:hover {
-    background: rgba(212, 175, 55, 0.08);
-    color: var(--gold-hover);
-}
-
-nav a.active {
-    background: rgba(212, 175, 55, 0.12);
-
-    color: var(--gold);
-
-    border-color: rgba(212, 175, 55, 0.25);
-
-    box-shadow:
-        0 0 12px rgba(212, 175, 55, 0.12);
-}
-
-/* =========================
-   LOGOUT
-========================= */
-
-.logout {
-    margin-top: 15px;
-
-    padding: 12px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 8px;
-
-    background: transparent;
-
-    color: var(--muted);
-
-    cursor: pointer;
-
-    font-size: 14px;
-
-    transition: 0.2s;
-}
-
-.logout:hover {
-    background: rgba(239, 68, 68, 0.12);
-
-    border-color: var(--danger);
-
-    color: white;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-.main {
-    flex: 1;
-
-    min-width: 0;
-
-    padding: 30px;
-
-    overflow-x: hidden;
-}
-
-/* =========================
-   TOPBAR
-========================= */
-
-.topbar {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 25px;
-}
-
-.topbar h1 {
-    font-size: 28px;
-
-    color: var(--text);
-}
-
-.topbar p {
-    margin-top: 5px;
-
-    color: var(--muted);
-
-    font-size: 14px;
-}
-
-/* =========================
-   TOPBAR ACTIONS
-========================= */
-
-.topbar-actions {
-    display: flex;
-
-    align-items: center;
-
-    gap: 16px;
-}
-
-/* =========================
-   THEME TOGGLE
-========================= */
-
-.theme-toggle {
-    width: 40px;
-    height: 40px;
-
-    border-radius: 10px;
-
-    border: 1px solid var(--border);
-
-    background: var(--card);
-
-    color: var(--gold);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 17px;
-
-    cursor: pointer;
-
-    transition: 0.25s;
-}
-
-.theme-toggle:hover {
-    border-color: var(--gold);
-
-    background: rgba(212, 175, 55, 0.1);
-}
-
-/* =========================
-   USER
-========================= */
-
-.user-info {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-}
-
-.user-info strong {
-    color: var(--text);
-
-    font-size: 14px;
-}
-
-.user-info small {
-    display: block;
-
-    margin-top: 3px;
-
-    color: var(--muted);
-
-    font-size: 12px;
-}
-
-.avatar {
-    width: 42px;
-    height: 42px;
-
-    border-radius: 50%;
-
-    background: var(--gold);
-
-    color: #111;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-weight: 800;
-}
 
 /* =========================
    SUMMARY
 ========================= */
 
-.summary-row {
-    display: grid;
+function updateSummary() {
 
-    grid-template-columns: repeat(3, 1fr);
+    const total = reminders.length;
 
-    gap: 18px;
+    const pending = reminders.filter(
+        item => item.status === "Pending"
+    ).length;
 
-    margin-bottom: 25px;
+    const completed = reminders.filter(
+        item => item.status === "Completed"
+    ).length;
+
+    totalReminders.textContent = total;
+
+    pendingReminders.textContent = pending;
+
+    completedReminders.textContent = completed;
 }
 
-.summary-card {
-    background: var(--card);
-
-    border: 1px solid var(--border);
-
-    border-radius: 14px;
-
-    padding: 22px;
-}
-
-.summary-card span {
-    color: var(--muted);
-
-    font-size: 14px;
-}
-
-.summary-card strong {
-    display: block;
-
-    color: var(--gold);
-
-    font-size: 28px;
-
-    margin-top: 10px;
-}
 
 /* =========================
-   REMINDER SECTION
+   RENDER REMINDERS
 ========================= */
 
-.reminder-section {
-    background: var(--card);
+function renderReminders() {
 
-    border: 1px solid var(--border);
+    if (reminders.length === 0) {
 
-    border-radius: 14px;
+        reminderList.innerHTML = `
+            <div class="empty">
+                No reminders found.
+            </div>
+        `;
 
-    padding: 22px;
+        resultText.textContent = "No reminders found";
 
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.12);
+        return;
+    }
+
+    resultText.textContent =
+        `${reminders.length} reminder${
+            reminders.length !== 1 ? "s" : ""
+        } found`;
+
+    reminderList.innerHTML = reminders.map(item => {
+
+        const statusClass =
+            String(item.status || "")
+                .toLowerCase();
+
+        return `
+            <div class="reminder-card">
+
+                <div class="reminder-info">
+
+                    <h3>
+                        ${escapeHTML(
+                            item.renewals?.name || "Renewal"
+                        )}
+                    </h3>
+
+                    <p>
+                        <strong>Reminder Date:</strong>
+                        ${formatDate(item.reminder_date)}
+                    </p>
+
+                    <p>
+                        <strong>Reminder:</strong>
+                        ${escapeHTML(
+                            item.reminder_days || "-"
+                        )}
+                        days before expiry
+                    </p>
+
+                    <p>
+                        <strong>Expiry Date:</strong>
+                        ${formatDate(
+                            item.renewals?.expiry_date
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="reminder-actions">
+
+                    <span class="badge ${statusClass}">
+                        ${escapeHTML(
+                            item.status || "-"
+                        )}
+                    </span>
+
+                    ${
+                        item.status === "Pending"
+                        ?
+                        `
+                            <button
+                                class="complete-btn"
+                                onclick="completeReminder(${item.id})">
+                                Complete
+                            </button>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
 }
+
 
 /* =========================
-   SECTION HEADER
+   COMPLETE REMINDER
 ========================= */
 
-.section-header {
-    margin-bottom: 22px;
+async function completeReminder(id) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/reminders/${id}`,
+            {
+                method: "PUT",
+                headers,
+                body: JSON.stringify({
+                    status: "Completed"
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Failed to update reminder"
+            );
+        }
+
+        await loadReminders();
+
+    } catch (error) {
+
+        console.error(
+            "UPDATE REMINDER ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Failed to update reminder"
+        );
+    }
 }
 
-.section-header h2 {
-    font-size: 20px;
-
-    color: var(--text);
-
-    font-weight: 600;
-
-    margin-bottom: 5px;
-}
-
-.section-header p {
-    color: var(--muted);
-
-    font-size: 14px;
-}
 
 /* =========================
-   REMINDER CARD
+   USER INFO
 ========================= */
 
-.reminder-card {
-    background: #121212;
+const user = JSON.parse(
+    localStorage.getItem("user")
+);
 
-    border: 1px solid var(--border);
+if (user) {
 
-    border-radius: 10px;
+    document.getElementById("userName").textContent =
+        user.name || "User";
 
-    padding: 18px 20px;
+    document.getElementById("userRole").textContent =
+        user.role || "Employee";
 
-    margin-bottom: 12px;
+    document.getElementById("userAvatar").textContent =
+        (user.name || "U")
+            .charAt(0)
+            .toUpperCase();
 
-    display: flex;
+    if (user.role !== "Admin") {
 
-    align-items: center;
+        document.getElementById("usersLink")
+            .style.display = "none";
 
-    justify-content: space-between;
-
-    gap: 20px;
-
-    transition: all 0.2s ease;
+        document.getElementById("auditLink")
+            .style.display = "none";
+    }
 }
 
-.reminder-card:hover {
-    border-color: rgba(212, 175, 55, 0.45);
-
-    box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.25);
-
-    transform: translateY(-1px);
-}
 
 /* =========================
-   REMINDER INFO
+   LOGOUT
 ========================= */
 
-.reminder-info {
-    flex: 1;
-    min-width: 0;
-}
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", () => {
 
-.reminder-info h3 {
-    font-size: 16px;
+        localStorage.clear();
 
-    color: var(--text);
+        window.location.href = "login.html";
+    });
 
-    margin-bottom: 8px;
-}
-
-.reminder-info p {
-    margin: 4px 0;
-
-    color: var(--muted);
-
-    font-size: 13px;
-}
 
 /* =========================
-   REMINDER ACTIONS
+   THEME
 ========================= */
 
-.reminder-actions {
-    display: flex;
+const themeToggle =
+    document.getElementById("themeToggle");
 
-    align-items: center;
+const savedTheme =
+    localStorage.getItem("theme");
 
-    gap: 12px;
+if (savedTheme === "light") {
 
-    flex-shrink: 0;
+    document.body.classList.add("light-theme");
+
+    themeToggle.textContent = "🌙";
 }
+
+themeToggle.addEventListener("click", () => {
+
+    document.body.classList.toggle(
+        "light-theme"
+    );
+
+    const isLight =
+        document.body.classList.contains(
+            "light-theme"
+        );
+
+    localStorage.setItem(
+        "theme",
+        isLight ? "light" : "dark"
+    );
+
+    themeToggle.textContent =
+        isLight ? "🌙" : "☀️";
+});
+
 
 /* =========================
-   BADGE
+   HELPERS
 ========================= */
 
-.badge {
-    display: inline-block;
+function formatDate(date) {
 
-    padding: 5px 10px;
+    if (!date) {
+        return "-";
+    }
 
-    border-radius: 6px;
-
-    font-size: 12px;
-
-    font-weight: 600;
-
-    white-space: nowrap;
+    return new Date(date).toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
 }
 
-.badge.pending {
-    background: #3A2D0A;
 
-    color: var(--warning);
+function escapeHTML(value) {
+
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-.badge.completed {
-    background: #12351F;
-
-    color: var(--success);
-}
 
 /* =========================
-   COMPLETE BUTTON
+   START
 ========================= */
 
-.complete-btn {
-    padding: 9px 14px;
-
-    border: 1px solid rgba(212, 175, 55, 0.35);
-
-    border-radius: 7px;
-
-    background: rgba(212, 175, 55, 0.10);
-
-    color: var(--gold);
-
-    cursor: pointer;
-
-    font-size: 13px;
-
-    transition: 0.2s;
-}
-
-.complete-btn:hover {
-    background: var(--gold);
-
-    color: #111;
-
-    border-color: var(--gold);
-}
-
-/* =========================
-   LOADING / EMPTY
-========================= */
-
-.loading,
-.empty {
-    text-align: center;
-
-    padding: 35px;
-
-    color: var(--muted);
-
-    font-size: 14px;
-}
-
-/* =========================
-   LIGHT THEME
-========================= */
-
-body.light-theme {
-    --bg: #F7F7F5;
-    --sidebar: #FFFFFF;
-    --card: #FFFFFF;
-    --input: #FFFFFF;
-    --border: #E5E5E5;
-
-    --gold: #B8860B;
-    --gold-hover: #D4A017;
-
-    --text: #171717;
-    --muted: #666666;
-}
-
-.light-theme nav a {
-    color: #666;
-}
-
-.light-theme nav a:hover,
-.light-theme nav a.active {
-    background: #FFF8E1;
-
-    color: #B8860B;
-}
-
-.light-theme .summary-card strong {
-    color: #B8860B;
-}
-
-.light-theme .theme-toggle {
-    background: #FFFFFF;
-
-    border-color: #E5E5E5;
-}
-
-.light-theme .reminder-section {
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.04);
-}
-
-.light-theme .reminder-card {
-    background: #FAFAFA;
-
-    border-color: #E5E5E5;
-}
-
-.light-theme .reminder-card:hover {
-    background: #FFFFFF;
-}
-
-.light-theme .reminder-info h3 {
-    color: #171717;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 900px) {
-
-    .sidebar {
-        width: 220px;
-    }
-
-    .main {
-        padding: 22px;
-    }
-}
-
-@media (max-width: 750px) {
-
-    .sidebar {
-        width: 210px;
-    }
-
-    .main {
-        padding: 25px 18px;
-    }
-
-    .topbar {
-        align-items: flex-start;
-
-        gap: 15px;
-    }
-
-    .summary-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-
-    .layout {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-
-        height: auto;
-
-        padding: 15px;
-    }
-
-    .brand {
-        padding-bottom: 15px;
-    }
-
-    nav {
-        flex-direction: row;
-
-        flex-wrap: wrap;
-    }
-
-    nav a {
-        font-size: 12px;
-
-        padding: 9px 10px;
-    }
-
-    .logout {
-        margin-top: 15px;
-    }
-
-    .main {
-        padding: 20px 12px;
-    }
-
-    .topbar {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-    .topbar-actions {
-        width: 100%;
-
-        justify-content: flex-end;
-    }
-
-    .summary-row {
-        grid-template-columns: 1fr;
-    }
-
-    .reminder-section {
-        padding: 18px;
-    }
-
-    .reminder-card {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        padding: 16px;
-    }
-
-    .reminder-actions {
-        width: 100%;
-
-        justify-content: space-between;
-    }
-}
-
-@media (max-width: 450px) {
-
-    .topbar h1 {
-        font-size: 24px;
-    }
-
-    .topbar p {
-        font-size: 13px;
-    }
-
-    .reminder-actions {
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-    .complete-btn {
-        width: 100%;
-    }
-
-    .badge {
-        text-align: center;
-    }
-}
+loadReminders();
