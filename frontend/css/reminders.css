@@ -549,15 +549,11 @@ nav a.active {
     font-size: 14px;
 }
 
-/* =========================
-   LIGHT THEME
-========================= */
-
 body.light-theme {
     --bg: #F7F7F5;
     --sidebar: #FFFFFF;
     --card: #FFFFFF;
-    --input: #FFFFFF;
+    --input: #FAFAFA;
     --border: #E5E5E5;
 
     --gold: #B8860B;
@@ -567,44 +563,19 @@ body.light-theme {
     --muted: #666666;
 }
 
-.light-theme nav a {
-    color: #666;
+body.light-theme thead {
+    background: #F5F5F5;
 }
 
-.light-theme nav a:hover,
-.light-theme nav a.active {
-    background: #FFF8E1;
-
-    color: #B8860B;
+body.light-theme .brand-icon {
+    color: white;
 }
 
-.light-theme .summary-card strong {
-    color: #B8860B;
-}
-
-.light-theme .theme-toggle {
-    background: #FFFFFF;
-
-    border-color: #E5E5E5;
-}
-
-.light-theme .reminder-section {
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.04);
-}
-
-.light-theme .reminder-card {
-    background: #FAFAFA;
-
-    border-color: #E5E5E5;
-}
-
-.light-theme .reminder-card:hover {
-    background: #FFFFFF;
-}
-
-.light-theme .reminder-info h3 {
-    color: #171717;
+/* Light Theme Active Navigation Bar */
+body.light-theme nav a.active {
+    background: rgba(184, 134, 11, 0.10);
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
 }
 
 /* =========================
