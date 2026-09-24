@@ -11,53 +11,122 @@
 
 <body>
 
-<div class="audit-page">
+<div class="layout">
 
-    <div class="audit-header">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-        <div>
-            <h1>Audit Logs</h1>
-            <p>View system activities and user actions</p>
+        <div class="brand">
+            <div class="brand-icon">R</div>
+
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
         </div>
 
-        <button onclick="window.location.href='dashboard.html'">
-            ← Dashboard
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="renewals.html">Renewals</a>
+            <a href="reminders.html">Reminders</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="history.html">History</a>
+            <a href="documents.html">Documents</a>
+            <a href="reports.html">Reports</a>
+            <a href="profile.html">Profile</a>
+            <a href="users.html" id="usersLink">User Management</a>
+            <a href="audit-logs.html" class="active" id="auditLink">Audit Logs</a>
+        </nav>
+
+        <button class="logout" id="logoutBtn">
+            Logout
         </button>
 
-    </div>
+    </aside>
 
 
-    <div class="audit-card">
+    <!-- MAIN -->
+    <main class="main">
 
-        <div class="table-container">
+        <!-- TOPBAR -->
+        <div class="topbar">
 
-            <table>
+            <div>
+                <h1>Audit Logs</h1>
+                <p>View system activities and user actions</p>
+            </div>
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>User ID</th>
-                        <th>Action</th>
-                        <th>Details</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
+            <div class="topbar-actions">
 
-                <tbody id="auditTable">
-                    <tr>
-                        <td colspan="5">
-                            Loading audit logs...
-                        </td>
-                    </tr>
-                </tbody>
+                <button id="themeToggle" class="theme-toggle">
+                    ☀️
+                </button>
 
-            </table>
+                <div class="user-info">
+
+                    <div class="avatar" id="userAvatar">
+                        U
+                    </div>
+
+                    <div>
+                        <strong id="userName">User</strong>
+                        <small id="userRole">Employee</small>
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
-    </div>
+
+        <!-- AUDIT CARD -->
+        <div class="audit-card">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>System Activity</h2>
+                    <p>Track user actions and system events</p>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User ID</th>
+                            <th>Action</th>
+                            <th>Details</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="auditTable">
+
+                        <tr>
+                            <td colspan="5" class="loading">
+                                Loading audit logs...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
+
 
 <script src="js/audit.js"></script>
 
