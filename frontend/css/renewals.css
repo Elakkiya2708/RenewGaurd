@@ -124,7 +124,7 @@ nav {
     flex-direction: column;
     gap: 5px;
     flex: 1;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Logout button-kum nav-kum naduvula exact spacing varum */
 }
 
 nav a {
