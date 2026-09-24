@@ -24,11 +24,20 @@
 
         <div class="report-actions">
 
-            <button onclick="downloadPDF()" class="pdf-btn">
+            <button
+                onclick="downloadPDF()"
+                class="pdf-btn">
                 📄 Download PDF
             </button>
 
-            <button onclick="window.location.href='dashboard.html'">
+            <button
+                onclick="downloadExcel()"
+                class="excel-btn">
+                📊 Download Excel
+            </button>
+
+            <button
+                onclick="window.location.href='dashboard.html'">
                 ← Dashboard
             </button>
 
@@ -73,7 +82,9 @@
 
         <h2>Category-wise Summary</h2>
 
-        <div id="categorySummary" class="category-grid">
+        <div
+            id="categorySummary"
+            class="category-grid">
 
             <p>Loading categories...</p>
 
