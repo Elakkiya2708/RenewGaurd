@@ -10,123 +10,124 @@ body {
 }
 
 .calendar-page {
-    width: 92%;
-    max-width: 1100px;
-    margin: 35px auto;
+    width: 88%;
+    max-width: 900px;
+    margin: 25px auto;
 }
 
-/* Header */
+/* Title */
 .calendar-page h1 {
     margin: 0;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 700;
 }
 
 .calendar-page > p {
-    margin: 6px 0 25px;
+    margin: 4px 0 18px;
     color: #64748b;
-    font-size: 15px;
+    font-size: 13px;
 }
 
-/* Calendar Header */
+/* Month Header */
 .calendar-header {
     background: white;
-    padding: 18px 22px;
-    border-radius: 14px;
+    padding: 12px 16px;
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.07);
-    margin-bottom: 15px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.06);
+    margin-bottom: 10px;
 }
 
 .calendar-header h2 {
     margin: 0;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 600;
 }
 
 .calendar-header button {
-    width: 42px;
-    height: 38px;
+    width: 34px;
+    height: 32px;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
     background: #2563eb;
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .calendar-header button:hover {
     background: #1d4ed8;
-    transform: translateY(-1px);
 }
 
 /* Weekdays */
 .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    margin-bottom: 6px;
+    gap: 4px;
+    margin-bottom: 4px;
 }
 
 .weekdays div {
     text-align: center;
-    padding: 13px 5px;
-    font-size: 13px;
+    padding: 8px 4px;
+    font-size: 11px;
     font-weight: 600;
     color: #64748b;
 }
 
-/* Calendar Grid */
+/* Calendar */
 .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+    gap: 4px;
 }
 
 .day {
-    min-height: 105px;
+    min-height: 78px;
     background: white;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 7px;
     border: 1px solid #e5eaf1;
     transition: 0.2s;
 }
 
 .day:hover {
     border-color: #93c5fd;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.07);
 }
 
+/* Day Number */
 .day-number {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 11px;
     color: #334155;
 }
 
 /* Renewal */
 .renewal {
-    margin-top: 8px;
-    padding: 7px 8px;
+    margin-top: 5px;
+    padding: 5px 6px;
     background: #eff6ff;
     color: #1d4ed8;
     border-left: 3px solid #2563eb;
     border-radius: 5px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* Empty cells */
+/* Empty Calendar Cells */
 .empty {
     background: transparent;
     border: none;
@@ -140,13 +141,13 @@ body {
 
 /* Back Button */
 .calendar-page > button {
-    margin-top: 25px;
-    padding: 11px 18px;
+    margin-top: 18px;
+    padding: 8px 14px;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
     background: #172033;
     color: white;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -159,40 +160,55 @@ body {
 @media (max-width: 700px) {
 
     .calendar-page {
-        width: 96%;
-        margin: 20px auto;
+        width: 95%;
+        margin: 18px auto;
     }
 
     .calendar-page h1 {
-        font-size: 24px;
+        font-size: 22px;
+    }
+
+    .calendar-page > p {
+        font-size: 12px;
     }
 
     .calendar-header {
-        padding: 14px;
+        padding: 10px 12px;
     }
 
     .calendar-header h2 {
-        font-size: 18px;
+        font-size: 16px;
+    }
+
+    .calendar-header button {
+        width: 30px;
+        height: 29px;
+        font-size: 13px;
     }
 
     .weekdays div {
-        font-size: 11px;
-        padding: 9px 2px;
+        font-size: 9px;
+        padding: 7px 2px;
+    }
+
+    .calendar {
+        gap: 3px;
     }
 
     .day {
-        min-height: 75px;
-        padding: 6px;
+        min-height: 65px;
+        padding: 5px;
     }
 
     .day-number {
-        width: 24px;
-        height: 24px;
-        font-size: 11px;
+        width: 21px;
+        height: 21px;
+        font-size: 10px;
     }
 
     .renewal {
-        font-size: 9px;
-        padding: 5px;
+        margin-top: 4px;
+        padding: 4px;
+        font-size: 8px;
     }
 }
