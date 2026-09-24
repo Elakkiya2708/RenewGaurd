@@ -23,6 +23,7 @@ const auditRoutes = require("./routes/auditRoutes");
 app.use("/api/auth", authRoutes);
 app.use("/api/renewals", renewalRoutes);
 app.use("/api/documents", documentRoutes);
+console.log("DOCUMENT ROUTE LOADED");
 app.use("/api/reminders", reminderRoutes);
 app.use("/api/history", historyRoutes);
 app.use("/api/reports", reportRoutes);
