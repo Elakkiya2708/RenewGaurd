@@ -13,7 +13,13 @@ if (!id) {
 
 let renewal;
 
+
+/* =========================
+   LOAD RENEWAL DETAILS
+========================= */
+
 async function loadDetails() {
+
     try {
 
         const response = await fetch(
@@ -28,67 +34,258 @@ async function loadDetails() {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || "Failed to load renewal");
+            throw new Error(
+                data.message || "Failed to load renewal"
+            );
         }
 
-        renewal = data.find(item => item.id == id);
+
+        /* Find selected renewal */
+
+        renewal = data.find(
+            item => item.id == id
+        );
+
+
+        /* Renewal not found */
 
         if (!renewal) {
-            document.getElementById("details").innerHTML =
-                "<p>Renewal not found</p>";
+
+            document.getElementById("details").innerHTML = `
+                <div class="loading">
+                    Renewal not found
+                </div>
+            `;
+
             return;
         }
 
+
+        /* Status class */
+
+        let statusClass = "";
+
+        if (renewal.status === "Pending") {
+            statusClass = "pending";
+        }
+
+        else if (renewal.status === "In Progress") {
+            statusClass = "in-progress";
+        }
+
+        else if (renewal.status === "Renewed") {
+            statusClass = "renewed";
+        }
+
+        else if (renewal.status === "Expired") {
+            statusClass = "expired";
+        }
+
+
+        /* Priority class */
+
+        let priorityClass = "";
+
+        if (renewal.priority === "High") {
+            priorityClass = "high";
+        }
+
+        else if (renewal.priority === "Medium") {
+            priorityClass = "medium";
+        }
+
+        else if (renewal.priority === "Low") {
+            priorityClass = "low";
+        }
+
+
+        /* Display details */
+
         document.getElementById("details").innerHTML = `
+
             <div class="details-box">
 
-                <p><strong>Name:</strong> ${renewal.name}</p>
+                <!-- Renewal Name -->
 
-                <p><strong>Category:</strong> ${renewal.category}</p>
+                <div class="detail-item">
 
-                <p><strong>Organization:</strong>
-                    ${renewal.organization || "-"}
-                </p>
+                    <span class="detail-label">
+                        Renewal Name
+                    </span>
 
-                <p><strong>Start Date:</strong>
-                    ${renewal.start_date || "-"}
-                </p>
+                    <span class="detail-value">
+                        ${renewal.name}
+                    </span>
 
-                <p><strong>Expiry Date:</strong>
-                    ${renewal.expiry_date}
-                </p>
+                </div>
 
-                <p><strong>Cost:</strong>
-                    ₹${renewal.cost || 0}
-                </p>
 
-                <p><strong>Priority:</strong>
-                    ${renewal.priority}
-                </p>
+                <!-- Category -->
 
-                <p><strong>Status:</strong>
-                    ${renewal.status}
-                </p>
+                <div class="detail-item">
 
-                <p><strong>Notes:</strong>
-                    ${renewal.notes || "-"}
-                </p>
+                    <span class="detail-label">
+                        Category
+                    </span>
+
+                    <span class="detail-value">
+                        ${renewal.category}
+                    </span>
+
+                </div>
+
+
+                <!-- Organization -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Organization / Vendor
+                    </span>
+
+                    <span class="detail-value">
+                        ${renewal.organization || "-"}
+                    </span>
+
+                </div>
+
+
+                <!-- Start Date -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Start Date
+                    </span>
+
+                    <span class="detail-value">
+                        ${renewal.start_date || "-"}
+                    </span>
+
+                </div>
+
+
+                <!-- Expiry Date -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Expiry Date
+                    </span>
+
+                    <span class="detail-value">
+                        ${renewal.expiry_date}
+                    </span>
+
+                </div>
+
+
+                <!-- Cost -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Cost
+                    </span>
+
+                    <span class="detail-value">
+                        ₹${renewal.cost || 0}
+                    </span>
+
+                </div>
+
+
+                <!-- Priority -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Priority
+                    </span>
+
+                    <span class="detail-value">
+
+                        <span class="priority ${priorityClass}">
+                            ${renewal.priority}
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <span class="detail-value">
+
+                        <span class="status ${statusClass}">
+                            ${renewal.status}
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Notes -->
+
+                <div class="detail-item full">
+
+                    <span class="detail-label">
+                        Notes
+                    </span>
+
+                    <span class="detail-value">
+                        ${renewal.notes || "-"}
+                    </span>
+
+                </div>
 
             </div>
+
         `;
 
-    } catch (error) {
+    }
 
-        console.error("Details Error:", error);
+    catch (error) {
 
-        document.getElementById("details").innerHTML =
-            "<p>Unable to load renewal details</p>";
+        console.error(
+            "Renewal Details Error:",
+            error
+        );
+
+        document.getElementById("details").innerHTML = `
+            <div class="loading">
+                Unable to load renewal details
+            </div>
+        `;
     }
 }
 
+
+/* =========================
+   EDIT RENEWAL
+========================= */
+
 function editRenewal() {
+
+    if (!id) {
+        return;
+    }
+
     window.location.href =
         `edit-renewal.html?id=${id}`;
 }
+
+
+/* =========================
+   LOAD PAGE
+========================= */
 
 loadDetails();
