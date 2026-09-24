@@ -12,25 +12,213 @@
 
 <body>
 
-    <div class="history-page">
+<div class="layout">
 
-        <div class="history-header">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">R</div>
+
             <div>
-                <h1>Renewal History</h1>
-                <p>View previous renewal activities and records</p>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
             </div>
-
-            <button onclick="window.location.href='dashboard.html'">
-                ← Dashboard
-            </button>
         </div>
 
+        <nav>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="renewals.html">
+                Renewals
+            </a>
+
+            <a href="reminders.html">
+                Reminders
+            </a>
+
+            <a href="calendar.html">
+                Calendar
+            </a>
+
+            <a href="history.html" class="active">
+                History
+            </a>
+
+            <a href="documents.html">
+                Documents
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <a href="users.html" id="usersLink">
+                User Management
+            </a>
+
+            <a href="audit-logs.html" id="auditLink">
+                Audit Logs
+            </a>
+
+        </nav>
+
+        <button class="logout" id="logoutBtn">
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- HEADER -->
+        <div class="page-header">
+
+            <div>
+                <h1>Renewal History</h1>
+
+                <p>
+                    View previous renewal activities and status changes
+                </p>
+            </div>
+
+            <div class="header-actions">
+
+                <button
+                    class="back-btn"
+                    onclick="window.location.href='renewals.html'">
+                    ← Renewals
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+        <div class="summary-row">
+
+            <div class="summary-card">
+                <span>Total Activities</span>
+                <strong id="totalHistory">0</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Status Changes</span>
+                <strong id="statusChanges">0</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Renewed</span>
+                <strong id="renewedCount">0</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Expired</span>
+                <strong id="expiredCount">0</strong>
+            </div>
+
+        </div>
+
+
+        <!-- FILTER CARD -->
+        <div class="filter-card">
+
+            <div class="search-box">
+
+                <span class="search-icon">⌕</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by Renewal ID or remarks..."
+                >
+
+            </div>
+
+
+            <select id="actionFilter">
+
+                <option value="">
+                    All Actions
+                </option>
+
+                <option value="Status Changed">
+                    Status Changed
+                </option>
+
+                <option value="Renewal Updated">
+                    Renewal Updated
+                </option>
+
+            </select>
+
+
+            <select id="statusFilter">
+
+                <option value="">
+                    All New Status
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="In Progress">
+                    In Progress
+                </option>
+
+                <option value="Renewed">
+                    Renewed
+                </option>
+
+                <option value="Expired">
+                    Expired
+                </option>
+
+            </select>
+
+
+            <button
+                id="resetFilters"
+                class="reset-btn">
+                Reset
+            </button>
+
+        </div>
+
+
+        <!-- HISTORY TABLE -->
         <div class="history-card">
+
+            <div class="table-header">
+
+                <div>
+                    <h2>Activity Records</h2>
+
+                    <p id="resultText">
+                        Loading history...
+                    </p>
+                </div>
+
+            </div>
+
 
             <div class="table-wrapper">
 
                 <table>
+
                     <thead>
+
                         <tr>
                             <th>Renewal ID</th>
                             <th>Action</th>
@@ -39,22 +227,95 @@
                             <th>Remarks</th>
                             <th>Date</th>
                         </tr>
+
                     </thead>
 
+
                     <tbody id="historyTable">
+
                         <tr>
-                            <td colspan="6">Loading history...</td>
+                            <td
+                                colspan="6"
+                                class="loading">
+                                Loading history...
+                            </td>
                         </tr>
+
                     </tbody>
+
                 </table>
 
             </div>
 
         </div>
 
-    </div>
+    </main>
 
-    <script src="js/history.js"></script>
+</div>
+
+
+<script>
+
+const user =
+    JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ROLE CONTROL */
+
+if (user && user.role !== "Admin") {
+
+    const usersLink =
+        document.getElementById("usersLink");
+
+    const auditLink =
+        document.getElementById("auditLink");
+
+    if (usersLink)
+        usersLink.style.display = "none";
+
+    if (auditLink)
+        auditLink.style.display = "none";
+}
+
+
+/* LOGOUT */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", () => {
+
+        localStorage.clear();
+
+        window.location.href =
+            "login.html";
+
+    });
+
+
+/* THEME */
+
+const savedTheme =
+    localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+
+    document.body
+        .classList
+        .add("light-theme");
+
+}
+
+</script>
+
+
+<script src="js/history.js"></script>
 
 </body>
 
