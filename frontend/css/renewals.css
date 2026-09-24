@@ -154,8 +154,7 @@ nav a.active {
 ========================= */
 
 .logout {
-    margin-top: auto;
-    margin-top: 25px; 
+    margin-top: 25px !important; /* nav-ல் இருந்து கட்டாயமாக இடைவெளி தரும் */
     padding: 12px;
     border: 1px solid var(--danger);
     border-radius: 8px;
@@ -166,11 +165,10 @@ nav a.active {
 }
 
 .logout:hover {
-    border-color: #DC2626; /* Darker red on hover */
+    border-color: #DC2626;
     color: #DC2626;
-    background: rgba(239, 68, 68, 0.1); /* Subtle red background on hover */
+    background: rgba(239, 68, 68, 0.1);
 }
-
 /* =========================
    MAIN
 ========================= */
