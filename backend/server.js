@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const historyRoutes = require("./routes/historyRoutes");
+
 require("dotenv").config();
 
 const app = express();
@@ -15,6 +15,7 @@ const authRoutes = require("./routes/authRoutes");
 const renewalRoutes = require("./routes/renewalRoutes");
 const documentRoutes = require("./routes/documentRoutes");
 const reminderRoutes = require("./routes/reminderRoutes");
+const historyRoutes = require("./routes/historyRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/renewals", renewalRoutes);
