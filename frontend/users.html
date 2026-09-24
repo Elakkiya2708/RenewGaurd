@@ -28,6 +28,25 @@
     </div>
 
 
+    <!-- Search and Filter -->
+    <div class="user-filters">
+
+        <input
+            type="text"
+            id="searchUser"
+            placeholder="Search by name or email..."
+        >
+
+        <select id="roleFilter">
+            <option value="All">All Roles</option>
+            <option value="Admin">Admin</option>
+            <option value="Employee">Employee</option>
+        </select>
+
+    </div>
+
+
+    <!-- Users Table -->
     <div class="users-card">
 
         <div class="table-wrapper">
@@ -35,6 +54,7 @@
             <table>
 
                 <thead>
+
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -45,6 +65,7 @@
                         <th>Role</th>
                         <th>Action</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="usersTable">
