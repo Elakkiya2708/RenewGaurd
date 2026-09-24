@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Renewal History - RenewGuard</title>
+
+    <link rel="stylesheet" href="css/history.css">
+</head>
+
+<body>
+
+    <div class="history-page">
+
+        <div class="history-header">
+            <div>
+                <h1>Renewal History</h1>
+                <p>View previous renewal activities and records</p>
+            </div>
+
+            <button onclick="window.location.href='dashboard.html'">
+                ← Dashboard
+            </button>
+        </div>
+
+        <div class="history-card">
+
+            <div class="table-wrapper">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Renewal ID</th>
+                            <th>Action</th>
+                            <th>Old Status</th>
+                            <th>New Status</th>
+                            <th>Remarks</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="historyTable">
+                        <tr>
+                            <td colspan="6">Loading history...</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/history.js"></script>
+
+</body>
+
+</html>history
