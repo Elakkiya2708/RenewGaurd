@@ -525,40 +525,33 @@ tbody tr:hover td {
 }
 
 
-/* =========================
-   LIGHT THEME
-========================= */
-
 body.light-theme {
-    --bg: #F5F5F5;
-
+    --bg: #F7F7F5;
     --sidebar: #FFFFFF;
-
     --card: #FFFFFF;
+    --input: #FAFAFA;
+    --border: #E5E5E5;
 
-    --input: #F8F8F8;
-
-    --border: #E2E2E2;
+    --gold: #B8860B;
+    --gold-hover: #D4A017;
 
     --text: #171717;
-
     --muted: #666666;
 }
 
-body.light-theme nav a:hover {
+body.light-theme thead {
     background: #F5F5F5;
 }
 
+body.light-theme .brand-icon {
+    color: white;
+}
+
+/* Light Theme Active Navigation Bar */
 body.light-theme nav a.active {
-    background: rgba(212, 175, 55, 0.12);
-}
-
-body.light-theme th {
-    background: #F8F8F8;
-}
-
-body.light-theme tbody tr:hover td {
-    background: #FAFAFA;
+    background: rgba(184, 134, 11, 0.10);
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
 }
 
 
