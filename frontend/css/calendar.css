@@ -4,90 +4,195 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    color: #1f2937;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
 }
 
 .calendar-page {
-    width: 90%;
-    max-width: 1000px;
-    margin: 40px auto;
+    width: 92%;
+    max-width: 1100px;
+    margin: 35px auto;
 }
 
-h1 {
-    margin-bottom: 5px;
+/* Header */
+.calendar-page h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
 }
 
-p {
-    color: #6b7280;
+.calendar-page > p {
+    margin: 6px 0 25px;
+    color: #64748b;
+    font-size: 15px;
 }
 
+/* Calendar Header */
 .calendar-header {
+    background: white;
+    padding: 18px 22px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 25px 0 15px;
-}
-
-.calendar-header button {
-    border: none;
-    background: #2563eb;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.07);
+    margin-bottom: 15px;
 }
 
 .calendar-header h2 {
     margin: 0;
+    font-size: 22px;
+    font-weight: 600;
 }
 
-.weekdays,
-.calendar {
+.calendar-header button {
+    width: 42px;
+    height: 38px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.calendar-header button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Weekdays */
+.weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 6px;
+    margin-bottom: 6px;
 }
 
 .weekdays div {
     text-align: center;
-    font-weight: bold;
-    padding: 12px;
+    padding: 13px 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* Calendar Grid */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
 }
 
 .day {
-    min-height: 100px;
+    min-height: 105px;
     background: white;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+    border: 1px solid #e5eaf1;
+    transition: 0.2s;
+}
+
+.day:hover {
+    border-color: #93c5fd;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
 
 .day-number {
-    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+    color: #334155;
 }
 
+/* Renewal */
 .renewal {
     margin-top: 8px;
-    padding: 5px;
-    background: #dbeafe;
+    padding: 7px 8px;
+    background: #eff6ff;
     color: #1d4ed8;
+    border-left: 3px solid #2563eb;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+/* Empty cells */
 .empty {
     background: transparent;
+    border: none;
     box-shadow: none;
 }
 
+.empty:hover {
+    border: none;
+    box-shadow: none;
+}
+
+/* Back Button */
 .calendar-page > button {
     margin-top: 25px;
-    padding: 10px 18px;
+    padding: 11px 18px;
     border: none;
-    border-radius: 6px;
-    background: #2563eb;
+    border-radius: 8px;
+    background: #172033;
     color: white;
+    font-size: 14px;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.calendar-page > button:hover {
+    background: #0f172a;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .calendar-page {
+        width: 96%;
+        margin: 20px auto;
+    }
+
+    .calendar-page h1 {
+        font-size: 24px;
+    }
+
+    .calendar-header {
+        padding: 14px;
+    }
+
+    .calendar-header h2 {
+        font-size: 18px;
+    }
+
+    .weekdays div {
+        font-size: 11px;
+        padding: 9px 2px;
+    }
+
+    .day {
+        min-height: 75px;
+        padding: 6px;
+    }
+
+    .day-number {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+
+    .renewal {
+        font-size: 9px;
+        padding: 5px;
+    }
 }
