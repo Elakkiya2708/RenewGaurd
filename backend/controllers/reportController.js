@@ -20,16 +20,33 @@ exports.getReport = async (req, res) => {
         const expired = [];
         const renewed = [];
 
+        const categories = {};
+
         data.forEach(item => {
+
             const expiry = new Date(item.expiry_date);
 
+            // Status based classification
             if (item.status === "Renewed") {
                 renewed.push(item);
-            } else if (expiry < today) {
+            } 
+            else if (item.status === "Expired" || expiry < today) {
                 expired.push(item);
-            } else {
+            } 
+            else {
                 upcoming.push(item);
             }
+
+            // Category summary
+            if (!categories[item.category]) {
+                categories[item.category] = {
+                    count: 0,
+                    cost: 0
+                };
+            }
+
+            categories[item.category].count += 1;
+            categories[item.category].cost += Number(item.cost || 0);
         });
 
         const totalCost = data.reduce(
@@ -43,10 +60,12 @@ exports.getReport = async (req, res) => {
             expired: expired.length,
             renewed: renewed.length,
             totalCost,
+            categories,
             data
         });
 
     } catch (error) {
+
         console.error(error);
 
         res.status(500).json({
