@@ -63,3 +63,29 @@ exports.addReminder = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+exports.updateReminder = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const { data, error } = await supabase
+            .from("reminders")
+            .update({ status })
+            .eq("id", id)
+            .select()
+            .single();
+
+        if (error) {
+            return res.status(400).json({ message: error.message });
+        }
+
+        res.json({
+            message: "Reminder updated successfully",
+            reminder: data
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+};
