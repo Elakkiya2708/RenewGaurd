@@ -103,3 +103,76 @@ exports.downloadPDF = async (req, res) => {
         });
     }
 };
+
+exports.downloadExcel = async (req, res) => {
+    try {
+        const { data, error } = await supabase
+            .from("renewals")
+            .select("*")
+            .order("expiry_date", { ascending: true });
+
+        if (error) {
+            return res.status(400).json({
+                message: error.message
+            });
+        }
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet("Renewals");
+
+        worksheet.columns = [
+            { header: "Name", key: "name", width: 25 },
+            { header: "Category", key: "category", width: 18 },
+            { header: "Organization", key: "organization", width: 22 },
+            { header: "Start Date", key: "start_date", width: 15 },
+            { header: "Expiry Date", key: "expiry_date", width: 15 },
+            { header: "Cost", key: "cost", width: 12 },
+            { header: "Priority", key: "priority", width: 12 },
+            { header: "Status", key: "status", width: 15 },
+            { header: "Notes", key: "notes", width: 30 }
+        ];
+
+        data.forEach(item => {
+            worksheet.addRow({
+                name: item.name || "",
+                category: item.category || "",
+                organization: item.organization || "",
+                start_date: item.start_date || "",
+                expiry_date: item.expiry_date || "",
+                cost: Number(item.cost || 0),
+                priority: item.priority || "",
+                status: item.status || "",
+                notes: item.notes || ""
+            });
+        });
+
+        worksheet.getRow(1).font = {
+            bold: true
+        };
+
+        worksheet.getRow(1).alignment = {
+            horizontal: "center"
+        };
+
+        res.setHeader(
+            "Content-Type",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        );
+
+        res.setHeader(
+            "Content-Disposition",
+            "attachment; filename=RenewGuard_Report.xlsx"
+        );
+
+        await workbook.xlsx.write(res);
+
+        res.end();
+
+    } catch (error) {
+        console.error("Excel Error:", error);
+
+        res.status(500).json({
+            message: "Excel generation failed"
+        });
+    }
+};
