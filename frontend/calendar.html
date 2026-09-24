@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calendar - RenewGuard</title>
+
+    <link rel="stylesheet" href="css/calendar.css">
+</head>
+
+<body>
+
+<div class="calendar-page">
+
+    <h1>📅 Renewal Calendar</h1>
+    <p>View your renewal dates</p>
+
+    <div class="calendar-header">
+        <button id="prevMonth">←</button>
+        <h2 id="monthYear"></h2>
+        <button id="nextMonth">→</button>
+    </div>
+
+    <div class="weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+    </div>
+
+    <div id="calendar" class="calendar"></div>
+
+    <button onclick="window.location.href='dashboard.html'">
+        ← Back to Dashboard
+    </button>
+
+</div>
+
+<script src="js/calendar.js"></script>
+
+</body>
+</html>
