@@ -14,14 +14,22 @@ if (!id) {
 let renewal;
 
 async function loadDetails() {
-
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/renewals"
+            "http://localhost:5000/api/renewals",
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
         );
 
         const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to load renewal");
+        }
 
         renewal = data.find(item => item.id == id);
 
@@ -36,9 +44,7 @@ async function loadDetails() {
 
                 <p><strong>Name:</strong> ${renewal.name}</p>
 
-                <p><strong>Category:</strong>
-                    ${renewal.category}
-                </p>
+                <p><strong>Category:</strong> ${renewal.category}</p>
 
                 <p><strong>Organization:</strong>
                     ${renewal.organization || "-"}
@@ -72,6 +78,8 @@ async function loadDetails() {
         `;
 
     } catch (error) {
+
+        console.error("Details Error:", error);
 
         document.getElementById("details").innerHTML =
             "<p>Unable to load renewal details</p>";
