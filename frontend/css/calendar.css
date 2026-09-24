@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 
-
 /* =========================
    THEME VARIABLES
 ========================= */
@@ -14,18 +13,14 @@
     --sidebar: #111111;
     --card: #181818;
     --border: #2A2A2A;
-
     --gold: #D4AF37;
     --gold-hover: #F1C75B;
-
     --text: #F5F5F5;
     --muted: #A3A3A3;
-
     --success: #22C55E;
     --warning: #F59E0B;
     --danger: #EF4444;
 }
-
 
 /* =========================
    BODY
@@ -43,7 +38,6 @@ body {
     min-height: 100vh;
 }
 
-
 /* =========================
    SIDEBAR
 ========================= */
@@ -51,15 +45,11 @@ body {
 .sidebar {
     width: 250px;
     height: 100vh;
-
     background: var(--sidebar);
     border-right: 1px solid var(--border);
-
     padding: 25px 16px;
-
     display: flex;
     flex-direction: column;
-
     overflow-y: auto;
     flex-shrink: 0;
 }
@@ -81,7 +71,6 @@ body {
     background: var(--gold);
 }
 
-
 /* =========================
    BRAND
 ========================= */
@@ -90,28 +79,21 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-
     padding: 5px 10px 30px;
-
     flex-shrink: 0;
 }
 
 .brand-icon {
     width: 42px;
     height: 42px;
-
     background: var(--gold);
     color: #111;
-
     border-radius: 10px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-weight: 800;
     font-size: 20px;
-
     box-shadow: 0 0 15px rgba(212, 175, 55, 0.18);
 }
 
@@ -125,7 +107,6 @@ body {
     font-size: 10px;
 }
 
-
 /* =========================
    NAVIGATION
 ========================= */
@@ -134,23 +115,16 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 6px;
-
     flex: 1;
 }
 
 nav a {
     padding: 12px 14px;
-
     border-radius: 8px;
-
     text-decoration: none;
-
     color: var(--muted);
-
     font-size: 14px;
-
     border: 1px solid transparent;
-
     transition: all 0.2s ease;
 }
 
@@ -162,10 +136,8 @@ nav a:hover {
 nav a.active {
     background: rgba(212, 175, 55, 0.12);
     color: var(--gold);
-
     border-color: rgba(212, 175, 55, 0.25);
 }
-
 
 /* =========================
    LOGOUT
@@ -173,29 +145,20 @@ nav a.active {
 
 .logout {
     margin-top: 15px;
-
     padding: 12px;
-
     border: 1px solid var(--border);
     border-radius: 8px;
-
     background: transparent;
-
     color: var(--muted);
-
     cursor: pointer;
-
     transition: 0.2s;
 }
 
 .logout:hover {
     background: rgba(239, 68, 68, 0.12);
-
     border-color: var(--danger);
-
     color: white;
 }
-
 
 /* =========================
    MAIN
@@ -204,12 +167,9 @@ nav a.active {
 .main {
     flex: 1;
     min-width: 0;
-
     padding: 30px;
-
     overflow-x: hidden;
 }
-
 
 /* =========================
    TOPBAR
@@ -217,10 +177,8 @@ nav a.active {
 
 .topbar {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 25px;
 }
 
@@ -231,12 +189,9 @@ nav a.active {
 
 .topbar p {
     margin-top: 5px;
-
     color: var(--muted);
-
     font-size: 14px;
 }
-
 
 /* =========================
    TOPBAR ACTIONS
@@ -248,7 +203,6 @@ nav a.active {
     gap: 16px;
 }
 
-
 /* =========================
    THEME TOGGLE
 ========================= */
@@ -256,32 +210,22 @@ nav a.active {
 .theme-toggle {
     width: 40px;
     height: 40px;
-
     border-radius: 10px;
-
     border: 1px solid var(--border);
-
     background: var(--card);
-
     color: var(--gold);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 17px;
-
     cursor: pointer;
-
     transition: 0.25s;
 }
 
 .theme-toggle:hover {
     border-color: var(--gold);
-
     background: rgba(212, 175, 55, 0.1);
 }
-
 
 /* =========================
    USER
@@ -299,28 +243,21 @@ nav a.active {
 
 .user-info small {
     display: block;
-
     margin-top: 3px;
-
     color: var(--muted);
 }
 
 .avatar {
     width: 42px;
     height: 42px;
-
     border-radius: 50%;
-
     background: var(--gold);
     color: #111;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-weight: 800;
 }
-
 
 /* =========================
    CALENDAR CONTAINER
@@ -328,20 +265,13 @@ nav a.active {
 
 .calendar-container {
     background: var(--card);
-
     border: 1px solid var(--border);
-
     border-radius: 14px;
-
     padding: 22px;
-
     max-width: 1100px;
-
     margin: 0 auto;
-
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
-
 
 /* =========================
    MONTH HEADER
@@ -349,48 +279,34 @@ nav a.active {
 
 .calendar-header {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 18px;
 }
 
 .calendar-header h2 {
     font-size: 20px;
-
     color: var(--text);
-
     font-weight: 600;
 }
 
 .calendar-header button {
     width: 40px;
     height: 38px;
-
     border-radius: 8px;
-
     border: 1px solid var(--border);
-
     background: transparent;
-
     color: var(--gold);
-
     font-size: 18px;
-
     cursor: pointer;
-
     transition: 0.2s;
 }
 
 .calendar-header button:hover {
     background: var(--gold);
-
     color: #111;
-
     border-color: var(--gold);
 }
-
 
 /* =========================
    WEEKDAYS
@@ -398,28 +314,19 @@ nav a.active {
 
 .weekdays {
     display: grid;
-
     grid-template-columns: repeat(7, 1fr);
-
     gap: 6px;
-
     margin-bottom: 6px;
 }
 
 .weekdays div {
     text-align: center;
-
     padding: 10px 4px;
-
     font-size: 12px;
-
     font-weight: 600;
-
     color: var(--gold);
-
     text-transform: uppercase;
 }
-
 
 /* =========================
    CALENDAR GRID
@@ -427,12 +334,9 @@ nav a.active {
 
 .calendar {
     display: grid;
-
     grid-template-columns: repeat(7, 1fr);
-
     gap: 6px;
 }
-
 
 /* =========================
    DAY
@@ -440,27 +344,18 @@ nav a.active {
 
 .day {
     min-height: 90px;
-
     background: #121212;
-
     border: 1px solid var(--border);
-
     border-radius: 9px;
-
     padding: 8px;
-
     transition: all 0.2s ease;
 }
 
 .day:hover {
     border-color: rgba(212, 175, 55, 0.5);
-
-    box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.25);
-
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
     transform: translateY(-1px);
 }
-
 
 /* =========================
    DAY NUMBER
@@ -469,20 +364,14 @@ nav a.active {
 .day-number {
     width: 26px;
     height: 26px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-weight: 600;
-
     font-size: 12px;
-
     color: var(--text);
-
     border-radius: 50%;
 }
-
 
 /* =========================
    RENEWAL
@@ -490,28 +379,17 @@ nav a.active {
 
 .renewal {
     margin-top: 6px;
-
     padding: 6px 7px;
-
     background: rgba(212, 175, 55, 0.12);
-
     color: var(--gold-hover);
-
     border-left: 3px solid var(--gold);
-
     border-radius: 5px;
-
     font-size: 10px;
-
     font-weight: 600;
-
     white-space: nowrap;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
 }
-
 
 /* =========================
    EMPTY CELLS
@@ -519,20 +397,15 @@ nav a.active {
 
 .empty {
     background: transparent;
-
     border: none;
-
     box-shadow: none;
 }
 
 .empty:hover {
     border: none;
-
     box-shadow: none;
-
     transform: none;
 }
-
 
 /* =========================
    LIGHT THEME
@@ -540,19 +413,12 @@ nav a.active {
 
 body.light-theme {
     --bg: #F7F7F5;
-
     --sidebar: #FFFFFF;
-
     --card: #FFFFFF;
-
     --border: #E5E5E5;
-
     --gold: #B8860B;
-
     --gold-hover: #D4A017;
-
     --text: #171717;
-
     --muted: #666666;
 }
 
@@ -562,15 +428,12 @@ body.light-theme .day {
 
 body.light-theme .renewal {
     background: rgba(184, 134, 11, 0.10);
-
     color: #8A6508;
-
     border-left-color: var(--gold);
 }
 
-
 /* =========================
-   MOBILE
+   RESPONSIVE
 ========================= */
 
 @media (max-width: 900px) {
@@ -588,18 +451,15 @@ body.light-theme .renewal {
     }
 }
 
-
 @media (max-width: 700px) {
 
     .sidebar {
         width: 70px;
-
         padding: 20px 8px;
     }
 
     .brand {
         justify-content: center;
-
         padding-bottom: 25px;
     }
 
@@ -670,7 +530,6 @@ body.light-theme .renewal {
 
     .renewal {
         padding: 4px;
-
         font-size: 8px;
     }
 }
