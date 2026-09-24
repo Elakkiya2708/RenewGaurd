@@ -94,6 +94,11 @@ nav a.active {
     align-items: center;
     margin-bottom: 25px;
 }
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
 
 .topbar h1 {
     font-size: 28px;
