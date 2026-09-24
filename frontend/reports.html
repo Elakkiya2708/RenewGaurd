@@ -14,7 +14,9 @@
 
 <div class="reports-page">
 
+    <!-- Header -->
     <div class="reports-header">
+
         <div>
             <h1>Renewal Reports</h1>
             <p>Overview of your renewal records and costs</p>
@@ -23,10 +25,11 @@
         <button onclick="window.location.href='dashboard.html'">
             ← Dashboard
         </button>
+
     </div>
 
-    <!-- Summary Cards -->
 
+    <!-- Summary Cards -->
     <div class="summary-grid">
 
         <div class="summary-card">
@@ -56,8 +59,22 @@
 
     </div>
 
-    <!-- Renewal Table -->
 
+    <!-- Category Summary -->
+    <div class="report-card category-card">
+
+        <h2>Category-wise Summary</h2>
+
+        <div id="categorySummary" class="category-grid">
+
+            <p>Loading categories...</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Renewal Records -->
     <div class="report-card">
 
         <h2>Renewal Records</h2>
@@ -67,6 +84,7 @@
             <table>
 
                 <thead>
+
                     <tr>
                         <th>Name</th>
                         <th>Category</th>
@@ -76,12 +94,17 @@
                         <th>Priority</th>
                         <th>Status</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="reportTable">
+
                     <tr>
-                        <td colspan="7">Loading...</td>
+                        <td colspan="7">
+                            Loading...
+                        </td>
                     </tr>
+
                 </tbody>
 
             </table>
@@ -92,7 +115,9 @@
 
 </div>
 
+
 <script src="js/reports.js"></script>
 
 </body>
+
 </html>
