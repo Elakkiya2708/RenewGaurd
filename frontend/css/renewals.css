@@ -154,11 +154,12 @@ nav a.active {
 
 .logout {
     margin-top: auto;
+    margin-top: 25px; 
     padding: 12px;
-    border: 1px solid var(--danger); /* Red border */
+    border: 1px solid var(--danger);
     border-radius: 8px;
     background: transparent;
-    color: var(--danger); /* Red text color */
+    color: var(--danger);
     cursor: pointer;
     transition: 0.2s;
 }
