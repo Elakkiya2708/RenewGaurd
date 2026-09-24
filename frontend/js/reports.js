@@ -9,7 +9,10 @@ const upcomingCount = document.getElementById("upcomingCount");
 const expiredCount = document.getElementById("expiredCount");
 const renewedCount = document.getElementById("renewedCount");
 const totalCost = document.getElementById("totalCost");
+
+const categorySummary = document.getElementById("categorySummary");
 const reportTable = document.getElementById("reportTable");
+
 
 async function loadReports() {
 
@@ -22,18 +25,76 @@ async function loadReports() {
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.message || "Failed to load reports");
+            throw new Error(
+                result.message || "Failed to load reports"
+            );
         }
 
+
+        /* =========================
+           SUMMARY
+        ========================= */
+
         totalCount.textContent = result.total;
+
         upcomingCount.textContent = result.upcoming;
+
         expiredCount.textContent = result.expired;
+
         renewedCount.textContent = result.renewed;
 
         totalCost.textContent =
-            "₹" + Number(result.totalCost).toLocaleString("en-IN");
+            "₹" +
+            Number(result.totalCost).toLocaleString("en-IN");
 
-        if (result.data.length === 0) {
+
+        /* =========================
+           CATEGORY SUMMARY
+        ========================= */
+
+        const categories = result.categories || {};
+
+        if (Object.keys(categories).length === 0) {
+
+            categorySummary.innerHTML = `
+                <p>No category data found.</p>
+            `;
+
+        } else {
+
+            categorySummary.innerHTML =
+                Object.entries(categories)
+                    .map(([category, value]) => {
+
+                        return `
+                            <div class="category-item">
+
+                                <div>
+                                    <strong>${category}</strong>
+
+                                    <span>
+                                        ${value.count} renewal(s)
+                                    </span>
+                                </div>
+
+                                <b>
+                                    ₹${Number(value.cost)
+                                        .toLocaleString("en-IN")}
+                                </b>
+
+                            </div>
+                        `;
+
+                    })
+                    .join("");
+        }
+
+
+        /* =========================
+           RENEWAL TABLE
+        ========================= */
+
+        if (!result.data || result.data.length === 0) {
 
             reportTable.innerHTML = `
                 <tr>
@@ -46,44 +107,63 @@ async function loadReports() {
             return;
         }
 
-        reportTable.innerHTML = result.data.map(item => {
 
-            const statusClass =
-                (item.status || "")
-                .toLowerCase()
-                .replace(" ", "-");
+        reportTable.innerHTML = result.data
+            .map(item => {
 
-            return `
-                <tr>
+                const statusClass =
+                    (item.status || "")
+                        .toLowerCase()
+                        .replace(/\s+/g, "-");
 
-                    <td>${item.name}</td>
+                return `
+                    <tr>
 
-                    <td>${item.category}</td>
+                        <td>
+                            ${item.name || "-"}
+                        </td>
 
-                    <td>${item.organization || "-"}</td>
+                        <td>
+                            ${item.category || "-"}
+                        </td>
 
-                    <td>${item.expiry_date}</td>
+                        <td>
+                            ${item.organization || "-"}
+                        </td>
 
-                    <td>
-                        ₹${Number(item.cost || 0).toLocaleString("en-IN")}
-                    </td>
+                        <td>
+                            ${item.expiry_date || "-"}
+                        </td>
 
-                    <td>${item.priority}</td>
+                        <td>
+                            ₹${Number(item.cost || 0)
+                                .toLocaleString("en-IN")}
+                        </td>
 
-                    <td>
-                        <span class="status ${statusClass}">
-                            ${item.status}
-                        </span>
-                    </td>
+                        <td>
+                            ${item.priority || "-"}
+                        </td>
 
-                </tr>
-            `;
+                        <td>
+                            <span class="status ${statusClass}">
+                                ${item.status || "-"}
+                            </span>
+                        </td>
 
-        }).join("");
+                    </tr>
+                `;
+
+            })
+            .join("");
+
 
     } catch (error) {
 
         console.error("Reports Error:", error);
+
+        categorySummary.innerHTML = `
+            <p>Failed to load category data.</p>
+        `;
 
         reportTable.innerHTML = `
             <tr>
@@ -94,5 +174,6 @@ async function loadReports() {
         `;
     }
 }
+
 
 loadReports();
