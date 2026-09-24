@@ -4,12 +4,17 @@ if (!token) {
     window.location.href = "login.html";
 }
 
+const headers = {
+    "Authorization": `Bearer ${token}`
+};
+
 const renewalSelect = document.getElementById("renewalSelect");
 const fileInput = document.getElementById("fileInput");
 const fileName = document.getElementById("fileName");
 const message = document.getElementById("message");
 const uploadBtn = document.getElementById("uploadBtn");
-const successNotification = document.getElementById("successNotification");
+const successNotification =
+    document.getElementById("successNotification");
 
 
 // Load Renewals
@@ -18,7 +23,10 @@ async function loadRenewals() {
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/renewals"
+            "http://localhost:5000/api/renewals",
+            {
+                headers: headers
+            }
         );
 
         const data = await response.json();
@@ -34,7 +42,8 @@ async function loadRenewals() {
 
         data.forEach(item => {
 
-            const option = document.createElement("option");
+            const option =
+                document.createElement("option");
 
             option.value = item.id;
             option.textContent = item.name;
@@ -47,7 +56,8 @@ async function loadRenewals() {
         console.error(error);
 
         message.style.color = "#ef4444";
-        message.textContent = "Failed to load renewals";
+        message.textContent =
+            error.message || "Failed to load renewals";
     }
 }
 
@@ -56,110 +66,147 @@ async function loadRenewals() {
 let notificationTimer;
 
 function showSuccessNotification() {
+
     successNotification.style.display = "flex";
 
-    setTimeout(() => {
+    clearTimeout(notificationTimer);
+
+    notificationTimer = setTimeout(() => {
         successNotification.style.display = "none";
     }, 15000);
 }
 
 
 // Upload Document
-uploadBtn.addEventListener("click", async function () {
+uploadBtn.addEventListener(
+    "click",
+    async function () {
 
-    const renewalId = renewalSelect.value;
-    const file = fileInput.files[0];
+        const renewalId =
+            renewalSelect.value;
 
-
-    if (!renewalId) {
-
-        message.style.color = "#ef4444";
-        message.textContent = "Please select a renewal";
-
-        return;
-    }
+        const file =
+            fileInput.files[0];
 
 
-    if (!file) {
+        if (!renewalId) {
 
-        message.style.color = "#ef4444";
-        message.textContent = "Please select a file";
+            message.style.color = "#ef4444";
+            message.textContent =
+                "Please select a renewal";
 
-        return;
-    }
-
-
-    if (file.size > 10 * 1024 * 1024) {
-
-        message.style.color = "#ef4444";
-        message.textContent =
-            "File size must be less than 10 MB";
-
-        return;
-    }
-
-
-    uploadBtn.disabled = true;
-    uploadBtn.textContent = "Uploading...";
-
-    message.style.color = "#f59e0b";
-    message.textContent = "Uploading document...";
-
-
-    const formData = new FormData();
-
-    formData.append("renewal_id", renewalId);
-    formData.append("file", file);
-
-
-    try {
-
-        const response = await fetch(
-            "http://localhost:5000/api/documents",
-            {
-                method: "POST",
-                body: formData
-            }
-        );
-
-
-        const data = await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message || "Document upload failed"
-            );
+            return;
         }
 
 
-        // SUCCESS
-        message.style.color = "#4ade80";
-message.textContent = "Document uploaded successfully!";
-        // Clear form
-        fileInput.value = "";
-        renewalSelect.value = "";
-        fileName.textContent = "Choose a file";
+        if (!file) {
+
+            message.style.color = "#ef4444";
+            message.textContent =
+                "Please select a file";
+
+            return;
+        }
 
 
-    } catch (error) {
+        if (file.size > 10 * 1024 * 1024) {
 
-        console.error("Upload Error:", error);
+            message.style.color = "#ef4444";
+            message.textContent =
+                "File size must be less than 10 MB";
 
-        message.style.color = "#ef4444";
+            return;
+        }
 
+
+        uploadBtn.disabled = true;
+        uploadBtn.textContent = "Uploading...";
+
+        message.style.color = "#f59e0b";
         message.textContent =
-            "✕ " + error.message;
+            "Uploading document...";
 
 
-    } finally {
+        const formData = new FormData();
 
-        uploadBtn.disabled = false;
-        uploadBtn.textContent = "Upload Document";
+        formData.append(
+            "renewal_id",
+            renewalId
+        );
+
+        formData.append(
+            "file",
+            file
+        );
+
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:5000/api/documents",
+                {
+                    method: "POST",
+                    headers: headers,
+                    body: formData
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Document upload failed"
+                );
+            }
+
+
+            // SUCCESS
+            message.style.color = "#4ade80";
+
+            message.textContent =
+                "Document uploaded successfully!";
+
+
+            showSuccessNotification();
+
+
+            // Clear form
+            fileInput.value = "";
+
+            renewalSelect.value = "";
+
+            fileName.textContent =
+                "Choose a file";
+
+
+        } catch (error) {
+
+            console.error(
+                "Upload Error:",
+                error
+            );
+
+            message.style.color = "#ef4444";
+
+            message.textContent =
+                "✕ " + error.message;
+
+
+        } finally {
+
+            uploadBtn.disabled = false;
+
+            uploadBtn.textContent =
+                "Upload Document";
+        }
+
     }
-
-});
+);
 
 
 // Load Renewals
