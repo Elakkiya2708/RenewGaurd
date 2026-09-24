@@ -1,3 +1,9 @@
+const token = localStorage.getItem("token");
+
+if (!token) {
+    window.location.href = "login.html";
+}
+
 const calendar = document.getElementById("calendar");
 const monthYear = document.getElementById("monthYear");
 
@@ -6,9 +12,24 @@ let renewals = [];
 
 async function loadRenewals() {
     try {
-        const response = await fetch("http://localhost:5000/api/renewals");
-        renewals = await response.json();
+        const response = await fetch(
+            "http://localhost:5000/api/renewals",
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to load renewals");
+        }
+
+        renewals = data;
         renderCalendar();
+
     } catch (error) {
         console.error("Calendar Error:", error);
         calendar.innerHTML = "<p>Failed to load renewals.</p>";
@@ -36,19 +57,24 @@ function renderCalendar() {
     }
 
     for (let day = 1; day <= totalDays; day++) {
+
         const cell = document.createElement("div");
         cell.className = "day";
 
         cell.innerHTML = `<div class="day-number">${day}</div>`;
 
-        const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const date =
+            `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
         renewals
             .filter(item => item.expiry_date === date)
             .forEach(item => {
+
                 const renewal = document.createElement("div");
+
                 renewal.className = "renewal";
                 renewal.textContent = item.name;
+
                 cell.appendChild(renewal);
             });
 
