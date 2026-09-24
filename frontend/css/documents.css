@@ -255,15 +255,9 @@ body {
 }
 .success-notification {
     display: none;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #22c55e;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 6px;
+    margin-top: 12px;
+    color: #4ade80;
     font-size: 14px;
+    text-align: center;
     font-weight: 500;
-    z-index: 9999;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
