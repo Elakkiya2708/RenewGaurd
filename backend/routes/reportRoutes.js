@@ -8,6 +8,7 @@ const {
 const router = express.Router();
 
 router.get("/", getReport);
+
 router.get("/pdf", downloadPDF);
 
 module.exports = router;
