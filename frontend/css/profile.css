@@ -91,41 +91,36 @@ body {
 }
 
 
-/* NAVIGATION */
+/* =========================
+   NAVIGATION
+========================= */
 
 nav {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    flex: 1;
 }
 
 nav a {
+    padding: 12px 14px;
+    border-radius: 8px;
     text-decoration: none;
     color: var(--muted);
-
-    padding: 11px 12px;
-
-    border: 1px solid transparent;
-    border-radius: 8px;
-
     font-size: 14px;
-
     transition: 0.2s;
 }
 
 nav a:hover {
-    color: var(--text);
-    background: #181818;
+    background: rgba(212, 175, 55, 0.08);
+    color: var(--gold-hover);
 }
 
+/* History page-la irukura adhe exact active style & border indicator */
 nav a.active {
     background: rgba(212, 175, 55, 0.12);
     color: var(--gold);
-
-    border-color: rgba(212, 175, 55, 0.25);
-
-    box-shadow:
-        0 0 12px rgba(212, 175, 55, 0.12);
+    border-left: 3px solid var(--gold);
 }
 
 
