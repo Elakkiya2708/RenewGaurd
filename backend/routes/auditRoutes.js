@@ -1,12 +1,13 @@
 const express = require("express");
+
+const {
+    getAuditLogs
+} = require("../controllers/auditController");
+
 const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/", authMiddleware, (req, res) => {
-    res.json({
-        message: "Audit Logs API is working"
-    });
-});
+router.get("/", authMiddleware, getAuditLogs);
 
 module.exports = router;
