@@ -421,3 +421,27 @@ body.light-theme .document-card input {
         grid-template-columns: 1fr;
     }
 }
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.theme-toggle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--gold);
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.theme-toggle:hover {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: var(--gold);
+    transform: rotate(15deg);
+}
