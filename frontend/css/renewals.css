@@ -122,8 +122,8 @@ body {
 nav {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    flex: 1;
+    gap: 8px; 
+    margin-bottom: 20px; 
 }
 
 nav a {
