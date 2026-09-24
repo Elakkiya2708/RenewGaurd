@@ -5,7 +5,8 @@ const {
     updateUserRole,
     deleteUser,
     getProfile,
-    updateProfile
+    updateProfile,
+    changePassword
 } = require("../controllers/userController");
 
 const authMiddleware = require("../middleware/authMiddleware");
