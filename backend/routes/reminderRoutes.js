@@ -6,10 +6,26 @@ const {
     updateReminder
 } = require("../controllers/reminderController");
 
+const authMiddleware = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-router.get("/", getReminders);
-router.post("/", addReminder);
-router.put("/:id", updateReminder);
+router.get(
+    "/",
+    authMiddleware,
+    getReminders
+);
+
+router.post(
+    "/",
+    authMiddleware,
+    addReminder
+);
+
+router.put(
+    "/:id",
+    authMiddleware,
+    updateReminder
+);
 
 module.exports = router;
