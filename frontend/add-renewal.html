@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenewGuard - Add Renewal</title>
+    <title>Add Renewal - RenewGuard</title>
     <link rel="stylesheet" href="css/add-renewal.css">
 </head>
 
@@ -11,12 +11,10 @@
 
 <div class="layout">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="brand">
             <div class="brand-icon">R</div>
-
             <div>
                 <h2>RenewGuard</h2>
                 <span>Management System</span>
@@ -24,58 +22,24 @@
         </div>
 
         <nav>
-
             <a href="dashboard.html">Dashboard</a>
+            <a href="renewals.html" class="active">Renewals</a>
+            <a href="reminders.html">Reminders</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="history.html">History</a>
+            <a href="documents.html">Documents</a>
+            <a href="reports.html">Reports</a>
+            <a href="profile.html">Profile</a>
 
-            <a href="renewals.html" class="active">
-                Renewals
-            </a>
-
-            <a href="calendar.html">
-                Calendar
-            </a>
-
-            <a href="history.html">
-                History
-            </a>
-
-            <a href="documents.html">
-                Documents
-            </a>
-
-            <a href="reports.html">
-                Reports
-            </a>
-
-            <a href="reminders.html">
-                Reminders
-            </a>
-
-            <a href="audit-logs.html" id="auditLink">
-                Audit Logs
-            </a>
-
-
-            <a href="profile.html">
-                My Profile
-            </a>
-
-            <!-- ADMIN ONLY -->
-            <a href="users.html" id="usersLink">
-                User Management
-            </a>
-
-            
+            <a href="users.html" id="usersLink">User Management</a>
+            <a href="audit-logs.html" id="auditLink">Audit Logs</a>
         </nav>
 
-        <button class="logout" id="logoutBtn">
-            Logout
-        </button>
+        <button class="logout" id="logoutBtn">Logout</button>
 
     </aside>
 
 
-    <!-- MAIN -->
     <main class="main">
 
         <div class="page-header">
@@ -86,22 +50,26 @@
             </div>
 
             <a href="renewals.html" class="back-btn">
-                ← Back
+                ← Back to Renewals
             </a>
 
         </div>
 
 
-        <!-- FORM -->
         <div class="form-container">
+
+            <div class="form-title">
+                <h2>Renewal Information</h2>
+                <p>Enter the details of the renewal below.</p>
+            </div>
+
 
             <form id="renewalForm">
 
                 <div class="form-grid">
 
                     <div class="form-group full">
-                        <label>Renewal Name *</label>
-
+                        <label>Renewal Name <span>*</span></label>
                         <input
                             type="text"
                             id="name"
@@ -112,15 +80,10 @@
 
 
                     <div class="form-group">
-
-                        <label>Category *</label>
+                        <label>Category <span>*</span></label>
 
                         <select id="category" required>
-
-                            <option value="">
-                                Select Category
-                            </option>
-
+                            <option value="">Select Category</option>
                             <option>Contract</option>
                             <option>License</option>
                             <option>Certification</option>
@@ -129,14 +92,11 @@
                             <option>Subscription</option>
                             <option>Regulatory Permit</option>
                             <option>Other</option>
-
                         </select>
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label>Organization / Vendor</label>
 
                         <input
@@ -144,37 +104,31 @@
                             id="organization"
                             placeholder="Organization or vendor"
                         >
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label>Start Date</label>
 
                         <input
                             type="date"
                             id="start_date"
                         >
-
                     </div>
 
 
                     <div class="form-group">
-
-                        <label>Expiry Date *</label>
+                        <label>Expiry Date <span>*</span></label>
 
                         <input
                             type="date"
                             id="expiry_date"
                             required
                         >
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label>Cost</label>
 
                         <input
@@ -184,62 +138,33 @@
                             step="0.01"
                             placeholder="0.00"
                         >
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label>Priority</label>
 
                         <select id="priority">
-
-                            <option value="Low">
-                                Low
-                            </option>
-
-                            <option value="Medium" selected>
-                                Medium
-                            </option>
-
-                            <option value="High">
-                                High
-                            </option>
-
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
                         </select>
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label>Status</label>
 
                         <select id="status">
-
-                            <option value="Pending" selected>
-                                Pending
-                            </option>
-
-                            <option value="In Progress">
-                                In Progress
-                            </option>
-
-                            <option value="Renewed">
-                                Renewed
-                            </option>
-
-                            <option value="Expired">
-                                Expired
-                            </option>
-
+                            <option value="Pending" selected>Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Renewed">Renewed</option>
+                            <option value="Expired">Expired</option>
                         </select>
-
                     </div>
 
 
                     <div class="form-group full">
-
                         <label>Notes</label>
 
                         <textarea
@@ -247,7 +172,6 @@
                             rows="5"
                             placeholder="Add additional notes..."
                         ></textarea>
-
                     </div>
 
                 </div>
@@ -258,17 +182,11 @@
 
                 <div class="form-actions">
 
-                    <a
-                        href="renewals.html"
-                        class="cancel-btn"
-                    >
+                    <a href="renewals.html" class="cancel-btn">
                         Cancel
                     </a>
 
-                    <button
-                        type="submit"
-                        class="save-btn"
-                    >
+                    <button type="submit" class="save-btn">
                         Save Renewal
                     </button>
 
@@ -283,35 +201,38 @@
 </div>
 
 
-<!-- ROLE CONTROL -->
 <script>
 
-    const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("user"));
 
-    // Login இல்லனா login page
-    if (!user) {
-        window.location.href = "login.html";
-    }
+if (!user) {
+    window.location.href = "login.html";
+}
 
-    // Employeeக்கு Admin links hide
-    if (user && user.role !== "Admin") {
+if (user && user.role !== "Admin") {
 
-        const usersLink = document.getElementById("usersLink");
-        const auditLink = document.getElementById("auditLink");
+    const usersLink = document.getElementById("usersLink");
+    const auditLink = document.getElementById("auditLink");
 
-        if (usersLink) {
-            usersLink.style.display = "none";
-        }
+    if (usersLink) usersLink.style.display = "none";
+    if (auditLink) auditLink.style.display = "none";
+}
 
-        if (auditLink) {
-            auditLink.style.display = "none";
-        }
-    }
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.clear();
+    window.location.href = "login.html";
+});
+
+
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+    document.body.classList.add("light-theme");
+}
 
 </script>
 
-
-<!-- EXISTING FUNCTIONALITY -->
 <script src="js/add-renewal.js"></script>
 
 </body>
