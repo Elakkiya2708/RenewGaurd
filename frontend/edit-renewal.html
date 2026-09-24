@@ -1,112 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Edit Renewal - RenewGuard</title>
-    <link rel="stylesheet" href="css/add-renewal.css">
+
+    <link rel="stylesheet" href="css/edit-renewal.css">
 </head>
 
 <body>
 
-<div class="form-container">
+<div class="layout">
 
-    <div class="form-header">
-        <h1>Edit Renewal</h1>
-        <p>Update renewal information</p>
-    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-    <form id="editForm">
+        <div class="brand">
 
-        <div class="form-group">
-            <label>Renewal Name</label>
-            <input type="text" id="name" required>
-        </div>
-
-        <div class="form-group">
-            <label>Category</label>
-            <select id="category" required>
-                <option value="Contract">Contract</option>
-                <option value="License">License</option>
-                <option value="Certification">Certification</option>
-                <option value="Warranty">Warranty</option>
-                <option value="Insurance">Insurance</option>
-                <option value="Subscription">Subscription</option>
-                <option value="Regulatory Permit">Regulatory Permit</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Organization / Vendor</label>
-            <input type="text" id="organization">
-        </div>
-
-        <div class="form-row">
-
-            <div class="form-group">
-                <label>Start Date</label>
-                <input type="date" id="start_date">
+            <div class="brand-icon">
+                R
             </div>
 
-            <div class="form-group">
-                <label>Expiry Date</label>
-                <input type="date" id="expiry_date" required>
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
             </div>
 
         </div>
 
-        <div class="form-group">
-            <label>Cost</label>
-            <input type="number" id="cost" min="0">
-        </div>
 
-        <div class="form-row">
+        <nav>
 
-            <div class="form-group">
-                <label>Priority</label>
-                <select id="priority">
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                </select>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="renewals.html" class="active">
+                Renewals
+            </a>
+
+            <a href="reminders.html">
+                Reminders
+            </a>
+
+            <a href="calendar.html">
+                Calendar
+            </a>
+
+            <a href="history.html">
+                History
+            </a>
+
+            <a href="documents.html">
+                Documents
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <!-- ADMIN ONLY -->
+
+            <a href="users.html" id="usersLink">
+                User Management
+            </a>
+
+            <a href="audit-logs.html" id="auditLink">
+                Audit Logs
+            </a>
+
+        </nav>
+
+
+        <button class="logout" id="logoutBtn">
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Edit Renewal</h1>
+
+                <p>
+                    Update renewal information
+                </p>
+
             </div>
 
-            <div class="form-group">
-                <label>Status</label>
-                <select id="status">
-                    <option value="Pending">Pending</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Renewed">Renewed</option>
-                    <option value="Expired">Expired</option>
-                </select>
-            </div>
+
+            <a
+                href="renewals.html"
+                class="back-top"
+            >
+                ← Back to Renewals
+            </a>
 
         </div>
 
-        <div class="form-group">
-            <label>Notes</label>
-            <textarea id="notes" rows="4"></textarea>
+
+        <!-- FORM CARD -->
+
+        <div class="form-container">
+
+            <form id="editForm">
+
+                <div class="form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Renewal Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="e.g. Microsoft 365 License"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Category *
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Contract">
+                                Contract
+                            </option>
+
+                            <option value="License">
+                                License
+                            </option>
+
+                            <option value="Certification">
+                                Certification
+                            </option>
+
+                            <option value="Warranty">
+                                Warranty
+                            </option>
+
+                            <option value="Insurance">
+                                Insurance
+                            </option>
+
+                            <option value="Subscription">
+                                Subscription
+                            </option>
+
+                            <option value="Regulatory Permit">
+                                Regulatory Permit
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ORGANIZATION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Organization / Vendor
+                        </label>
+
+                        <input
+                            type="text"
+                            id="organization"
+                            placeholder="Organization or vendor"
+                        >
+
+                    </div>
+
+
+                    <!-- START DATE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Start Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="start_date"
+                        >
+
+                    </div>
+
+
+                    <!-- EXPIRY DATE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Expiry Date *
+                        </label>
+
+                        <input
+                            type="date"
+                            id="expiry_date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- COST -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Cost
+                        </label>
+
+                        <input
+                            type="number"
+                            id="cost"
+                            min="0"
+                            step="0.01"
+                            placeholder="0.00"
+                        >
+
+                    </div>
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Priority
+                        </label>
+
+                        <select id="priority">
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <select id="status">
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Renewed">
+                                Renewed
+                            </option>
+
+                            <option value="Expired">
+                                Expired
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- NOTES -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="5"
+                            placeholder="Add additional notes..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <p id="message"></p>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="window.location.href='renewals.html'"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Update Renewal
+                    </button>
+
+                </div>
+
+            </form>
+
         </div>
 
-        <p id="message"></p>
-
-        <div class="form-actions">
-            <button type="submit" class="save-btn">
-                Update Renewal
-            </button>
-
-            <button type="button" class="cancel-btn"
-                onclick="window.location.href='renewals.html'">
-                Cancel
-            </button>
-        </div>
-
-    </form>
+    </main>
 
 </div>
+
+
+<!-- ROLE CONTROL -->
+
+<script>
+
+const user = JSON.parse(
+    localStorage.getItem("user")
+);
+
+if (!user) {
+
+    window.location.href = "login.html";
+
+}
+
+
+if (user && user.role !== "Admin") {
+
+    const usersLink =
+        document.getElementById("usersLink");
+
+    const auditLink =
+        document.getElementById("auditLink");
+
+
+    if (usersLink) {
+        usersLink.style.display = "none";
+    }
+
+
+    if (auditLink) {
+        auditLink.style.display = "none";
+    }
+
+}
+
+
+/* Logout */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener("click", () => {
+
+        localStorage.clear();
+
+        window.location.href =
+            "login.html";
+
+    });
+
+
+/* Theme */
+
+const savedTheme =
+    localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+
+    document.body.classList.add(
+        "light-theme"
+    );
+
+}
+
+</script>
+
+
+<!-- EXISTING EDIT FUNCTIONALITY -->
 
 <script src="js/edit-renewal.js"></script>
 
 </body>
+
 </html>
