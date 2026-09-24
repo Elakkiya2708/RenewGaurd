@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Audit Logs - RenewGuard</title>
+
+    <link rel="stylesheet" href="css/audit-logs.css">
+</head>
+
+<body>
+
+<div class="audit-page">
+
+    <div class="audit-header">
+
+        <div>
+            <h1>Audit Logs</h1>
+            <p>View system activities and user actions</p>
+        </div>
+
+        <button onclick="window.location.href='dashboard.html'">
+            ← Dashboard
+        </button>
+
+    </div>
+
+
+    <div class="audit-card">
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User ID</th>
+                        <th>Action</th>
+                        <th>Details</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody id="auditTable">
+                    <tr>
+                        <td colspan="5">
+                            Loading audit logs...
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/audit.js"></script>
+
+</body>
+</html>
