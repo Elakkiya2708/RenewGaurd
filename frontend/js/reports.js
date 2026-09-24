@@ -184,3 +184,10 @@ function downloadPDF() {
         "_blank"
     );
 }
+
+function downloadExcel() {
+    window.open(
+        "http://localhost:5000/api/reports/excel",
+        "_blank"
+    );
+}
