@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports - RenewGuard</title>
+
+    <link rel="stylesheet" href="css/reports.css">
+</head>
+
+<body>
+
+<div class="reports-page">
+
+    <div class="reports-header">
+        <div>
+            <h1>Renewal Reports</h1>
+            <p>Overview of your renewal records and costs</p>
+        </div>
+
+        <button onclick="window.location.href='dashboard.html'">
+            ← Dashboard
+        </button>
+    </div>
+
+    <!-- Summary Cards -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+            <span>Total Renewals</span>
+            <strong id="totalCount">0</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Upcoming</span>
+            <strong id="upcomingCount">0</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Expired</span>
+            <strong id="expiredCount">0</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Renewed</span>
+            <strong id="renewedCount">0</strong>
+        </div>
+
+        <div class="summary-card cost-card">
+            <span>Total Cost</span>
+            <strong id="totalCost">₹0</strong>
+        </div>
+
+    </div>
+
+    <!-- Renewal Table -->
+
+    <div class="report-card">
+
+        <h2>Renewal Records</h2>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Organization</th>
+                        <th>Expiry Date</th>
+                        <th>Cost</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="reportTable">
+                    <tr>
+                        <td colspan="7">Loading...</td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/reports.js"></script>
+
+</body>
+</html>
