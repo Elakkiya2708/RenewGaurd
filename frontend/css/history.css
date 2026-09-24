@@ -177,6 +177,7 @@ nav a.active {
 .header-actions {
     display: flex;
     align-items: center;
+    
 }
 
 .back-btn {
