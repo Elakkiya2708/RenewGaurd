@@ -1,316 +1,249 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --bg: #0A0A0A;
-    --card: #181818;
-    --input: #101010;
-    --border: #2A2A2A;
-    --gold: #D4AF37;
-    --gold-hover: #F1C75B;
-    --text: #F5F5F5;
-    --muted: #A3A3A3;
-    --success: #22C55E;
-    --danger: #EF4444;
-}
-
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-}
-
-/* PAGE */
-
-.register-page {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 20px;
-
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            rgba(212, 175, 55, 0.08),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            rgba(212, 175, 55, 0.05),
-            transparent 30%
-        ),
-        var(--bg);
-}
-
-/* CARD */
-
-.register-card {
-    width: 100%;
-    max-width: 850px;
-
-    padding: 25px 42px;
-
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-}
-
-/* LOGO */
-
-.logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    gap: 12px;
-    margin-bottom: 18px;
-}
-
-.logo-icon {
-    width: 45px;
-    height: 45px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+<!DOCTYPE html>
+<html lang="en">
 
-    background: var(--gold);
-    color: #111;
+<head>
 
-    border-radius: 10px;
+    <meta charset="UTF-8">
 
-    font-size: 23px;
-    font-weight: 700;
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-.logo h1 {
-    font-size: 23px;
-    margin-bottom: 2px;
-}
+    <title>RenewGuard - Register</title>
 
-.logo span {
-    color: var(--muted);
-    font-size: 11px;
-}
+    <link rel="stylesheet" href="css/register.css">
 
-/* HEADING */
+</head>
 
-.register-heading {
-    margin-bottom: 18px;
-}
+<body>
 
-.register-heading h2 {
-    font-size: 21px;
-    margin-bottom: 5px;
-}
+<div class="register-page">
 
-.register-heading p {
-    color: var(--muted);
-    font-size: 13px;
-}
+    <div class="register-card">
 
-/* ROW */
+        <!-- Logo -->
+        <div class="logo">
 
-.row {
-    display: flex;
-    gap: 15px;
-}
+            <div class="logo-icon">
+                R
+            </div>
 
-/* FIELD */
+            <div>
+                <h1>RenewGuard</h1>
+                <span>Management System</span>
+            </div>
 
-.field {
-    flex: 1;
-    margin-bottom: 12px;
-}
+        </div>
 
-.field label {
-    display: block;
 
-    margin-bottom: 5px;
+        <!-- Heading -->
+        <div class="register-heading">
 
-    color: var(--muted);
+            <h2>Create Account</h2>
 
-    font-size: 13px;
-    font-weight: 500;
-}
+            <p>
+                Create your RenewGuard account
+            </p>
 
-.field input {
-    width: 100%;
+        </div>
 
-    padding: 9px 12px;
 
-    background: var(--input);
-    color: var(--text);
+        <!-- Register Form -->
+        <form id="registerForm">
 
-    border: 1px solid var(--border);
-    border-radius: 8px;
 
-    outline: none;
+            <!-- Name + Email -->
+            <div class="row">
 
-    font-family: inherit;
-    font-size: 14px;
+                <div class="field">
 
-    transition: 0.2s;
-}
+                    <label for="full_name">
+                        Full Name *
+                    </label>
 
-.field input::placeholder {
-    color: #666;
-}
+                    <input
+                        type="text"
+                        id="full_name"
+                        placeholder="Enter full name"
+                        required
+                    >
 
-.field input:focus {
-    border-color: var(--gold);
+                </div>
 
-    box-shadow:
-        0 0 0 2px rgba(212, 175, 55, 0.08);
-}
 
-/* TERMS */
+                <div class="field">
 
-.terms {
-    display: flex;
-    align-items: center;
+                    <label for="email">
+                        Email *
+                    </label>
 
-    gap: 8px;
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter email"
+                        required
+                    >
 
-    margin: 0 0 14px;
+                </div>
 
-    color: var(--muted);
+            </div>
 
-    font-size: 13px;
-    font-weight: normal;
 
-    cursor: pointer;
-}
+            <!-- Mobile + Organization -->
+            <div class="row">
 
-.terms input {
-    width: 15px;
-    height: 15px;
+                <div class="field">
 
-    accent-color: var(--gold);
+                    <label for="mobile">
+                        Mobile Number
+                    </label>
 
-    cursor: pointer;
-}
+                    <input
+                        type="text"
+                        id="mobile"
+                        placeholder="Enter mobile number"
+                    >
 
-/* REGISTER BUTTON */
+                </div>
 
-.register-btn {
-    width: 100%;
 
-    padding: 11px;
+                <div class="field">
 
-    border: none;
-    border-radius: 8px;
+                    <label for="organization">
+                        Organization
+                    </label>
 
-    background: var(--gold);
-    color: #111;
+                    <input
+                        type="text"
+                        id="organization"
+                        placeholder="Company / Organization"
+                    >
 
-    font-size: 14px;
-    font-weight: 600;
+                </div>
 
-    cursor: pointer;
+            </div>
 
-    transition: 0.2s;
-}
 
-.register-btn:hover {
-    background: var(--gold-hover);
+            <!-- Department + Employee ID -->
+            <div class="row">
 
-    transform: translateY(-1px);
-}
+                <div class="field">
 
-.register-btn:active {
-    transform: translateY(0);
-}
+                    <label for="department">
+                        Department
+                    </label>
 
-/* MESSAGE */
+                    <input
+                        type="text"
+                        id="department"
+                        placeholder="Enter department"
+                    >
 
-#message {
-    min-height: 18px;
+                </div>
 
-    margin-top: 10px;
 
-    text-align: center;
+                <div class="field">
 
-    font-size: 13px;
-}
+                    <label for="employee_id">
+                        Employee ID
+                    </label>
 
-/* LOGIN LINK */
+                    <input
+                        type="text"
+                        id="employee_id"
+                        placeholder="Enter employee ID"
+                    >
 
-.login-link {
-    display: flex;
-    justify-content: center;
+                </div>
 
-    gap: 5px;
+            </div>
 
-    margin-top: 14px;
-    padding-top: 12px;
 
-    border-top: 1px solid var(--border);
+            <!-- Password -->
+            <div class="field">
 
-    color: var(--muted);
+                <label for="password">
+                    Password *
+                </label>
 
-    font-size: 13px;
-}
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create password"
+                    minlength="6"
+                    required
+                >
 
-.login-link a {
-    color: var(--gold);
+            </div>
 
-    text-decoration: none;
 
-    font-weight: 600;
-}
+            <!-- Confirm Password -->
+            <div class="field">
 
-.login-link a:hover {
-    color: var(--gold-hover);
-    text-decoration: underline;
-}
+                <label for="confirm_password">
+                    Confirm Password *
+                </label>
 
-/* TABLET / MOBILE */
+                <input
+                    type="password"
+                    id="confirm_password"
+                    placeholder="Confirm password"
+                    minlength="6"
+                    required
+                >
 
-@media (max-width: 650px) {
+            </div>
 
-    .register-page {
-        padding: 15px;
-    }
 
-    .register-card {
-        padding: 25px 22px;
-    }
+            <!-- Terms -->
+            <label class="terms">
 
-    .row {
-        flex-direction: column;
-        gap: 0;
-    }
+                <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                >
 
-    .logo h1 {
-        font-size: 22px;
-    }
+                <span>
+                    I agree to the Terms & Conditions
+                </span>
 
-    .register-heading h2 {
-        font-size: 20px;
-    }
-}
+            </label>
 
-/* SMALL MOBILE */
 
-@media (max-width: 450px) {
+            <!-- Button -->
+            <button
+                type="submit"
+                class="register-btn"
+            >
+                Create Account
+            </button>
 
-    .register-card {
-        padding: 22px 18px;
-    }
 
-    .logo {
-        margin-bottom: 20px;
-    }
+            <!-- Message -->
+            <p id="message"></p>
 
-    .terms {
-        align-items: flex-start;
-    }
-}
+
+            <!-- Login -->
+            <div class="login-link">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="js/register.js"></script>
+
+</body>
+
+</html>
