@@ -6,12 +6,30 @@ const {
     deleteUser
 } = require("../controllers/userController");
 
+const authMiddleware = require("../middleware/authMiddleware");
+const adminOnly = require("../middleware/roleMiddleware");
+
 const router = express.Router();
 
-router.get("/", getUsers);
+router.get(
+    "/",
+    authMiddleware,
+    adminOnly,
+    getUsers
+);
 
-router.put("/:id/role", updateUserRole);
+router.put(
+    "/:id/role",
+    authMiddleware,
+    adminOnly,
+    updateUserRole
+);
 
-router.delete("/:id", deleteUser);
+router.delete(
+    "/:id",
+    authMiddleware,
+    adminOnly,
+    deleteUser
+);
 
 module.exports = router;
