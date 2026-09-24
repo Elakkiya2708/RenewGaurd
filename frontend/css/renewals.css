@@ -123,8 +123,8 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    flex: 1;
-    margin-bottom: 20px; /* Logout button-kum nav-kum naduvula exact spacing varum */
+    /* flex: 1;  <- இதை தூக்கிடலாம் */
+    margin-bottom: 25px; /* இப்ப இந்த Space கரெக்ட்டா வேலை செய்யும் */
 }
 
 nav a {
