@@ -1,5 +1,5 @@
 const supabase = require("../config/database");
-
+const { createPDF } = require("../services/reportService");
 exports.getReport = async (req, res) => {
     try {
         const { data, error } = await supabase
