@@ -3,7 +3,9 @@ const express = require("express");
 const {
     getUsers,
     updateUserRole,
-    deleteUser
+    deleteUser,
+    getProfile,
+    updateProfile
 } = require("../controllers/userController");
 
 const authMiddleware = require("../middleware/authMiddleware");
@@ -11,6 +13,8 @@ const adminOnly = require("../middleware/roleMiddleware");
 
 const router = express.Router();
 
+
+// Admin - User Management
 router.get(
     "/",
     authMiddleware,
@@ -31,5 +35,20 @@ router.delete(
     adminOnly,
     deleteUser
 );
+
+
+// Logged-in User - Profile
+router.get(
+    "/profile",
+    authMiddleware,
+    getProfile
+);
+
+router.put(
+    "/profile",
+    authMiddleware,
+    updateProfile
+);
+
 
 module.exports = router;
