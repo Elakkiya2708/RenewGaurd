@@ -3,357 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>RenewGuard - Dashboard</title>
-
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
-
 <body>
 
 <div class="layout">
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
+    <!-- Sidebar -->
     <aside class="sidebar">
-
         <div class="brand">
-
             <div class="brand-icon">R</div>
-
             <div>
                 <h2>RenewGuard</h2>
                 <span>Management System</span>
             </div>
-
         </div>
 
+     <nav>
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="renewals.html">Renewals</a>
+    <a href="calendar.html">Calendar</a>
+    <a href="history.html">History</a>
+    <a href="documents.html">Documents</a>
+    <a href="reports.html">Reports</a>
+    <a href="reminders.html">Reminders</a>
+    <a href="audit-logs.html">Audit Logs</a>
+    <a href="profile.html">My Profile</a>
+    <a href="users.html">User Management</a>
+</nav>
 
-        <nav>
-
-            <a href="dashboard.html" class="active">
-                Dashboard
-            </a>
-
-            <a href="renewals.html">
-                Renewals
-            </a>
-
-            <a href="calendar.html">
-                Calendar
-            </a>
-
-            <a href="history.html">
-                History
-            </a>
-
-            <a href="documents.html">
-                Documents
-            </a>
-
-            <a href="reports.html">
-                Reports
-            </a>
-
-            <a href="reminders.html">
-                Reminders
-            </a>
-
-            <!-- Admin Only -->
-            <a href="audit-logs.html" id="auditLink">
-                Audit Logs
-            </a>
-
-            <a href="profile.html">
-                My Profile
-            </a>
-
-            <!-- Admin Only -->
-            <a href="users.html" id="usersLink">
-                User Management
-            </a>
-
-        </nav>
-
-
-        <button class="logout" id="logoutBtn">
-            Logout
-        </button>
-
+        <button class="logout" id="logoutBtn">Logout</button>
     </aside>
 
 
-    <!-- =========================
-         MAIN
-    ========================== -->
-
+    <!-- Main -->
     <main class="main">
 
-
-        <!-- =========================
-             TOPBAR
-        ========================== -->
-
+        <!-- Topbar -->
         <header class="topbar">
-
             <div>
                 <h1>Dashboard</h1>
                 <p>Welcome back to RenewGuard</p>
             </div>
 
+            <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+    ☀️
+</button>
 
-            <!-- Right Side -->
-
-            <div class="topbar-actions">
-
-                <!-- Theme Toggle -->
-
-                <button
-                    id="themeToggle"
-                    class="theme-toggle"
-                    title="Switch Theme">
-
-                    ☀️
-
-                </button>
-
-
-                <!-- User -->
-
-                <div class="user-info">
-
-                    <div
-                        class="avatar"
-                        id="userAvatar">
-
-                        U
-
-                    </div>
-
-
-                    <div>
-
-                        <strong id="userName">
-                            User
-                        </strong>
-
-                        <small id="userRole">
-                            Employee
-                        </small>
-
-                    </div>
-
+            <div class="user-info">
+                <div class="avatar" id="userAvatar">U</div>
+                <div>
+                    <strong id="userName">User</strong>
+                    <small id="userRole">Employee</small>
                 </div>
-
             </div>
-
         </header>
 
 
-        <!-- =========================
-             STATS
-        ========================== -->
-
+        <!-- Stats -->
         <section class="stats">
 
-
             <div class="card">
-
                 <span>Total Renewals</span>
-
-                <h2 id="totalRenewals">
-                    0
-                </h2>
-
-                <p>
-                    All renewal records
-                </p>
-
+                <h2 id="totalRenewals">0</h2>
+                <p>All renewal records</p>
             </div>
-
 
             <div class="card warning">
-
                 <span>Expiring Soon</span>
-
-                <h2 id="expiringSoon">
-                    0
-                </h2>
-
-                <p>
-                    Within 30 days
-                </p>
-
+                <h2 id="expiringSoon">0</h2>
+                <p>Within 30 days</p>
             </div>
-
 
             <div class="card danger">
-
                 <span>Expired</span>
-
-                <h2 id="expired">
-                    0
-                </h2>
-
-                <p>
-                    Requires attention
-                </p>
-
+                <h2 id="expired">0</h2>
+                <p>Requires attention</p>
             </div>
-
 
             <div class="card success">
-
                 <span>Renewed</span>
-
-                <h2 id="renewed">
-                    0
-                </h2>
-
-                <p>
-                    Successfully renewed
-                </p>
-
+                <h2 id="renewed">0</h2>
+                <p>Successfully renewed</p>
             </div>
-
 
             <div class="card">
-
                 <span>Pending</span>
-
-                <h2 id="pending">
-                    0
-                </h2>
-
-                <p>
-                    Pending renewal
-                </p>
-
+                <h2 id="pending">0</h2>
+                <p>Pending renewal</p>
             </div>
-
 
             <div class="card danger">
-
                 <span>High Priority</span>
-
-                <h2 id="highPriority">
-                    0
-                </h2>
-
-                <p>
-                    Needs attention
-                </p>
-
+                <h2 id="highPriority">0</h2>
+                <p>Needs attention</p>
             </div>
 
         </section>
 
 
-        <!-- =========================
-             DASHBOARD CONTENT
-        ========================== -->
-
+        <!-- Content -->
         <section class="dashboard-grid">
 
-
-            <!-- Recent Renewals -->
-
             <div class="panel">
-
                 <div class="panel-header">
-
-                    <h2>
-                        Recent Renewals
-                    </h2>
-
-                    <a href="renewals.html">
-                        View All
-                    </a>
-
+                    <h2>Recent Renewals</h2>
+                    <a href="renewals.html">View All</a>
                 </div>
 
-
-                <div
-                    id="recentRenewals"
-                    class="empty">
-
+                <div id="recentRenewals" class="empty">
                     No renewal records yet.
-
                 </div>
-
             </div>
 
-
-            <!-- Upcoming Expiry -->
 
             <div class="panel">
-
                 <div class="panel-header">
-
-                    <h2>
-                        Upcoming Expiry
-                    </h2>
-
-                    <a href="calendar.html">
-                        Calendar
-                    </a>
-
+                    <h2>Upcoming Expiry</h2>
+                    <a href="calendar.html">Calendar</a>
                 </div>
 
-
-                <div
-                    id="upcomingRenewals"
-                    class="empty">
-
+                <div id="upcomingRenewals" class="empty">
                     No upcoming renewals.
-
                 </div>
-
             </div>
-
 
         </section>
-
 
     </main>
 
 </div>
-
-
-<!-- =========================
-     ROLE CONTROL
-========================= -->
-
-<script>
-
-    const user =
-        JSON.parse(localStorage.getItem("user"));
-
-    const auditLink =
-        document.getElementById("auditLink");
-
-    const usersLink =
-        document.getElementById("usersLink");
-
-
-    if (!user || user.role !== "Admin") {
-
-        if (auditLink) {
-            auditLink.style.display = "none";
-        }
-
-        if (usersLink) {
-            usersLink.style.display = "none";
-        }
-
-    }
-
-</script>
-
-
-<!-- Dashboard JS -->
 
 <script src="js/dashboard.js"></script>
 
