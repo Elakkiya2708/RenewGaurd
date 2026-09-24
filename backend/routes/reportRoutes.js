@@ -2,7 +2,8 @@ const express = require("express");
 
 const {
     getReport,
-    downloadPDF
+    downloadPDF,
+    downloadExcel
 } = require("../controllers/reportController");
 
 const router = express.Router();
