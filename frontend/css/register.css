@@ -9,47 +9,29 @@
     --card: #181818;
     --input: #101010;
     --border: #2A2A2A;
-
     --gold: #D4AF37;
     --gold-hover: #F1C75B;
-
     --text: #F5F5F5;
     --muted: #A3A3A3;
-
     --success: #22C55E;
     --danger: #EF4444;
 }
 
-
-/* =========================
-   BODY
-========================= */
-
 body {
     font-family: "Segoe UI", Arial, sans-serif;
-
     background: var(--bg);
-
     color: var(--text);
-
     min-height: 100vh;
 }
 
-
-/* =========================
-   REGISTER PAGE
-========================= */
+/* PAGE */
 
 .register-page {
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
-    padding: 30px 20px;
+    padding: 15px 20px;
 
     background:
         radial-gradient(
@@ -65,150 +47,114 @@ body {
         var(--bg);
 }
 
-
-/* =========================
-   REGISTER CARD
-========================= */
+/* CARD */
 
 .register-card {
     width: 100%;
-
     max-width: 850px;
 
-    padding: 35px 42px;
+    padding: 25px 42px;
 
     background: var(--card);
-
     border: 1px solid var(--border);
-
     border-radius: 14px;
 
-    box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
 }
 
-
-/* =========================
-   LOGO
-========================= */
+/* LOGO */
 
 .logo {
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     gap: 12px;
-
-    margin-bottom: 28px;
+    margin-bottom: 18px;
 }
 
 .logo-icon {
-    width: 48px;
-    height: 48px;
+    width: 45px;
+    height: 45px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     background: var(--gold);
-
     color: #111;
 
     border-radius: 10px;
 
-    font-size: 24px;
-
+    font-size: 23px;
     font-weight: 700;
 }
 
 .logo h1 {
-    font-size: 24px;
-
-    margin-bottom: 3px;
+    font-size: 23px;
+    margin-bottom: 2px;
 }
 
 .logo span {
     color: var(--muted);
-
     font-size: 11px;
 }
 
-
-/* =========================
-   HEADING
-========================= */
+/* HEADING */
 
 .register-heading {
-    margin-bottom: 25px;
+    margin-bottom: 18px;
 }
 
 .register-heading h2 {
-    font-size: 22px;
-
-    margin-bottom: 6px;
+    font-size: 21px;
+    margin-bottom: 5px;
 }
 
 .register-heading p {
     color: var(--muted);
-
     font-size: 13px;
 }
 
-
-/* =========================
-   FORM ROW
-========================= */
+/* ROW */
 
 .row {
     display: flex;
-
-    gap: 20px;
+    gap: 15px;
 }
 
-
-/* =========================
-   FIELD
-========================= */
+/* FIELD */
 
 .field {
     flex: 1;
-
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .field label {
     display: block;
 
-    margin-bottom: 7px;
+    margin-bottom: 5px;
 
     color: var(--muted);
 
     font-size: 13px;
-
     font-weight: 500;
 }
 
 .field input {
     width: 100%;
 
-    padding: 11px 12px;
+    padding: 9px 12px;
 
     background: var(--input);
-
     color: var(--text);
 
     border: 1px solid var(--border);
-
     border-radius: 8px;
 
     outline: none;
 
     font-family: inherit;
-
     font-size: 14px;
 
     transition: 0.2s;
@@ -225,24 +171,19 @@ body {
         0 0 0 2px rgba(212, 175, 55, 0.08);
 }
 
-
-/* =========================
-   TERMS
-========================= */
+/* TERMS */
 
 .terms {
     display: flex;
-
     align-items: center;
 
     gap: 8px;
 
-    margin: 3px 0 20px;
+    margin: 0 0 14px;
 
     color: var(--muted);
 
     font-size: 13px;
-
     font-weight: normal;
 
     cursor: pointer;
@@ -257,26 +198,20 @@ body {
     cursor: pointer;
 }
 
-
-/* =========================
-   REGISTER BUTTON
-========================= */
+/* REGISTER BUTTON */
 
 .register-btn {
     width: 100%;
 
-    padding: 12px;
+    padding: 11px;
 
     border: none;
-
     border-radius: 8px;
 
     background: var(--gold);
-
     color: #111;
 
     font-size: 14px;
-
     font-weight: 600;
 
     cursor: pointer;
@@ -290,36 +225,32 @@ body {
     transform: translateY(-1px);
 }
 
+.register-btn:active {
+    transform: translateY(0);
+}
 
-/* =========================
-   MESSAGE
-========================= */
+/* MESSAGE */
 
 #message {
-    min-height: 20px;
+    min-height: 18px;
 
-    margin-top: 14px;
+    margin-top: 10px;
 
     text-align: center;
 
     font-size: 13px;
 }
 
-
-/* =========================
-   LOGIN LINK
-========================= */
+/* LOGIN LINK */
 
 .login-link {
     display: flex;
-
     justify-content: center;
 
     gap: 5px;
 
-    margin-top: 20px;
-
-    padding-top: 18px;
+    margin-top: 14px;
+    padding-top: 12px;
 
     border-top: 1px solid var(--border);
 
@@ -338,28 +269,23 @@ body {
 
 .login-link a:hover {
     color: var(--gold-hover);
-
     text-decoration: underline;
 }
 
-
-/* =========================
-   RESPONSIVE
-========================= */
+/* TABLET / MOBILE */
 
 @media (max-width: 650px) {
 
     .register-page {
-        padding: 20px 15px;
+        padding: 15px;
     }
 
     .register-card {
-        padding: 28px 22px;
+        padding: 25px 22px;
     }
 
     .row {
         flex-direction: column;
-
         gap: 0;
     }
 
@@ -370,22 +296,21 @@ body {
     .register-heading h2 {
         font-size: 20px;
     }
-
 }
 
+/* SMALL MOBILE */
 
 @media (max-width: 450px) {
 
     .register-card {
-        padding: 25px 18px;
+        padding: 22px 18px;
     }
 
     .logo {
-        margin-bottom: 24px;
+        margin-bottom: 20px;
     }
 
     .terms {
         align-items: flex-start;
     }
-
 }
