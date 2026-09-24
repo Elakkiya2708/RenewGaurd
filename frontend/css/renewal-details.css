@@ -130,24 +130,19 @@ nav a.active {
 
 .logout {
     margin-top: auto;
-
     padding: 12px;
-
-    border: 1px solid var(--border);
+    border: 1px solid var(--danger); /* Red border */
     border-radius: 8px;
-
     background: transparent;
-
-    color: var(--muted);
-
+    color: var(--danger); /* Red text color */
     cursor: pointer;
-
     transition: 0.2s;
 }
 
 .logout:hover {
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: #DC2626; /* Darker red on hover */
+    color: #DC2626;
+    background: rgba(239, 68, 68, 0.1); /* Subtle red background on hover */
 }
 
 
