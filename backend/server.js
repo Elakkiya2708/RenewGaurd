@@ -25,6 +25,7 @@ app.use("/api/documents", documentRoutes);
 app.use("/api/reminders", reminderRoutes);
 app.use("/api/history", historyRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
     res.json({
