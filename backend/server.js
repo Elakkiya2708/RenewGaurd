@@ -16,6 +16,7 @@ const renewalRoutes = require("./routes/renewalRoutes");
 const documentRoutes = require("./routes/documentRoutes");
 const reminderRoutes = require("./routes/reminderRoutes");
 const historyRoutes = require("./routes/historyRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/renewals", renewalRoutes);
