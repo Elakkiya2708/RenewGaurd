@@ -85,6 +85,20 @@ exports.updateRenewal = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // Get old renewal data
+        const { data: oldData, error: oldError } = await supabase
+            .from("renewals")
+            .select("*")
+            .eq("id", id)
+            .single();
+
+        if (oldError) {
+            return res.status(400).json({
+                message: oldError.message
+            });
+        }
+
+        // Update renewal
         const { data, error } = await supabase
             .from("renewals")
             .update(req.body)
@@ -93,7 +107,29 @@ exports.updateRenewal = async (req, res) => {
             .single();
 
         if (error) {
-            return res.status(400).json({ message: error.message });
+            return res.status(400).json({
+                message: error.message
+            });
+        }
+
+        // Save history when status changes
+        if (
+            req.body.status &&
+            req.body.status !== oldData.status
+        ) {
+            const { error: historyError } = await supabase
+                .from("renewal_history")
+                .insert([{
+                    renewal_id: id,
+                    action: "Status Changed",
+                    old_status: oldData.status,
+                    new_status: req.body.status,
+                    remarks: req.body.notes || null
+                }]);
+
+            if (historyError) {
+                console.error("History Error:", historyError);
+            }
         }
 
         res.json({
@@ -102,7 +138,11 @@ exports.updateRenewal = async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
+        console.error(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
     }
 };
 
