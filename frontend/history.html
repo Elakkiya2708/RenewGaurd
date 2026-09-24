@@ -68,7 +68,6 @@
                 User Management
             </a>
 
-
         </nav>
 
         <button class="logout" id="logoutBtn">
@@ -92,9 +91,17 @@
                 </p>
             </div>
 
+
             <div class="header-actions">
 
-                
+                <!-- THEME TOGGLE -->
+                <button
+                    id="themeToggle"
+                    class="theme-toggle">
+                    ☀️
+                </button>
+
+                <!-- BACK BUTTON -->
                 <button
                     class="back-btn"
                     onclick="window.location.href='renewals.html'">
@@ -236,11 +243,15 @@
                     <tbody id="historyTable">
 
                         <tr>
+
                             <td
                                 colspan="6"
                                 class="loading">
+
                                 Loading history...
+
                             </td>
+
                         </tr>
 
                     </tbody>
@@ -257,6 +268,8 @@
 
 
 <script>
+
+/* USER */
 
 const user =
     JSON.parse(localStorage.getItem("user"));
@@ -284,6 +297,7 @@ if (user && user.role !== "Admin") {
 
     if (auditLink)
         auditLink.style.display = "none";
+
 }
 
 
@@ -303,8 +317,12 @@ document
 
 /* THEME */
 
+const themeToggle =
+    document.getElementById("themeToggle");
+
 const savedTheme =
     localStorage.getItem("theme");
+
 
 if (savedTheme === "light") {
 
@@ -312,7 +330,33 @@ if (savedTheme === "light") {
         .classList
         .add("light-theme");
 
+    themeToggle.textContent = "🌙";
+
 }
+
+
+themeToggle.addEventListener("click", () => {
+
+    document.body
+        .classList
+        .toggle("light-theme");
+
+    const isLight =
+        document.body
+            .classList
+            .contains("light-theme");
+
+
+    localStorage.setItem(
+        "theme",
+        isLight ? "light" : "dark"
+    );
+
+
+    themeToggle.textContent =
+        isLight ? "🌙" : "☀️";
+
+});
 
 </script>
 
