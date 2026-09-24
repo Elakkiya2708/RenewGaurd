@@ -4,6 +4,12 @@ if (!token) {
     window.location.href = "login.html";
 }
 
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user || user.role !== "Admin") {
+    window.location.href = "dashboard.html";
+}
+
 const auditTable = document.getElementById("auditTable");
 
 async function loadAuditLogs() {
