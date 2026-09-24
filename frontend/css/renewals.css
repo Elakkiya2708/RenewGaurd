@@ -124,6 +124,7 @@ nav {
     flex-direction: column;
     gap: 5px;
     flex: 1;
+    margin-bottom: 20px;
 }
 
 nav a {
