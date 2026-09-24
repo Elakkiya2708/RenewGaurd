@@ -14,6 +14,7 @@ app.use(express.json());
 const authRoutes = require("./routes/authRoutes");
 const renewalRoutes = require("./routes/renewalRoutes");
 const documentRoutes = require("./routes/documentRoutes");
+console.log("DOCUMENT ROUTES FILE:", require.resolve("./routes/documentRoutes"));
 const reminderRoutes = require("./routes/reminderRoutes");
 const historyRoutes = require("./routes/historyRoutes");
 const reportRoutes = require("./routes/reportRoutes");
