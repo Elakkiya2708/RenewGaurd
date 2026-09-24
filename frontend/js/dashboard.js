@@ -35,6 +35,8 @@ if (user.role !== "Admin") {
     if (userManagement) {
         userManagement.style.display = "none";
     }
+    const auditLogs = document.querySelector('a[href="audit-logs.html"]');
+    if (auditLogs) auditLogs.style.display = "none";
 }
 
 
