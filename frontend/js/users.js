@@ -5,6 +5,10 @@ if (!token) {
 }
 
 const usersTable = document.getElementById("usersTable");
+const searchUser = document.getElementById("searchUser");
+const roleFilter = document.getElementById("roleFilter");
+
+let allUsers = [];
 
 const headers = {
     "Authorization": `Bearer ${token}`,
@@ -30,51 +34,9 @@ async function loadUsers() {
             );
         }
 
-        if (users.length === 0) {
-            usersTable.innerHTML = `
-                <tr>
-                    <td colspan="8">No users found.</td>
-                </tr>
-            `;
-            return;
-        }
+        allUsers = users;
 
-        usersTable.innerHTML = users.map(user => {
-
-            const roleClass = user.role.toLowerCase();
-
-            return `
-                <tr>
-                    <td>${user.id}</td>
-                    <td>${user.full_name || "-"}</td>
-                    <td>${user.email || "-"}</td>
-                    <td>${user.organization || "-"}</td>
-                    <td>${user.department || "-"}</td>
-                    <td>${user.employee_id || "-"}</td>
-
-                    <td>
-                        <span class="role role-${roleClass}">
-                            ${user.role}
-                        </span>
-                    </td>
-
-                    <td>
-                        <button
-                            class="action-btn role-btn"
-                            onclick="changeRole(${user.id}, '${user.role}')">
-                            Change Role
-                        </button>
-
-                        <button
-                            class="action-btn delete-btn"
-                            onclick="deleteUser(${user.id}, '${user.full_name}')">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            `;
-
-        }).join("");
+        displayUsers(allUsers);
 
     } catch (error) {
 
@@ -89,6 +51,110 @@ async function loadUsers() {
         `;
     }
 }
+
+
+function displayUsers(users) {
+
+    if (users.length === 0) {
+
+        usersTable.innerHTML = `
+            <tr>
+                <td colspan="8">
+                    No users found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    usersTable.innerHTML = users.map(user => {
+
+        const roleClass = user.role.toLowerCase();
+
+        return `
+            <tr>
+
+                <td>${user.id}</td>
+
+                <td>${user.full_name || "-"}</td>
+
+                <td>${user.email || "-"}</td>
+
+                <td>${user.organization || "-"}</td>
+
+                <td>${user.department || "-"}</td>
+
+                <td>${user.employee_id || "-"}</td>
+
+                <td>
+                    <span class="role role-${roleClass}">
+                        ${user.role}
+                    </span>
+                </td>
+
+                <td>
+
+                    <button
+                        class="action-btn role-btn"
+                        onclick="changeRole(${user.id}, '${user.role}')">
+                        Change Role
+                    </button>
+
+                    <button
+                        class="action-btn delete-btn"
+                        onclick="deleteUser(${user.id}, '${user.full_name}')">
+                        Delete
+                    </button>
+
+                </td>
+
+            </tr>
+        `;
+
+    }).join("");
+}
+
+
+function filterUsers() {
+
+    const search =
+        searchUser.value.toLowerCase().trim();
+
+    const role =
+        roleFilter.value;
+
+    const filtered = allUsers.filter(user => {
+
+        const matchesSearch =
+            (user.full_name || "")
+                .toLowerCase()
+                .includes(search) ||
+
+            (user.email || "")
+                .toLowerCase()
+                .includes(search);
+
+        const matchesRole =
+            role === "All" ||
+            user.role === role;
+
+        return matchesSearch && matchesRole;
+    });
+
+    displayUsers(filtered);
+}
+
+
+searchUser.addEventListener(
+    "input",
+    filterUsers
+);
+
+roleFilter.addEventListener(
+    "change",
+    filterUsers
+);
 
 
 async function changeRole(id, currentRole) {
@@ -132,6 +198,7 @@ async function changeRole(id, currentRole) {
     } catch (error) {
 
         console.error(error);
+
         alert(error.message);
     }
 }
@@ -139,7 +206,9 @@ async function changeRole(id, currentRole) {
 
 async function deleteUser(id, name) {
 
-    if (!confirm(`Delete user "${name}"?`)) {
+    if (!confirm(
+        `Delete user "${name}"?`
+    )) {
         return;
     }
 
@@ -168,6 +237,7 @@ async function deleteUser(id, name) {
     } catch (error) {
 
         console.error(error);
+
         alert(error.message);
     }
 }
