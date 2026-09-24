@@ -6,13 +6,17 @@
     <title>RenewGuard - Renewals</title>
     <link rel="stylesheet" href="css/renewals.css">
 </head>
+
 <body>
 
 <div class="layout">
 
+    <!-- Sidebar -->
     <aside class="sidebar">
+
         <div class="brand">
             <div class="brand-icon">R</div>
+
             <div>
                 <h2>RenewGuard</h2>
                 <span>Management System</span>
@@ -20,34 +24,54 @@
         </div>
 
         <nav>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="renewals.html" class="active">Renewals</a>
-    <a href="calendar.html">Calendar</a>
-    <a href="history.html">History</a>
-    <a href="documents.html">Documents</a>
-    <a href="reports.html">Reports</a>
-    <a href="reminders.html">Reminders</a>
-    <a href="audit-logs.html">Audit Logs</a>
-    <a href="profile.html">My Profile</a>
-    <a href="users.html">User Management</a>
-</nav>
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="renewals.html" class="active">Renewals</a>
+
+            <a href="calendar.html">Calendar</a>
+
+            <a href="history.html">History</a>
+
+            <a href="documents.html">Documents</a>
+
+            <a href="reports.html">Reports</a>
+
+            <a href="reminders.html">Reminders</a>
+
+            <!-- Admin Only -->
+            <a href="audit-logs.html" id="auditLink">Audit Logs</a>
+
+            <a href="profile.html">My Profile</a>
+
+            <!-- Admin Only -->
+            <a href="users.html" id="usersLink">User Management</a>
+        </nav>
 
         <button class="logout" id="logoutBtn">Logout</button>
+
     </aside>
 
+
+    <!-- Main -->
     <main class="main">
 
         <header class="topbar">
+
             <div>
                 <h1>Renewals</h1>
                 <p>Manage all your renewal records</p>
             </div>
 
-            <button class="add-btn" onclick="location.href='add-renewal.html'">
+            <button
+                class="add-btn"
+                onclick="location.href='add-renewal.html'">
                 + Add Renewal
             </button>
+
         </header>
 
+
+        <!-- Filters -->
         <section class="toolbar">
 
             <input
@@ -78,9 +102,12 @@
 
         </section>
 
+
+        <!-- Renewal Table -->
         <section class="table-container">
 
             <table>
+
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -94,12 +121,15 @@
                 </thead>
 
                 <tbody id="renewalTable">
+
                     <tr>
                         <td colspan="7" class="loading">
                             Loading renewals...
                         </td>
                     </tr>
+
                 </tbody>
+
             </table>
 
         </section>
@@ -107,6 +137,26 @@
     </main>
 
 </div>
+
+
+<!-- Role Based Menu -->
+<script>
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const auditLink = document.getElementById("auditLink");
+    const usersLink = document.getElementById("usersLink");
+
+    if (!user || user.role !== "Admin") {
+        if (auditLink) {
+            auditLink.style.display = "none";
+        }
+
+        if (usersLink) {
+            usersLink.style.display = "none";
+        }
+    }
+</script>
+
 
 <script src="js/renewals.js"></script>
 
