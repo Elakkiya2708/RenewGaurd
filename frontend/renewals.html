@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RenewGuard - Renewals</title>
+
     <link rel="stylesheet" href="css/renewals.css">
 </head>
 
@@ -15,39 +17,67 @@
     <aside class="sidebar">
 
         <div class="brand">
+
             <div class="brand-icon">R</div>
 
             <div>
                 <h2>RenewGuard</h2>
                 <span>Management System</span>
             </div>
+
         </div>
 
+
         <nav>
-            <a href="dashboard.html">Dashboard</a>
 
-            <a href="renewals.html" class="active">Renewals</a>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-            <a href="calendar.html">Calendar</a>
+            <a href="renewals.html" class="active">
+                Renewals
+            </a>
 
-            <a href="history.html">History</a>
+            <a href="calendar.html">
+                Calendar
+            </a>
 
-            <a href="documents.html">Documents</a>
+            <a href="history.html">
+                History
+            </a>
 
-            <a href="reports.html">Reports</a>
+            <a href="documents.html">
+                Documents
+            </a>
 
-            <a href="reminders.html">Reminders</a>
+            <a href="reports.html">
+                Reports
+            </a>
+
+            <a href="reminders.html">
+                Reminders
+            </a>
 
             <!-- Admin Only -->
-            <a href="audit-logs.html" id="auditLink">Audit Logs</a>
+            <a href="audit-logs.html" id="auditLink">
+                Audit Logs
+            </a>
 
-            <a href="profile.html">My Profile</a>
+            <a href="profile.html">
+                My Profile
+            </a>
 
             <!-- Admin Only -->
-            <a href="users.html" id="usersLink">User Management</a>
+            <a href="users.html" id="usersLink">
+                User Management
+            </a>
+
         </nav>
 
-        <button class="logout" id="logoutBtn">Logout</button>
+
+        <button class="logout" id="logoutBtn">
+            Logout
+        </button>
 
     </aside>
 
@@ -55,6 +85,7 @@
     <!-- Main -->
     <main class="main">
 
+        <!-- Topbar -->
         <header class="topbar">
 
             <div>
@@ -62,11 +93,50 @@
                 <p>Manage all your renewal records</p>
             </div>
 
-            <button
-                class="add-btn"
-                onclick="location.href='add-renewal.html'">
-                + Add Renewal
-            </button>
+
+            <div class="topbar-actions">
+
+                <!-- Theme Toggle -->
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    title="Toggle Theme">
+                    ☀️
+                </button>
+
+
+                <!-- User -->
+                <div class="user-info">
+
+                    <div
+                        class="avatar"
+                        id="userAvatar">
+                        U
+                    </div>
+
+                    <div>
+                        <strong id="userName">
+                            User
+                        </strong>
+
+                        <small id="userRole">
+                            Employee
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <!-- Add Renewal -->
+                <button
+                    class="add-btn"
+                    onclick="location.href='add-renewal.html'">
+
+                    + Add Renewal
+
+                </button>
+
+            </div>
 
         </header>
 
@@ -80,24 +150,70 @@
                 placeholder="Search renewals..."
             >
 
+
             <select id="categoryFilter">
-                <option value="">All Categories</option>
-                <option value="Contract">Contract</option>
-                <option value="License">License</option>
-                <option value="Certification">Certification</option>
-                <option value="Warranty">Warranty</option>
-                <option value="Insurance">Insurance</option>
-                <option value="Subscription">Subscription</option>
-                <option value="Regulatory Permit">Regulatory Permit</option>
-                <option value="Other">Other</option>
+
+                <option value="">
+                    All Categories
+                </option>
+
+                <option value="Contract">
+                    Contract
+                </option>
+
+                <option value="License">
+                    License
+                </option>
+
+                <option value="Certification">
+                    Certification
+                </option>
+
+                <option value="Warranty">
+                    Warranty
+                </option>
+
+                <option value="Insurance">
+                    Insurance
+                </option>
+
+                <option value="Subscription">
+                    Subscription
+                </option>
+
+                <option value="Regulatory Permit">
+                    Regulatory Permit
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
             </select>
 
+
             <select id="statusFilter">
-                <option value="">All Status</option>
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Renewed">Renewed</option>
-                <option value="Expired">Expired</option>
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="In Progress">
+                    In Progress
+                </option>
+
+                <option value="Renewed">
+                    Renewed
+                </option>
+
+                <option value="Expired">
+                    Expired
+                </option>
+
             </select>
 
         </section>
@@ -109,6 +225,7 @@
             <table>
 
                 <thead>
+
                     <tr>
                         <th>Name</th>
                         <th>Category</th>
@@ -118,14 +235,22 @@
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
+
                 </thead>
+
 
                 <tbody id="renewalTable">
 
                     <tr>
-                        <td colspan="7" class="loading">
+
+                        <td
+                            colspan="7"
+                            class="loading">
+
                             Loading renewals...
+
                         </td>
+
                     </tr>
 
                 </tbody>
@@ -139,14 +264,23 @@
 </div>
 
 
-<!-- Role Based Menu -->
+<!-- Role Based Menu + Theme -->
 <script>
-    const user = JSON.parse(localStorage.getItem("user"));
 
-    const auditLink = document.getElementById("auditLink");
-    const usersLink = document.getElementById("usersLink");
+    const user =
+        JSON.parse(localStorage.getItem("user"));
+
+    const auditLink =
+        document.getElementById("auditLink");
+
+    const usersLink =
+        document.getElementById("usersLink");
+
+
+    /* Employee/Admin Menu */
 
     if (!user || user.role !== "Admin") {
+
         if (auditLink) {
             auditLink.style.display = "none";
         }
@@ -154,7 +288,68 @@
         if (usersLink) {
             usersLink.style.display = "none";
         }
+
     }
+
+
+    /* User Details */
+
+    if (user) {
+
+        const name =
+            user.name || user.full_name || "User";
+
+        document.getElementById("userName").textContent =
+            name;
+
+        document.getElementById("userRole").textContent =
+            user.role || "Employee";
+
+        document.getElementById("userAvatar").textContent =
+            name.charAt(0).toUpperCase();
+
+    }
+
+
+    /* Theme */
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+    const savedTheme =
+        localStorage.getItem("theme");
+
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add("light-theme");
+
+        themeToggle.textContent = "🌙";
+
+    } else {
+
+        themeToggle.textContent = "☀️";
+
+    }
+
+
+    themeToggle.addEventListener("click", () => {
+
+        document.body.classList.toggle("light-theme");
+
+        const isLight =
+            document.body.classList.contains("light-theme");
+
+        localStorage.setItem(
+            "theme",
+            isLight ? "light" : "dark"
+        );
+
+        themeToggle.textContent =
+            isLight ? "🌙" : "☀️";
+
+    });
+
 </script>
 
 
