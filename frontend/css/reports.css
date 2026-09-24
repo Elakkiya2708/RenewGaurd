@@ -485,63 +485,33 @@ tr:hover {
     font-size: 14px;
 }
 
-/* =========================
-   LIGHT THEME
-========================= */
-
 body.light-theme {
     --bg: #F7F7F5;
     --sidebar: #FFFFFF;
     --card: #FFFFFF;
-    --input: #FFFFFF;
+    --input: #FAFAFA;
     --border: #E5E5E5;
+
     --gold: #B8860B;
     --gold-hover: #D4A017;
+
     --text: #171717;
     --muted: #666666;
 }
 
-.light-theme nav a {
-    color: #666;
+body.light-theme thead {
+    background: #F5F5F5;
 }
 
-.light-theme nav a:hover,
-.light-theme nav a.active {
-    background: #FFF8E1;
-    color: #B8860B;
+body.light-theme .brand-icon {
+    color: white;
 }
 
-.light-theme .summary-card strong {
-    color: #B8860B;
-}
-
-.light-theme .theme-toggle {
-    background: #FFFFFF;
-    border-color: #E5E5E5;
-}
-
-.light-theme .filter-grid select,
-.light-theme .filter-grid input {
-    background: #FFFFFF;
-    color: #171717;
-    border-color: #E5E5E5;
-}
-
-.light-theme th {
-    border-color: #E5E5E5;
-}
-
-.light-theme td {
-    border-color: #EEEEEE;
-}
-
-.light-theme tr:hover {
-    background: #FAFAFA;
-}
-
-.light-theme .report-card,
-.light-theme .summary-card {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+/* Light Theme Active Navigation Bar */
+body.light-theme nav a.active {
+    background: rgba(184, 134, 11, 0.10);
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
 }
 
 /* =========================
