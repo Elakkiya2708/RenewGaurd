@@ -12,7 +12,9 @@ const {
 } = require("../controllers/documentController");
 
 const router = express.Router();
-
+router.get("/test", (req, res) => {
+    res.json({ message: "Document route working" });
+});
 
 // Upload
 router.post(
