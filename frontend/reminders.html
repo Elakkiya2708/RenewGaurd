@@ -9,19 +9,149 @@
 
 <body>
 
-<div class="reminder-page">
+<div class="layout">
 
-    <h1>🔔 Reminders</h1>
-    <p>Upcoming renewal reminders</p>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-    <div id="reminderList"></div>
+        <div class="brand">
+            <div class="brand-icon">R</div>
 
-    <button onclick="window.location.href='dashboard.html'">
-        ← Back to Dashboard
-    </button>
+            <div>
+                <h2>RenewGuard</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="renewals.html">Renewals</a>
+
+            <a href="reminders.html" class="active">Reminders</a>
+
+            <a href="calendar.html">Calendar</a>
+
+            <a href="history.html">History</a>
+
+            <a href="documents.html">Documents</a>
+
+            <a href="reports.html">Reports</a>
+
+            <a href="profile.html">Profile</a>
+
+            <a href="users.html" id="usersLink">
+                User Management
+            </a>
+
+            <a href="audit-logs.html" id="auditLink">
+                Audit Logs
+            </a>
+
+        </nav>
+
+        <button class="logout" id="logoutBtn">
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+
+            <div>
+                <h1>Reminders</h1>
+                <p>Manage your upcoming renewal reminders</p>
+            </div>
+
+            <div class="topbar-actions">
+
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    title="Toggle Theme">
+                    ☀️
+                </button>
+
+                <div class="user-info">
+
+                    <div class="avatar" id="userAvatar">
+                        U
+                    </div>
+
+                    <div>
+                        <strong id="userName">
+                            User
+                        </strong>
+
+                        <small id="userRole">
+                            Employee
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+        <div class="summary-row">
+
+            <div class="summary-card">
+                <span>Total Reminders</span>
+                <strong id="totalReminders">0</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Pending</span>
+                <strong id="pendingReminders">0</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Completed</span>
+                <strong id="completedReminders">0</strong>
+            </div>
+
+        </div>
+
+
+        <!-- REMINDER SECTION -->
+        <div class="reminder-section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Renewal Reminders</h2>
+
+                    <p id="resultText">
+                        Loading reminders...
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div id="reminderList">
+
+                <div class="loading">
+                    Loading reminders...
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
-<div id="reminderList"></div>
+
 
 <script src="js/reminders.js"></script>
 
