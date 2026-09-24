@@ -593,49 +593,34 @@ tbody tr:last-child td {
 }
 
 
-/* =========================
-   LIGHT THEME
-========================= */
-
 body.light-theme {
     --bg: #F7F7F5;
-
     --sidebar: #FFFFFF;
-
     --card: #FFFFFF;
-
-    --card-dark: #FAFAFA;
-
+    --input: #FAFAFA;
     --border: #E5E5E5;
 
     --gold: #B8860B;
-
     --gold-hover: #D4A017;
 
     --text: #171717;
-
     --muted: #666666;
 }
 
-
-body.light-theme .toolbar input,
-body.light-theme .toolbar select {
-    background: #FFFFFF;
-
-    color: var(--text);
+body.light-theme thead {
+    background: #F5F5F5;
 }
 
-
-body.light-theme th {
-    background: #F7F7F5;
+body.light-theme .brand-icon {
+    color: white;
 }
 
-
-body.light-theme tbody tr:hover {
-    background:
-        rgba(184, 134, 11, 0.04);
+/* Light Theme Active Navigation Bar */
+body.light-theme nav a.active {
+    background: rgba(184, 134, 11, 0.10);
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
 }
-
 
 /* =========================
    RESPONSIVE
