@@ -10,5 +10,6 @@ const router = express.Router();
 
 router.get("/", getReminders);
 router.post("/", addReminder);
+router.put("/:id", updateReminder);
 
 module.exports = router;
